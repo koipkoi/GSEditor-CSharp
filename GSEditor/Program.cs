@@ -1,11 +1,16 @@
-namespace GSEditor
+using GSEditor.Core;
+
+namespace GSEditor;
+
+public static class Program
 {
-  public static class Program
+  [STAThread]
+  static void Main()
   {
-    [STAThread]
-    static void Main()
-    {
-      ApplicationConfiguration.Initialize();
-    }
+    ApplicationConfiguration.Initialize();
+
+    var pokegold = new Pokegold();
+    pokegold.Read("test.gbc");
+    pokegold.Write("test_mod.gbc");
   }
 }
