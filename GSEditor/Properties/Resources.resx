@@ -2596,4 +2596,35 @@ ff=9
 0b6c=.
 0bff=</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="if_database" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_database.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_exit.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_folder.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_help.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_music" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_music.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_new_docs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_new_docs.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_play" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_play.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_save.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_script" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_script.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_settings.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

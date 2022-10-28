@@ -1,4 +1,5 @@
 using GSEditor.Core;
+using GSEditor.UI.Forms;
 
 namespace GSEditor;
 
@@ -9,8 +10,9 @@ public static class Program
   {
     ApplicationConfiguration.Initialize();
 
-    var pokegold = new Pokegold();
-    pokegold.Read("test.gbc");
-    pokegold.Write("test_mod.gbc");
+    Injector.Register(new Pokegold());
+
+    var form = new MainForm();
+    form.ShowDialog();
   }
 }
