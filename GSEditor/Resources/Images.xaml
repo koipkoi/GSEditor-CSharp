@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ImageSource x:Key="GSEditor_Icon_Database">./Images/if_database.png</ImageSource>
+  <ImageSource x:Key="GSEditor_Icon_Exit">./Images/if_exit.png</ImageSource>
+  <ImageSource x:Key="GSEditor_Icon_Folder">./Images/if_folder.png</ImageSource>
+  <ImageSource x:Key="GSEditor_Icon_HelpBook">./Images/if_help_book.png</ImageSource>
+  <ImageSource x:Key="GSEditor_Icon_Play">./Images/if_play.png</ImageSource>
+  <ImageSource x:Key="GSEditor_Icon_Save">./Images/if_save.png</ImageSource>
+  <ImageSource x:Key="GSEditor_Icon_Script">./Images/if_script.png</ImageSource>
+  <ImageSource x:Key="GSEditor_Icon_Settings">./Images/if_settings.png</ImageSource>
+</ResourceDictionary>

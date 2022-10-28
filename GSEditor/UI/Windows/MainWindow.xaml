@@ -1,0 +1,119 @@
+﻿<Window x:Class="GSEditor.UI.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="GS 에디터"
+        MinHeight="450"
+        MinWidth="650"
+        Height="450"
+        Width="650"
+        ResizeMode="CanResizeWithGrip"
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Menu Grid.Row="0">
+      <MenuItem Header="파일(_F)">
+        <MenuItem Header="열기(_O)..."
+                  InputGestureText="Ctrl+O"
+                  Click="OnMenuItemClick">
+          <MenuItem.Icon>
+            <Image Source="{DynamicResource GSEditor_Icon_Folder}"
+                   Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+          </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="저장(_S)"
+                  InputGestureText="Ctrl+S"
+                  IsEnabled="{Binding RomFileOpened}"
+                  Click="OnMenuItemClick">
+          <MenuItem.Icon>
+            <Image Source="{DynamicResource GSEditor_Icon_Save}"
+                   Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+          </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="닫기(_X)"
+                  InputGestureText="Alt+F4"
+                  Click="OnMenuItemClick">
+          <MenuItem.Icon>
+            <Image Source="{DynamicResource GSEditor_Icon_Exit}"
+                   Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+          </MenuItem.Icon>
+        </MenuItem>
+      </MenuItem>
+      <MenuItem Header="게임(_G)">
+        <MenuItem Header="테스트 플레이(_P)..."
+                  InputGestureText="F5"
+                  IsEnabled="{Binding RomFileOpened}"
+                  Click="OnMenuItemClick">
+          <MenuItem.Icon>
+            <Image Source="{DynamicResource GSEditor_Icon_Play}"
+                   Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+          </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Name="EmulatorSettingsMenuItem"
+                  Header="에뮬레이터 설정(_P)..."
+                  Click="OnMenuItemClick">
+          <MenuItem.Icon>
+            <Image Source="{DynamicResource GSEditor_Icon_Settings}"
+                   Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+          </MenuItem.Icon>
+        </MenuItem>
+      </MenuItem>
+      <MenuItem Header="도움말(_H)">
+        <MenuItem Name="AppInformationMenuItem"
+                  Header="GS 에디터 정보(_A)..."
+                  Click="OnMenuItemClick">
+        </MenuItem>
+      </MenuItem>
+    </Menu>
+    <ToolBar Grid.Row="1"
+             ToolBarTray.IsLocked="True"
+             Name="MainToolBar"
+             Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+      <Button Tag="Ctrl+O"
+              ToolTip="열기..."
+              Click="OnMenuItemClick">
+        <Image Source="{DynamicResource GSEditor_Icon_Folder}"
+               Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+      </Button>
+      <Button Tag="Ctrl+S"
+              ToolTip="저장"
+              IsEnabled="{Binding RomFileOpened}"
+              Click="OnMenuItemClick">
+        <Image Source="{DynamicResource GSEditor_Icon_Save}"
+               Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+      </Button>
+      <Separator />
+      <Button Tag="F5"
+              ToolTip="테스트 플레이..."
+              IsEnabled="{Binding RomFileOpened}"
+              Click="OnMenuItemClick">
+        <Image Source="{DynamicResource GSEditor_Icon_Play}"
+               Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+      </Button>
+      <Separator />
+      <Button Tag="Alt+F4"
+              ToolTip="닫기"
+              Click="OnMenuItemClick">
+        <Image Source="{DynamicResource GSEditor_Icon_Exit}"
+               Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
+      </Button>
+    </ToolBar>
+    <TabControl Grid.Row="2"
+                Name="MainTab"
+                Margin="2">
+      <TabItem Header="todo 추가" />
+    </TabControl>
+    <StatusBar Grid.Row="3" >
+      <StatusBarItem Content="{Binding RomFilename}" />
+    </StatusBar>
+  </Grid>
+</Window>

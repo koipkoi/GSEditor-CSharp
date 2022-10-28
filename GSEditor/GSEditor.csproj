@@ -4,13 +4,15 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
-		<UseWindowsForms>true</UseWindowsForms>
+		<UseWindowsForms>False</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Platforms>x86</Platforms>
 		<ApplicationManifest>App.manifest</ApplicationManifest>
 		<ApplicationIcon>App.ico</ApplicationIcon>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<UseWPF>True</UseWPF>
+		<StartupObject>GSEditor.App</StartupObject>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
@@ -20,6 +22,27 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
 		<DebugType>full</DebugType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\if_database.bmp" />
+	  <None Remove="Resources\Images\if_database.png" />
+	  <None Remove="Resources\Images\if_exit.bmp" />
+	  <None Remove="Resources\Images\if_exit.png" />
+	  <None Remove="Resources\Images\if_folder.bmp" />
+	  <None Remove="Resources\Images\if_folder.png" />
+	  <None Remove="Resources\Images\if_help.bmp" />
+	  <None Remove="Resources\Images\if_help_book.png" />
+	  <None Remove="Resources\Images\if_music.bmp" />
+	  <None Remove="Resources\Images\if_new_docs.bmp" />
+	  <None Remove="Resources\Images\if_play.bmp" />
+	  <None Remove="Resources\Images\if_play.png" />
+	  <None Remove="Resources\Images\if_save.bmp" />
+	  <None Remove="Resources\Images\if_save.png" />
+	  <None Remove="Resources\Images\if_script.bmp" />
+	  <None Remove="Resources\Images\if_script.png" />
+	  <None Remove="Resources\Images\if_settings.bmp" />
+	  <None Remove="Resources\Images\if_settings.png" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="App.ico" />
@@ -47,7 +70,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="UI\Controls\" />
 	  <Folder Include="UI\Tabs\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="PresentationTheme.Aero" Version="0.6.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Include="App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Resources\Images\if_database.png" />
+	  <Resource Include="Resources\Images\if_exit.png" />
+	  <Resource Include="Resources\Images\if_folder.png" />
+	  <Resource Include="Resources\Images\if_help_book.png" />
+	  <Resource Include="Resources\Images\if_play.png" />
+	  <Resource Include="Resources\Images\if_save.png" />
+	  <Resource Include="Resources\Images\if_script.png" />
+	  <Resource Include="Resources\Images\if_settings.png" />
 	</ItemGroup>
 
 </Project>

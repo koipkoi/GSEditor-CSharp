@@ -1,4 +1,6 @@
-﻿namespace GSEditor.Core.PokegoldCore;
+﻿using System.Drawing;
+
+namespace GSEditor.Core.PokegoldCore;
 
 public sealed class GBColor
 {

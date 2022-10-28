@@ -1,4 +1,5 @@
 ﻿using GSEditor.Core.PokegoldCore;
+using System.IO;
 
 namespace GSEditor.Core;
 
@@ -26,6 +27,10 @@ public sealed partial class Pokegold
 
       foreach (var converter in _converters)
         converter.Read(this);
+
+      IsOpened = true;
+      Filename = filename;
+      RomChanged?.Invoke(this, EventArgs.Empty);
 
       return true;
     }
@@ -57,6 +62,8 @@ public sealed partial class Pokegold
       _data[0x14f] = (byte)(globalChecksum & 0x00ff >> 0);
 
       File.WriteAllBytes(filename, _data);
+      IsChanged = false;
+
       return true;
     }
     catch { }

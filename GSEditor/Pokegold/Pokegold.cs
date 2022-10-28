@@ -4,6 +4,10 @@ namespace GSEditor.Core;
 
 public sealed partial class Pokegold
 {
+  public bool IsChanged { get; private set; } = false;
+  public bool IsOpened { get; private set; } = false;
+  public string Filename { get; private set; } = "-";
+
   public Colors Colors { get; } = new();
   public Images Images { get; } = new();
   public List<PGItem> Items { get; } = new();
