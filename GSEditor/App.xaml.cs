@@ -13,6 +13,7 @@ public partial class App
 
     Injector.Register(this);
     Injector.Register(new Pokegold());
+    Injector.Register(new AppSettings());
 
     AeroTheme.SetAsCurrentTheme();
 

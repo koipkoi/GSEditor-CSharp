@@ -18,6 +18,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
   };
 
   private readonly Pokegold _pokegold = Injector.Get<Pokegold>();
+  private readonly AppSettings _appSettings = Injector.Get<AppSettings>();
 
   public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -105,7 +106,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
       case "F5":
         if (_pokegold.IsOpened)
         {
-          // todo 테스트 플레이 추가
+          if (!_pokegold.StartTestPlay(_appSettings.EmulatorPath))
+            MessageBox.Show("에뮬레이터가 설정되어있지 않아 실패했습니다.", "알림", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         break;
 
@@ -115,7 +117,14 @@ public partial class MainWindow : Window, INotifyPropertyChanged
           switch (menuItem.Name)
           {
             case nameof(EmulatorSettingsMenuItem):
-              // todo 에뮬레이터 설정 추가
+              var emulatorDialog = new OpenFileDialog
+              {
+                Title = "열기",
+                Filter = "실행 가능한 파일|*.exe|모든 파일|*.*",
+                FileName = _appSettings.EmulatorPath,
+              };
+              if (emulatorDialog.ShowDialog() ?? false)
+                _appSettings.EmulatorPath = emulatorDialog.FileName;
               break;
 
             case nameof(AppInformationMenuItem):
