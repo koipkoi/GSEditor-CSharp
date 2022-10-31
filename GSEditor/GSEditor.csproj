@@ -70,7 +70,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="UI\Controls\" />
 	  <Folder Include="UI\Tabs\" />
 	</ItemGroup>
 

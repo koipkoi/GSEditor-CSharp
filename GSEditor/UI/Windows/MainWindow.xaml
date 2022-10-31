@@ -112,7 +112,7 @@
                 Margin="2">
       <TabItem Header="todo 추가" />
     </TabControl>
-    <StatusBar Grid.Row="3" >
+    <StatusBar Grid.Row="3">
       <StatusBarItem Content="{Binding RomFilename}" />
     </StatusBar>
   </Grid>
