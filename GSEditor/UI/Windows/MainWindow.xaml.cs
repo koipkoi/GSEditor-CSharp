@@ -47,13 +47,32 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     };
 
     _pokegold.RomChanged += OnRomChanged;
+    _pokegold.DataChanged += OnDataChanged;
   }
 
   protected override void OnClosing(CancelEventArgs e)
   {
     base.OnClosing(e);
 
-    // todo 종료 확인 추가
+    if (_pokegold.IsChanged)
+    {
+      switch (MessageBox.Show("변경 내용을 저장하시겠습니까?", "알림", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+      {
+        case MessageBoxResult.Yes:
+          e.Cancel = false;
+          _pokegold.Write(_pokegold.Filename);
+          break;
+
+        case MessageBoxResult.No:
+          e.Cancel = false;
+          break;
+
+        default:
+        case MessageBoxResult.Cancel:
+          e.Cancel = true;
+          break;
+      }
+    }
   }
 
   protected override void OnClosed(EventArgs e)
@@ -61,6 +80,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     base.OnClosed(e);
 
     _pokegold.RomChanged -= OnRomChanged;
+    _pokegold.DataChanged -= OnDataChanged;
+  }
+
+  private void OnDataChanged(object? _, EventArgs __)
+  {
+    FileModifyState.Visibility = _pokegold.IsChanged ? Visibility.Visible : Visibility.Collapsed;
   }
 
   private void OnRomChanged(object? _, EventArgs __)

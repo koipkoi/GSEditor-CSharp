@@ -1,4 +1,6 @@
-﻿namespace GSEditor.Core;
+﻿using System.Windows;
+
+namespace GSEditor.Core;
 
 /// <summary>
 /// 간이 의존성 주입기
@@ -15,6 +17,10 @@ public sealed class Injector
 
   public static T Get<T>()
   {
+    // 디자인 타임 오류 예외처리
+    if (Application.Current is not App)
+      return Activator.CreateInstance<T>();
+
     return (T)_instances[typeof(T)]!;
   }
 

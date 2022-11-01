@@ -31,6 +31,7 @@ public sealed partial class Pokegold
       IsOpened = true;
       Filename = filename;
       RomChanged?.Invoke(this, EventArgs.Empty);
+      NotifyDataChanged(false);
 
       return true;
     }
@@ -62,7 +63,7 @@ public sealed partial class Pokegold
       _data[0x14f] = (byte)(globalChecksum & 0x00ff >> 0);
 
       File.WriteAllBytes(filename, _data);
-      IsChanged = false;
+      NotifyDataChanged(false);
 
       return true;
     }

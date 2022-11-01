@@ -3,13 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tabs="clr-namespace:GSEditor.UI.Tabs"
         mc:Ignorable="d"
         Title="GS 에디터"
-        MinHeight="450"
-        MinWidth="650"
-        Height="450"
-        Width="650"
-        ResizeMode="CanResizeWithGrip"
+        Height="560"
+        Width="720"
+        ResizeMode="CanMinimize"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
   <Grid>
     <Grid.RowDefinitions>
@@ -109,10 +108,19 @@
     </ToolBar>
     <TabControl Grid.Row="2"
                 Name="MainTab"
-                Margin="2">
-      <TabItem Header="todo 추가" />
+                Padding="0"
+                Margin="2"
+                IsEnabled="{Binding RomFileOpened}">
+      <TabItem Header="포켓몬">
+        <tabs:PokemonTab />
+      </TabItem>
     </TabControl>
     <StatusBar Grid.Row="3">
+      <StatusBarItem Name="FileModifyState"
+                     Padding="2, 0, 2, 0"
+                     Margin="0"
+                     Content="[변경됨]"
+                     Visibility="Collapsed" />
       <StatusBarItem Content="{Binding RomFilename}" />
     </StatusBar>
   </Grid>

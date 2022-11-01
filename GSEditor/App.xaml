@@ -6,7 +6,9 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="./Resources/Images.xaml" />
+        <ResourceDictionary Source="./UI/Styles/Border.xaml" />
         <ResourceDictionary Source="./UI/Styles/Image.xaml" />
+        <ResourceDictionary Source="./UI/Styles/Label.xaml" />
         <ResourceDictionary Source="./UI/Styles/ListBox.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
