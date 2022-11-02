@@ -29,6 +29,7 @@ public sealed class PokemonsConverter : IPokegoldConverter
     for (var i = 0; i < 251; i++)
     {
       pokegold.SetBytes(0x51bdf + (i * 32), pokegold.Pokemons[i].ToBytes());
+      pokegold.SetBytes(0x423ed + (i * 2), addr.ToGBPointer());
 
       foreach (var e in pokegold.Pokemons[i].Evolutions)
       {
