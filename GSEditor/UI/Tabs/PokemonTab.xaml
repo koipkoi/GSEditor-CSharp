@@ -29,233 +29,186 @@
                     VerticalScrollBarVisibility="Auto">
         <StackPanel Orientation="Vertical"
                     Margin="6, 6, 6, 56">
+
           <Label Margin="0, 0, 0, 8"
                  Style="{DynamicResource GSEditor_Style_Label_Section}">기본 정보 &amp; 능력치</Label>
           <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="4" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="4" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="4" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="4" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="4" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="4" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="4" />
-              <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="1.75*" />
               <ColumnDefinition Width="1.75*" />
               <ColumnDefinition Width="8" />
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="*" />
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"
-                   Grid.Column="0">번호：</Label>
-            <TextBox Grid.Row="0"
-                     Grid.Column="1"
-                     Grid.ColumnSpan="2"
-                     Name="NumberTextBox"
-                     IsEnabled="False" />
-            <Label Grid.Row="2"
-                   Grid.Column="0">이름：</Label>
-            <TextBox Grid.Row="2"
-                     Grid.Column="1"
-                     Grid.ColumnSpan="2"
-                     Name="NameTextBox"
-                     MaxLength="5"
-                     MaxLines="1"
-                     TextChanged="OnTextChanged" />
-            <Label Grid.Row="4"
-                   Grid.Column="0">성비율：</Label>
-            <ComboBox Grid.Row="4"
-                      Grid.Column="1"
-                      Grid.ColumnSpan="2"
-                      Name="GenderRateComboBox"
-                      FontFamily="consolas"
-                      SelectionChanged="OnComboBoxSelectionChanged">
-              <ComboBoxItem>0% (수컷)</ComboBoxItem>
-              <ComboBoxItem>12.5%</ComboBoxItem>
-              <ComboBoxItem>25%</ComboBoxItem>
-              <ComboBoxItem>37.5%</ComboBoxItem>
-              <ComboBoxItem>50% (중간)</ComboBoxItem>
-              <ComboBoxItem>62.5%</ComboBoxItem>
-              <ComboBoxItem>75%</ComboBoxItem>
-              <ComboBoxItem>87.5%</ComboBoxItem>
-              <ComboBoxItem>100% (암컷)</ComboBoxItem>
-              <ComboBoxItem>없음</ComboBoxItem>
-            </ComboBox>
-            <Label Grid.Row="6"
-                   Grid.Column="0">성장률：</Label>
-            <ComboBox Grid.Row="6"
-                      Grid.Column="1"
-                      Grid.ColumnSpan="2"
-                      Name="GrowthRateComboBox"
-                      FontFamily="consolas"
-                      SelectionChanged="OnComboBoxSelectionChanged">
-              <ComboBoxItem>느　 　림 (156 ~ 1,250,000)</ComboBoxItem>
-              <ComboBoxItem>중간 느림 (135 ~ 1,059,860)</ComboBoxItem>
-              <ComboBoxItem>약간 느림 (523 ~ 949,930)</ComboBoxItem>
-              <ComboBoxItem>약간 빠름 (313 ~ 849,970)</ComboBoxItem>
-              <ComboBoxItem>중간 빠름 (125 ~ 1,000,000)</ComboBoxItem>
-              <ComboBoxItem>빠　 　름 (100 ~ 800,000)</ComboBoxItem>
-            </ComboBox>
-            <Label Grid.Row="8"
-                   Grid.Column="0">타입：</Label>
-            <ComboBox Grid.Row="8"
-                      Grid.Column="1"
-                      Name="Type1ComboBox"
-                      SelectionChanged="OnComboBoxSelectionChanged" />
-            <ComboBox Grid.Row="8"
-                      Grid.Column="2"
-                      Name="Type2ComboBox"
-                      Margin="4, 0, 0, 0"
-                      SelectionChanged="OnComboBoxSelectionChanged" />
-            <Label Grid.Row="10"
-                   Grid.Column="0">소지품：</Label>
-            <ComboBox Grid.Row="10"
-                      Grid.Column="1"
-                      Name="Item2ComboBox"
-                      SelectionChanged="OnComboBoxSelectionChanged" />
-            <ComboBox Grid.Row="10"
-                      Grid.Column="2"
-                      Name="Item1ComboBox"
-                      Margin="4, 0, 0, 0"
-                      SelectionChanged="OnComboBoxSelectionChanged" />
-            <Label Grid.Row="12"
-                   Grid.Column="0">교배 그룹：</Label>
-            <ComboBox Grid.Row="12"
-                      Grid.Column="1"
-                      Name="EggGroup1ComboBox"
-                      SelectionChanged="OnComboBoxSelectionChanged">
-              <ComboBoxItem>없음</ComboBoxItem>
-              <ComboBoxItem>괴물</ComboBoxItem>
-              <ComboBoxItem>양서류</ComboBoxItem>
-              <ComboBoxItem>벌레</ComboBoxItem>
-              <ComboBoxItem>비행</ComboBoxItem>
-              <ComboBoxItem>땅</ComboBoxItem>
-              <ComboBoxItem>요정</ComboBoxItem>
-              <ComboBoxItem>식물</ComboBoxItem>
-              <ComboBoxItem>인간형</ComboBoxItem>
-              <ComboBoxItem>뱀</ComboBoxItem>
-              <ComboBoxItem>광물</ComboBoxItem>
-              <ComboBoxItem>불완전</ComboBoxItem>
-              <ComboBoxItem>물고기</ComboBoxItem>
-              <ComboBoxItem>메타몽</ComboBoxItem>
-              <ComboBoxItem>드래곤</ComboBoxItem>
-              <ComboBoxItem>불명</ComboBoxItem>
-            </ComboBox>
-            <ComboBox Grid.Row="12"
-                      Grid.Column="2"
-                      Name="EggGroup2ComboBox"
-                      Margin="4, 0, 0, 0"
-                      SelectionChanged="OnComboBoxSelectionChanged">
-              <ComboBoxItem>없음</ComboBoxItem>
-              <ComboBoxItem>괴물</ComboBoxItem>
-              <ComboBoxItem>양서류</ComboBoxItem>
-              <ComboBoxItem>벌레</ComboBoxItem>
-              <ComboBoxItem>비행</ComboBoxItem>
-              <ComboBoxItem>땅</ComboBoxItem>
-              <ComboBoxItem>요정</ComboBoxItem>
-              <ComboBoxItem>식물</ComboBoxItem>
-              <ComboBoxItem>인간형</ComboBoxItem>
-              <ComboBoxItem>뱀</ComboBoxItem>
-              <ComboBoxItem>광물</ComboBoxItem>
-              <ComboBoxItem>불완전</ComboBoxItem>
-              <ComboBoxItem>물고기</ComboBoxItem>
-              <ComboBoxItem>메타몽</ComboBoxItem>
-              <ComboBoxItem>드래곤</ComboBoxItem>
-              <ComboBoxItem>불명</ComboBoxItem> s
-            </ComboBox>
-            <Label Grid.Row="0"
-                   Grid.Column="4">HP：</Label>
-            <xctk:IntegerUpDown Grid.Row="0"
-                                Grid.Column="5"
-                                Grid.ColumnSpan="2"
-                                Name="HPUpDown"
-                                FormatString="N0"
-                                Increment="1"
-                                Maximum="255"
-                                ValueChanged="OnUpDownValueChanged" />
-            <Label Grid.Row="2"
-                   Grid.Column="4">공격：</Label>
-            <xctk:IntegerUpDown Grid.Row="2"
-                                Grid.Column="5"
-                                Grid.ColumnSpan="2"
-                                Name="AttackUpDown"
-                                FormatString="N0"
-                                Increment="1"
-                                Maximum="255"
-                                ValueChanged="OnUpDownValueChanged" />
-            <Label Grid.Row="4"
-                   Grid.Column="4">방어：</Label>
-            <xctk:IntegerUpDown Grid.Row="4"
-                                Grid.Column="5"
-                                Grid.ColumnSpan="2"
-                                Name="DefenceUpDown"
-                                FormatString="N0"
-                                Increment="1"
-                                Maximum="255"
-                                ValueChanged="OnUpDownValueChanged" />
-            <Label Grid.Row="6"
-                   Grid.Column="4">특공：</Label>
-            <xctk:IntegerUpDown Grid.Row="6"
-                                Grid.Column="5"
-                                Grid.ColumnSpan="2"
-                                Name="SpAttackUpDown"
-                                FormatString="N0"
-                                Increment="1"
-                                Maximum="255"
-                                ValueChanged="OnUpDownValueChanged" />
-            <Label Grid.Row="8"
-                   Grid.Column="4">특방：</Label>
-            <xctk:IntegerUpDown Grid.Row="8"
-                                Grid.Column="5"
-                                Grid.ColumnSpan="2"
-                                Name="SpDefenceUpDown"
-                                FormatString="N0"
-                                Increment="1"
-                                Maximum="255"
-                                ValueChanged="OnUpDownValueChanged" />
-            <Label Grid.Row="10"
-                   Grid.Column="4">스피드：</Label>
-            <xctk:IntegerUpDown Grid.Row="10"
-                                Grid.Column="5"
-                                Grid.ColumnSpan="2"
-                                Name="SpeedUpDown"
-                                FormatString="N0"
-                                Increment="1"
-                                Maximum="255"
-                                ValueChanged="OnUpDownValueChanged" />
-            <Label Grid.Row="12"
-                   Grid.Column="4">경험치：</Label>
-            <xctk:IntegerUpDown Grid.Row="12"
-                                Grid.Column="5"
-                                Grid.ColumnSpan="2"
-                                Name="EXPUpDown"
-                                FormatString="N0"
-                                Increment="1"
-                                Maximum="255"
-                                ValueChanged="OnUpDownValueChanged" />
-            <Label Grid.Row="14"
-                   Grid.Column="4">포획률：</Label>
-            <xctk:IntegerUpDown Grid.Row="14"
-                                Grid.Column="5"
-                                Grid.ColumnSpan="2"
-                                Name="CatchRateUpDown"
-                                FormatString="N0"
-                                Increment="1"
-                                Maximum="255"
-                                ValueChanged="OnUpDownValueChanged" />
+
+            <controls:FormPanel Grid.Column="0"
+                                Columns="1"
+                                ColumnSpacing="0"
+                                RowSpacing="4">
+              <Label>번호：</Label>
+              <TextBox Name="NumberTextBox"
+                       IsEnabled="False" />
+
+              <Label>이름：</Label>
+              <TextBox Name="NameTextBox"
+                       MaxLength="5"
+                       MaxLines="1"
+                       TextChanged="OnTextChanged" />
+
+              <Label>성비율：</Label>
+              <ComboBox Name="GenderRateComboBox"
+                        FontFamily="consolas"
+                        SelectionChanged="OnComboBoxSelectionChanged">
+                <ComboBoxItem>0% (수컷)</ComboBoxItem>
+                <ComboBoxItem>12.5%</ComboBoxItem>
+                <ComboBoxItem>25%</ComboBoxItem>
+                <ComboBoxItem>37.5%</ComboBoxItem>
+                <ComboBoxItem>50% (중간)</ComboBoxItem>
+                <ComboBoxItem>62.5%</ComboBoxItem>
+                <ComboBoxItem>75%</ComboBoxItem>
+                <ComboBoxItem>87.5%</ComboBoxItem>
+                <ComboBoxItem>100% (암컷)</ComboBoxItem>
+                <ComboBoxItem>없음</ComboBoxItem>
+              </ComboBox>
+
+              <Label>성장률：</Label>
+              <ComboBox Name="GrowthRateComboBox"
+                        FontFamily="consolas"
+                        SelectionChanged="OnComboBoxSelectionChanged">
+                <ComboBoxItem>느　 　림 (156 ~ 1,250,000)</ComboBoxItem>
+                <ComboBoxItem>중간 느림 (135 ~ 1,059,860)</ComboBoxItem>
+                <ComboBoxItem>약간 느림 (523 ~ 949,930)</ComboBoxItem>
+                <ComboBoxItem>약간 빠름 (313 ~ 849,970)</ComboBoxItem>
+                <ComboBoxItem>중간 빠름 (125 ~ 1,000,000)</ComboBoxItem>
+                <ComboBoxItem>빠　 　름 (100 ~ 800,000)</ComboBoxItem>
+              </ComboBox>
+
+              <Label>타입：</Label>
+              <UniformGrid Columns="2">
+                <ComboBox Name="Type1ComboBox"
+                          SelectionChanged="OnComboBoxSelectionChanged" />
+                <ComboBox Name="Type2ComboBox"
+                          Margin="4, 0, 0, 0"
+                          SelectionChanged="OnComboBoxSelectionChanged" />
+              </UniformGrid>
+
+              <Label>소지품：</Label>
+              <UniformGrid Columns="2">
+                <ComboBox Name="Item2ComboBox"
+                          SelectionChanged="OnComboBoxSelectionChanged" />
+                <ComboBox Name="Item1ComboBox"
+                          Margin="4, 0, 0, 0"
+                          SelectionChanged="OnComboBoxSelectionChanged" />
+              </UniformGrid>
+
+              <Label>교배 그룹：</Label>
+              <UniformGrid Columns="2">
+                <ComboBox Name="EggGroup1ComboBox"
+                          SelectionChanged="OnComboBoxSelectionChanged">
+                  <ComboBoxItem>없음</ComboBoxItem>
+                  <ComboBoxItem>괴물</ComboBoxItem>
+                  <ComboBoxItem>양서류</ComboBoxItem>
+                  <ComboBoxItem>벌레</ComboBoxItem>
+                  <ComboBoxItem>비행</ComboBoxItem>
+                  <ComboBoxItem>땅</ComboBoxItem>
+                  <ComboBoxItem>요정</ComboBoxItem>
+                  <ComboBoxItem>식물</ComboBoxItem>
+                  <ComboBoxItem>인간형</ComboBoxItem>
+                  <ComboBoxItem>뱀</ComboBoxItem>
+                  <ComboBoxItem>광물</ComboBoxItem>
+                  <ComboBoxItem>불완전</ComboBoxItem>
+                  <ComboBoxItem>물고기</ComboBoxItem>
+                  <ComboBoxItem>메타몽</ComboBoxItem>
+                  <ComboBoxItem>드래곤</ComboBoxItem>
+                  <ComboBoxItem>불명</ComboBoxItem>
+                </ComboBox>
+                <ComboBox Name="EggGroup2ComboBox"
+                          Margin="4, 0, 0, 0"
+                          SelectionChanged="OnComboBoxSelectionChanged">
+                  <ComboBoxItem>없음</ComboBoxItem>
+                  <ComboBoxItem>괴물</ComboBoxItem>
+                  <ComboBoxItem>양서류</ComboBoxItem>
+                  <ComboBoxItem>벌레</ComboBoxItem>
+                  <ComboBoxItem>비행</ComboBoxItem>
+                  <ComboBoxItem>땅</ComboBoxItem>
+                  <ComboBoxItem>요정</ComboBoxItem>
+                  <ComboBoxItem>식물</ComboBoxItem>
+                  <ComboBoxItem>인간형</ComboBoxItem>
+                  <ComboBoxItem>뱀</ComboBoxItem>
+                  <ComboBoxItem>광물</ComboBoxItem>
+                  <ComboBoxItem>불완전</ComboBoxItem>
+                  <ComboBoxItem>물고기</ComboBoxItem>
+                  <ComboBoxItem>메타몽</ComboBoxItem>
+                  <ComboBoxItem>드래곤</ComboBoxItem>
+                  <ComboBoxItem>불명</ComboBoxItem>
+                </ComboBox>
+              </UniformGrid>
+
+            </controls:FormPanel>
+
+            <controls:FormPanel Grid.Column="2"
+                                Columns="1"
+                                ColumnSpacing="0"
+                                RowSpacing="4">
+
+              <Label>HP：</Label>
+              <xctk:IntegerUpDown Name="HPUpDown"
+                                  FormatString="N0"
+                                  Increment="1"
+                                  Maximum="255"
+                                  ValueChanged="OnUpDownValueChanged" />
+
+              <Label>공격：</Label>
+              <xctk:IntegerUpDown Name="AttackUpDown"
+                                  FormatString="N0"
+                                  Increment="1"
+                                  Maximum="255"
+                                  ValueChanged="OnUpDownValueChanged" />
+
+              <Label>방어：</Label>
+              <xctk:IntegerUpDown Name="DefenceUpDown"
+                                  FormatString="N0"
+                                  Increment="1"
+                                  Maximum="255"
+                                  ValueChanged="OnUpDownValueChanged" />
+
+              <Label>특공：</Label>
+              <xctk:IntegerUpDown Name="SpAttackUpDown"
+                                  FormatString="N0"
+                                  Increment="1"
+                                  Maximum="255"
+                                  ValueChanged="OnUpDownValueChanged" />
+
+              <Label>특방：</Label>
+              <xctk:IntegerUpDown Name="SpDefenceUpDown"
+                                  FormatString="N0"
+                                  Increment="1"
+                                  Maximum="255"
+                                  ValueChanged="OnUpDownValueChanged" />
+
+              <Label>스피드：</Label>
+              <xctk:IntegerUpDown Name="SpeedUpDown"
+                                  FormatString="N0"
+                                  Increment="1"
+                                  Maximum="255"
+                                  ValueChanged="OnUpDownValueChanged" />
+
+              <Label>경험치：</Label>
+              <xctk:IntegerUpDown Name="EXPUpDown"
+                                  FormatString="N0"
+                                  Increment="1"
+                                  Maximum="255"
+                                  ValueChanged="OnUpDownValueChanged" />
+
+              <Label>포획률：</Label>
+              <xctk:IntegerUpDown Name="CatchRateUpDown"
+                                  FormatString="N0"
+                                  Increment="1"
+                                  Maximum="255"
+                                  ValueChanged="OnUpDownValueChanged" />
+
+            </controls:FormPanel>
+
           </Grid>
+
           <Label Margin="0, 16, 0, 8"
                  Style="{DynamicResource GSEditor_Style_Label_Section}">이미지 &amp; 색상</Label>
           <Grid Visibility="{ext:BooleanVisibility Name=IsUnown, True=Collapsed, False=Visible}">
