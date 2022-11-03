@@ -28,7 +28,7 @@
       <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Auto">
         <StackPanel Orientation="Vertical"
-                    Margin="6, 6, 6, 40">
+                    Margin="6, 6, 6, 56">
           <Label Margin="0, 0, 0, 8"
                  Style="{DynamicResource GSEditor_Style_Label_Section}">기본 정보 &amp; 능력치</Label>
           <Grid>
@@ -432,6 +432,7 @@
                       Height="128"
                       ItemsSource="{Binding Evolutions}"
                       Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
+                      SelectionChanged="OnEvolutionLearnMoveSelectionChanged"
                       MouseDoubleClick="OnEvolutionListViewDoubleClick"
                       PreviewMouseWheel="NestedScrollImplEvent">
               <ListView.View>
@@ -456,21 +457,29 @@
             </ListView>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
-              <Button Name="EvolutionRemoveButton"
-                      Padding="24, 4, 24, 4"
-                      Margin="4, 4, 0, 0"
-                      Click="OnEvolutionButtonClick">삭제</Button>
               <Button Name="EvolutionAddButton"
                       Padding="24, 4, 24, 4"
                       Margin="4, 4, 0, 0"
-                      Click="OnEvolutionButtonClick">추가</Button>
+                      Click="OnEvolutionButtonClick">추가...</Button>
+              <Button Name="EvolutionEditButton"
+                      Padding="24, 4, 24, 4"
+                      Margin="4, 4, 0, 0"
+                      IsEnabled="False"
+                      Click="OnEvolutionButtonClick">수정...</Button>
+              <Button Name="EvolutionRemoveButton"
+                      Padding="24, 4, 24, 4"
+                      Margin="4, 4, 0, 0"
+                      Foreground="Red"
+                      IsEnabled="False"
+                      Click="OnEvolutionButtonClick">삭제</Button>
             </StackPanel>
             <Label Margin="0, 4, 0, 4">배우는 기술</Label>
             <ListView Name="LearnMoveListView"
                       Height="128"
                       ItemsSource="{Binding Moves}"
                       Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
-                      MouseDoubleClick="OnEvolutionListViewDoubleClick"
+                      SelectionChanged="OnEvolutionLearnMoveSelectionChanged"
+                      MouseDoubleClick="OnLearnMoveListViewDoubleClick"
                       PreviewMouseWheel="NestedScrollImplEvent">
               <ListView.View>
                 <GridView>
@@ -490,14 +499,21 @@
             </ListView>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
-              <Button Name="LearnMoveRemoveButton"
-                      Padding="24, 4, 24, 4"
-                      Margin="4, 4, 0, 0"
-                      Click="OnLearnMoveButtonClick">삭제</Button>
               <Button Name="LearnMoveAddButton"
                       Padding="24, 4, 24, 4"
                       Margin="4, 4, 0, 0"
-                      Click="OnLearnMoveButtonClick">추가</Button>
+                      Click="OnLearnMoveButtonClick">추가...</Button>
+              <Button Name="LearnMoveEditButton"
+                      Padding="24, 4, 24, 4"
+                      Margin="4, 4, 0, 0"
+                      IsEnabled="False"
+                      Click="OnLearnMoveButtonClick">수정...</Button>
+              <Button Name="LearnMoveRemoveButton"
+                      Padding="24, 4, 24, 4"
+                      Margin="4, 4, 0, 0"
+                      Foreground="Red"
+                      IsEnabled="False"
+                      Click="OnLearnMoveButtonClick">삭제</Button>
             </StackPanel>
           </StackPanel>
         </StackPanel>

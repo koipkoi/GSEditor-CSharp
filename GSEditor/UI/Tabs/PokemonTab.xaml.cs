@@ -1,6 +1,7 @@
 ﻿using GSEditor.Core;
 using GSEditor.Core.PokegoldCore;
 using GSEditor.UI.Controls;
+using GSEditor.UI.Windows;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.IO;
@@ -99,16 +100,16 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
   {
     if (EvolutionListView.View is GridView evolutionGridView)
     {
-      var totallyWidth = EvolutionListView.ActualWidth - 72;
+      var totallyWidth = EvolutionListView.ActualWidth - 32;
       evolutionGridView.Columns[0].Width = totallyWidth * 0.2;
       evolutionGridView.Columns[1].Width = totallyWidth * 0.2;
-      evolutionGridView.Columns[2].Width = totallyWidth * 0.35;
-      evolutionGridView.Columns[3].Width = totallyWidth * 0.35;
+      evolutionGridView.Columns[2].Width = totallyWidth * 0.3;
+      evolutionGridView.Columns[3].Width = totallyWidth * 0.3;
     }
 
     if (LearnMoveListView.View is GridView learnMoveGridView)
     {
-      var totallyWidth = LearnMoveListView.ActualWidth - 72;
+      var totallyWidth = LearnMoveListView.ActualWidth - 32;
       learnMoveGridView.Columns[0].Width = totallyWidth * 0.3;
       learnMoveGridView.Columns[1].Width = totallyWidth * 0.7;
     }
@@ -167,68 +168,15 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
       WeightUpDown.Value = _pokegold.Pokedex[index].Weight / 10.0;
       DexDescriptionTextBox.Text = _pokegold.Pokedex[index].Description.Replace("[59]", "\n");
 
-      Evolutions.Clear();
-      foreach (var e in _pokegold.Pokemons[index].Evolutions)
-      {
-        Evolutions.Add(new()
-        {
-          Pokemon = _pokegold.Strings.PokemonNames[e.PokemonNo - 1],
-          Method = e.Type switch
-          {
-            1 => "레벨업",
-            2 => "도구",
-            3 => "통신교환",
-            4 => "친밀도",
-            5 => "능력치",
-            _ => "?",
-          },
-          Parameter1 = e.Type switch
-          {
-            1 => $"레벨 {e.Level} 달성",
-            2 => $"\"{_pokegold.Strings.ItemNames[e.ItemNo - 1]}\" 사용",
-            3 => e.ItemNo != 0xff ? $"\"{_pokegold.Strings.ItemNames[e.ItemNo - 1]}\" 지닌 상태" : "-",
-            4 => $"친밀도 MAX",
-            5 => $"레벨 {e.Level - 1} 달성",
-            _ => "-",
-          },
-          Parameter2 = e.Type switch
-          {
-            4 => e.Affection switch
-            {
-              1 => "레벨업",
-              2 => "낮에 레벨업",
-              3 => "밤에 레벨업",
-              _ => "?",
-            },
-            5 => e.BaseStats switch
-            {
-              1 => "공격이 방어보다 높음",
-              2 => "방어가 공격보다 높음",
-              3 => "공격과 방어가 같음",
-              _ => "?",
-            },
-            _ => "-",
-          },
-        });
-      }
-
-      Moves.Clear();
-      foreach (var e in _pokegold.Pokemons[index].LearnMoves)
-      {
-        Moves.Add(new()
-        {
-          Level = $"{e.Level}",
-          Move = $"{_pokegold.Strings.MoveNames[e.MoveNo]}",
-        });
-      }
-
       IsPokemonListSelected = true;
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPokemonListSelected)));
 
       IsUnown = index == 200;
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUnown)));
 
+      UpdateEvolutionMoves();
       UpdatePokemonImages();
+
       _selfChanged = false;
     }
   }
@@ -296,6 +244,67 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
     ShinyColor1.SelectedColor = _pokegold.Colors.ShinyPokemons[index][0].ToWPFColor();
     ShinyColor2.SelectedColor = _pokegold.Colors.ShinyPokemons[index][1].ToWPFColor();
+
+    _selfChanged = false;
+  }
+
+  private void UpdateEvolutionMoves()
+  {
+    _selfChanged = true;
+
+    var index = PokemonListBox.SelectedIndex;
+
+    Evolutions.Clear();
+    foreach (var e in _pokegold.Pokemons[index].Evolutions)
+    {
+      Evolutions.Add(new()
+      {
+        Pokemon = _pokegold.Strings.PokemonNames[e.PokemonNo - 1],
+        Method = e.Type switch
+        {
+          1 or 5 => "레벨업",
+          2 => "도구",
+          3 => "통신교환",
+          4 => "친밀도 MAX",
+          _ => "?",
+        },
+        Parameter1 = e.Type switch
+        {
+          1 or 5 => $"레벨 {e.Level} 달성",
+          2 => $"\"{_pokegold.Strings.ItemNames[e.ItemNo - 1]}\" 사용",
+          3 => e.ItemNo != 0xff ? $"\"{_pokegold.Strings.ItemNames[e.ItemNo - 1]}\" 지닌 상태" : "-",
+          4 => e.Affection switch
+          {
+            1 => "레벨업",
+            2 => "낮에 레벨업",
+            3 => "밤에 레벨업",
+            _ => "?",
+          },
+          _ => "-",
+        },
+        Parameter2 = e.Type switch
+        {
+          5 => e.BaseStats switch
+          {
+            1 => "공격이 방어보다 높음",
+            2 => "방어가 공격보다 높음",
+            3 => "공격과 방어가 같음",
+            _ => "?",
+          },
+          _ => "-",
+        },
+      });
+    }
+
+    Moves.Clear();
+    foreach (var e in _pokegold.Pokemons[index].LearnMoves)
+    {
+      Moves.Add(new()
+      {
+        Level = $"{e.Level}",
+        Move = $"{_pokegold.Strings.MoveNames[e.MoveNo]}",
+      });
+    }
 
     _selfChanged = false;
   }
@@ -490,12 +499,17 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
     }
   }
 
+  private void OnEvolutionLearnMoveSelectionChanged(object _, SelectionChangedEventArgs __)
+  {
+    EvolutionEditButton.IsEnabled = EvolutionListView.SelectedIndex != -1;
+    EvolutionRemoveButton.IsEnabled = EvolutionListView.SelectedIndex != -1;
+    LearnMoveEditButton.IsEnabled = LearnMoveListView.SelectedIndex != -1;
+    LearnMoveRemoveButton.IsEnabled = LearnMoveListView.SelectedIndex != -1;
+  }
+
   private void OnEvolutionListViewDoubleClick(object _, MouseButtonEventArgs e)
   {
-    if (e.OriginalSource is FrameworkElement element && element.DataContext is EvolutionItem item)
-    {
-      // todo 진화 항목 편집 추가
-    }
+    OnEvolutionEdit();
   }
 
   private void OnEvolutionButtonClick(object sender, RoutedEventArgs __)
@@ -504,22 +518,60 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
     {
       if (button.Name == nameof(EvolutionAddButton))
       {
-        // todo '항목 추가' 추가
+        var result = EvolutionDialog.Show(this);
+        if (result != null)
+        {
+          var index = PokemonListBox.SelectedIndex;
+          _pokegold.Pokemons[index].Evolutions.Add(result);
+          _pokegold.NotifyDataChanged();
+          UpdateEvolutionMoves();
+        }
+        return;
+      }
+
+      if (button.Name == nameof(EvolutionEditButton))
+      {
+        OnEvolutionEdit();
+        return;
       }
 
       if (button.Name == nameof(EvolutionRemoveButton))
       {
-        // todo '삭제' 추가
+        var index = EvolutionListView.SelectedIndex;
+        if (index != -1)
+        {
+          if (MessageBox.Show("정말로 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+            return;
+
+          _pokegold.Pokemons[PokemonListBox.SelectedIndex].Evolutions.RemoveAt(index);
+          _pokegold.NotifyDataChanged();
+          UpdateEvolutionMoves();
+        }
+        return;
+      }
+    }
+  }
+
+  private void OnEvolutionEdit()
+  {
+    var index = PokemonListBox.SelectedIndex;
+    var evIndex = EvolutionListView.SelectedIndex;
+
+    if (evIndex != -1)
+    {
+      var result = EvolutionDialog.Show(this, _pokegold.Pokemons[index].Evolutions[evIndex]);
+      if (result != null)
+      {
+        _pokegold.Pokemons[index].Evolutions[evIndex] = result;
+        _pokegold.NotifyDataChanged();
+        UpdateEvolutionMoves();
       }
     }
   }
 
   private void OnLearnMoveListViewDoubleClick(object _, MouseButtonEventArgs e)
   {
-    if (e.OriginalSource is FrameworkElement element && element.DataContext is LearnMoveItem item)
-    {
-      // todo 진화 항목 편집 추가
-    }
+    OnLearnMoveEdit();
   }
 
   private void OnLearnMoveButtonClick(object sender, RoutedEventArgs __)
@@ -528,12 +580,53 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
     {
       if (button.Name == nameof(LearnMoveAddButton))
       {
-        // todo '항목 추가' 추가
+        var result = LearnMoveDialog.Show(this);
+        if (result != null)
+        {
+          var index = PokemonListBox.SelectedIndex;
+          _pokegold.Pokemons[index].LearnMoves.Add(result);
+          _pokegold.NotifyDataChanged();
+          UpdateEvolutionMoves();
+        }
+        return;
+      }
+
+      if (button.Name == nameof(LearnMoveEditButton))
+      {
+        OnLearnMoveEdit();
+        return;
       }
 
       if (button.Name == nameof(LearnMoveRemoveButton))
       {
-        // todo '삭제' 추가
+        var index = LearnMoveListView.SelectedIndex;
+        if (index != -1)
+        {
+          if (MessageBox.Show("정말로 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+            return;
+
+          _pokegold.Pokemons[PokemonListBox.SelectedIndex].LearnMoves.RemoveAt(index);
+          _pokegold.NotifyDataChanged();
+          UpdateEvolutionMoves();
+        }
+        return;
+      }
+    }
+  }
+
+  private void OnLearnMoveEdit()
+  {
+    var index = PokemonListBox.SelectedIndex;
+    var lmIndex = LearnMoveListView.SelectedIndex;
+
+    if (lmIndex != -1)
+    {
+      var result = LearnMoveDialog.Show(this, _pokegold.Pokemons[index].LearnMoves[lmIndex]);
+      if (result != null)
+      {
+        _pokegold.Pokemons[index].LearnMoves[lmIndex] = result;
+        _pokegold.NotifyDataChanged();
+        UpdateEvolutionMoves();
       }
     }
   }

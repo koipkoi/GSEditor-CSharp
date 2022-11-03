@@ -1,0 +1,215 @@
+﻿<Window x:Class="GSEditor.UI.Windows.EvolutionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Height="320"
+        Width="300"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="SingleBorderWindow"
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+
+  <Grid>
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <TabControl Grid.Row="0"
+                Name="MainTab"
+                Margin="4">
+
+      <TabItem Header="레벨업">
+        <Grid Margin="8"
+              VerticalAlignment="Center">
+
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="4" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Label Grid.Row="0"
+                 Grid.Column="0">레벨</Label>
+          <Label Grid.Row="2"
+                 Grid.Column="0">포켓몬</Label>
+
+          <xctk:IntegerUpDown Grid.Row="0"
+                              Grid.Column="2"
+                              x:Name="StatsLevel"
+                              Increment="1"
+                              Minimum="0"
+                              Maximum="100"
+                              Value="5" />
+          <ComboBox  Grid.Row="2"
+                     Grid.Column="2"
+                     Name="StatsPokemonComboBox"
+                     SelectionChanged="OnPokemonComboBoxSelectionChanged" />
+
+          <StackPanel Grid.Row="3"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      Margin="0, 8, 0, 0"
+                      Orientation="Vertical">
+            <Label Style="{DynamicResource GSEditor_Style_Label_Section}">추가 조건</Label>
+            <RadioButton Name="Stats0"
+                         GroupName="Stats"
+                         Margin="0, 4, 0, 0">없음</RadioButton>
+            <RadioButton Name="Stats1"
+                         GroupName="Stats"
+                         Margin="0, 4, 0, 0">공격이 방어보다 높아야 함</RadioButton>
+            <RadioButton Name="Stats2"
+                         GroupName="Stats"
+                         Margin="0, 4, 0, 0">방어가 공격보다 높아야 함</RadioButton>
+            <RadioButton Name="Stats3"
+                         GroupName="Stats"
+                         Margin="0, 4, 0, 0">공격과 방어가 같아야 함</RadioButton>
+          </StackPanel>
+
+        </Grid>
+
+      </TabItem>
+
+      <TabItem Header="도구">
+        <Grid Margin="8"
+              VerticalAlignment="Center">
+
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="4" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Label Grid.Row="0"
+                 Grid.Column="0">도구</Label>
+          <Label Grid.Row="2"
+                 Grid.Column="0">포켓몬</Label>
+
+          <ComboBox  Grid.Row="0"
+                     Grid.Column="2"
+                     Name="ItemItemComboBox" />
+          <ComboBox  Grid.Row="2"
+                     Grid.Column="2"
+                     Name="ItemPokemonComboBox"
+                     SelectionChanged="OnPokemonComboBoxSelectionChanged" />
+
+        </Grid>
+
+      </TabItem>
+
+      <TabItem Header="통신교환">
+        <Grid Margin="8"
+              VerticalAlignment="Center">
+
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="4" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="4" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Label Grid.Row="0"
+                 Grid.Column="0">포켓몬</Label>
+          <Label Grid.Row="4"
+                 Grid.Column="0"
+                 IsEnabled="{Binding ElementName=ExchangeNeedItemCheckBox, Path=IsChecked}">도구</Label>
+
+          <CheckBox Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Name="ExchangeNeedItemCheckBox"
+                    Margin="0, 8, 0, 0">도구를 지닌 상태로 진화</CheckBox>
+
+          <ComboBox  Grid.Row="0"
+                     Grid.Column="2"
+                     Name="ExchangePokemonComboBox"
+                     SelectionChanged="OnPokemonComboBoxSelectionChanged" />
+          <ComboBox  Grid.Row="4"
+                     Grid.Column="2"
+                     IsEnabled="{Binding ElementName=ExchangeNeedItemCheckBox, Path=IsChecked}"
+                     Name="ExchangeItemComboBox" />
+
+        </Grid>
+
+      </TabItem>
+
+      <TabItem Header="친밀도">
+        <Grid Margin="8"
+              VerticalAlignment="Center">
+
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Label Grid.Row="0"
+                 Grid.Column="0">포켓몬</Label>
+
+          <ComboBox  Grid.Row="0"
+                     Grid.Column="2"
+                     Name="AffectionPokemonComboBox"
+                     SelectionChanged="OnPokemonComboBoxSelectionChanged" />
+
+          <StackPanel Grid.Row="1"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      Margin="0, 8, 0, 0"
+                      Orientation="Vertical">
+            <RadioButton Name="Affection1"
+                         GroupName="Affection"
+                         Margin="0, 4, 0, 0">친밀도 MAX + 레벨업</RadioButton>
+            <RadioButton Name="Affection2"
+                         GroupName="Affection"
+                         Margin="0, 4, 0, 0">친밀도 MAX + 낮에 레벨업</RadioButton>
+            <RadioButton Name="Affection3"
+                         GroupName="Affection"
+                         Margin="0, 4, 0, 0">친밀도 MAX + 밤에 레벨업</RadioButton>
+          </StackPanel>
+
+        </Grid>
+
+      </TabItem>
+
+    </TabControl>
+
+    <StackPanel Grid.Row="1"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+      <Button Margin="0, 0, 4, 4"
+              Padding="24, 4, 24, 4"
+              Click="OnConfirmClick">확인</Button>
+      <Button Margin="0, 0, 4, 4"
+              Padding="24, 4, 24, 4"
+              Click="OnCancelClick">취소</Button>
+    </StackPanel>
+
+  </Grid>
+
+</Window>
