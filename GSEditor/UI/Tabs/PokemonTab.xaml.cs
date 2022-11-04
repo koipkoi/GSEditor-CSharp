@@ -33,67 +33,47 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
     DataContext = this;
 
-    // 롬파일 로딩 갱신
-    _pokegold.RegisterRomChanged(this, (_, _) =>
+    Loaded += (_, __) => OnNeedTabUpdate();
+    _pokegold.RegisterRomChanged(this, (_, _) => OnNeedTabUpdate());
+  }
+
+  private void OnNeedTabUpdate()
+  {
+    _selfChanged = true;
+
+    var previousSelection = PokemonListBox.SelectedIndex;
+
+    PokemonListBox.Items.Clear();
+    for (var i = 0; i < 251; i++)
     {
-      _selfChanged = true;
-
-      var previousSelection = PokemonListBox.SelectedIndex;
-
-      PokemonListBox.Items.Clear();
-      for (var i = 0; i < 251; i++)
+      if (i < _pokegold.Strings.PokemonNames.Count)
       {
         var e = _pokegold.Strings.PokemonNames[i];
         PokemonListBox.Items.Add(e);
       }
+    }
 
-      Type1ComboBox.Items.Clear();
-      Type2ComboBox.Items.Clear();
-      foreach (var e in _pokegold.Strings.TypeNames)
-      {
-        Type1ComboBox.Items.Add(e);
-        Type2ComboBox.Items.Add(e);
-      }
-
-      Item1ComboBox.Items.Clear();
-      Item2ComboBox.Items.Clear();
-      Item1ComboBox.Items.Add("없음");
-      Item2ComboBox.Items.Add("없음");
-      foreach (var e in _pokegold.Strings.ItemNames)
-      {
-        Item1ComboBox.Items.Add(e);
-        Item2ComboBox.Items.Add(e);
-      }
-
-      _selfChanged = false;
-
-      PokemonListBox.SelectedIndex = previousSelection;
-    });
-
-    // 포켓몬 이름 변경 갱신
-    _pokegold.RegisterPokemonChanged(this, (_, index) =>
+    Type1ComboBox.Items.Clear();
+    Type2ComboBox.Items.Clear();
+    foreach (var e in _pokegold.Strings.TypeNames)
     {
-      _selfChanged = true;
+      Type1ComboBox.Items.Add(e);
+      Type2ComboBox.Items.Add(e);
+    }
 
-      PokemonListBox.Items[index] = _pokegold.Strings.PokemonNames[index];
-      PokemonListBox.SelectedIndex = index;
-
-      _selfChanged = false;
-    });
-
-    // 타입명 변경 갱신
-    _pokegold.RegisterTypeChanged(this, (_, index) =>
+    Item1ComboBox.Items.Clear();
+    Item2ComboBox.Items.Clear();
+    Item1ComboBox.Items.Add("없음");
+    Item2ComboBox.Items.Add("없음");
+    foreach (var e in _pokegold.Strings.ItemNames)
     {
-      Type1ComboBox.Items[index] = _pokegold.Strings.TypeNames[index];
-      Type2ComboBox.Items[index] = _pokegold.Strings.TypeNames[index];
-    });
+      Item1ComboBox.Items.Add(e);
+      Item2ComboBox.Items.Add(e);
+    }
 
-    // 아이템 변경 갱신
-    _pokegold.RegisterItemChanged(this, (_, index) =>
-    {
-      Item1ComboBox.Items[index + 1] = _pokegold.Strings.ItemNames[index];
-      Item2ComboBox.Items[index + 1] = _pokegold.Strings.ItemNames[index];
-    });
+    _selfChanged = false;
+
+    PokemonListBox.SelectedIndex = previousSelection;
   }
 
   private void OnSizeChanged(object _, SizeChangedEventArgs __)
@@ -316,8 +296,11 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
     if (!_selfChanged && NameTextBox.Text.TryTextEncode(out var _))
     {
+      _selfChanged = true;
       _pokegold.Strings.PokemonNames[index] = NameTextBox.Text;
-      _pokegold.NotifyPokemonChanged(index);
+      PokemonListBox.Items[index] = _pokegold.Strings.PokemonNames[index];
+      PokemonListBox.SelectedIndex = index;
+      _selfChanged = false;
       changed = true;
     }
 
@@ -335,9 +318,10 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
     }
     DexDescriptionLabel.Content = $"설명 ({maxLength}/18)：";
 
-    if (!_selfChanged && DexDescriptionTextBox.Text.TryTextEncode(out var _))
+    var realDescription = DexDescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
+    if (!_selfChanged && realDescription.TryTextEncode(out var _))
     {
-      _pokegold.Pokedex[index].Description = DexDescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
+      _pokegold.Pokedex[index].Description = realDescription;
       changed = true;
     }
 

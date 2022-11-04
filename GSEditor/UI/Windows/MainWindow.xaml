@@ -11,12 +11,14 @@
         ResizeMode="CanMinimize"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
   <Grid>
+
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
+
     <Menu Grid.Row="0">
       <MenuItem Header="파일(_F)">
         <MenuItem Header="열기(_O)..."
@@ -73,6 +75,7 @@
         </MenuItem>
       </MenuItem>
     </Menu>
+
     <ToolBar Grid.Row="1"
              ToolBarTray.IsLocked="True"
              Name="MainToolBar"
@@ -106,15 +109,23 @@
                Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
       </Button>
     </ToolBar>
+
     <TabControl Grid.Row="2"
-                Name="MainTab"
+                x:Name="MainTab"
                 Padding="0"
                 Margin="2"
                 IsEnabled="{Binding RomFileOpened}">
+
       <TabItem Header="포켓몬">
         <tabs:PokemonTab />
       </TabItem>
+
+      <TabItem Header="아이템">
+        <tabs:ItemsTab />
+      </TabItem>
+
     </TabControl>
+
     <StatusBar Grid.Row="3">
       <StatusBarItem Name="FileModifyState"
                      Padding="2, 0, 2, 0"
@@ -123,5 +134,7 @@
                      Visibility="Collapsed" />
       <StatusBarItem Content="{Binding RomFilename}" />
     </StatusBar>
+
   </Grid>
+
 </Window>

@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="GSEditor.UI.Tabs.ItemsTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:GSEditor.UI.Controls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d"
+             d:DesignHeight="1280"
+             d:DesignWidth="650">
+  <Grid>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <ListBox Grid.Column="0"
+             Name="ItemsListBox"
+             Width="144"
+             Margin="4"
+             Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
+             SelectionChanged="OnItemsSelectionChanged" />
+
+    <Border Grid.Column="1"
+            Margin="0, 4, 4, 4"
+            IsEnabled="{Binding IsListSelected}"
+            Style="{DynamicResource GSEditor_Style_Border_Default}">
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical"
+                    Margin="6, 6, 6, 56">
+
+          <Label Margin="0, 0, 0, 8"
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">기본 정보</Label>
+
+          <controls:FormPanel Width="240"
+                              Columns="1"
+                              ColumnSpacing="0"
+                              RowSpacing="4"
+                              HorizontalAlignment="Left">
+
+            <Label>이름：</Label>
+            <TextBox Name="NameTextBox"
+                     MaxLength="12"
+                     TextChanged="OnTextBoxTextChanged" />
+
+            <Label>가격：</Label>
+            <xctk:IntegerUpDown Name="PriceUpDown"
+                                Increment="1"
+                                Minimum="0"
+                                Maximum="65535"
+                                Value="0"
+                                ValueChanged="OnUpDownValueChaged" />
+
+            <Label>가방 분류：</Label>
+            <ComboBox Name="GroupComboBox"
+                      SelectedIndex="0"
+                      SelectionChanged="OnComboBoxSelectionChanged">
+              <ComboBoxItem>없음</ComboBoxItem>
+              <ComboBoxItem>도구</ComboBoxItem>
+              <ComboBoxItem>중요한</ComboBoxItem>
+              <ComboBoxItem>볼</ComboBoxItem>
+              <ComboBoxItem>기술머신</ComboBoxItem>
+            </ComboBox>
+
+          </controls:FormPanel>
+
+          <Label Name="DescriptionLabel"
+                 Margin="0, 8, 0, 4">설명 (0/18)：</Label>
+          <TextBox Name="DescriptionTextBox"
+                   MinLines="2"
+                   MaxLines="2"
+                   AcceptsReturn="True"
+                   FontSize="11pt"
+                   FontFamily="consolas"
+                   TextChanged="OnTextBoxTextChanged" />
+
+          <Label Margin="0, 16, 0, 8"
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">메뉴 설정</Label>
+          <controls:FormPanel Width="240"
+                              Columns="1"
+                              ColumnSpacing="0"
+                              RowSpacing="4"
+                              HorizontalAlignment="Left">
+
+            <Label>필드：</Label>
+            <ComboBox Name="FieldMenuComboBox"
+                      SelectionChanged="OnComboBoxSelectionChanged">
+              <ComboBoxItem>사용할 수 없음</ComboBoxItem>
+              <ComboBoxItem>?</ComboBoxItem>
+              <ComboBoxItem>?</ComboBoxItem>
+              <ComboBoxItem>?</ComboBoxItem>
+              <ComboBoxItem>사용만 함</ComboBoxItem>
+              <ComboBoxItem>포켓몬에게 사용</ComboBoxItem>
+              <ComboBoxItem>사용할때 필드로 돌아감</ComboBoxItem>
+            </ComboBox>
+
+            <Label>배틀：</Label>
+            <ComboBox Name="BattleMenuComboBox"
+                      SelectionChanged="OnComboBoxSelectionChanged">
+              <ComboBoxItem>사용할 수 없음</ComboBoxItem>
+              <ComboBoxItem>?</ComboBoxItem>
+              <ComboBoxItem>?</ComboBoxItem>
+              <ComboBoxItem>?</ComboBoxItem>
+              <ComboBoxItem>사용만 함</ComboBoxItem>
+              <ComboBoxItem>포켓몬에게 사용</ComboBoxItem>
+              <ComboBoxItem>사용할때 필드로 돌아감</ComboBoxItem>
+            </ComboBox>
+
+          </controls:FormPanel>
+
+          <Label Margin="0, 16, 0, 8"
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">기타 설정</Label>
+          <controls:FormPanel Columns="1"
+                              ColumnSpacing="0"
+                              Margin="0, 0, 128, 0"
+                              RowSpacing="4">
+
+            <Label>지닌 도구 효과：</Label>
+            <ComboBox Name="GiveEffectComboBox"
+                      SelectionChanged="OnComboBoxSelectionChanged" />
+
+            <Label>판매·등록 설정：</Label>
+            <ComboBox Name="RegisterAndSellComboBox"
+                      SelectionChanged="OnComboBoxSelectionChanged">
+              <ComboBoxItem>없음</ComboBoxItem>
+              <ComboBoxItem>등록 불가</ComboBoxItem>
+              <ComboBoxItem>판매 불가</ComboBoxItem>
+              <ComboBoxItem>판매·등록 불가</ComboBoxItem>
+            </ComboBox>
+
+            <Label ToolTip="회복량, 특수한 상황에 쓰입니다.">아이템 값：</Label>
+            <xctk:ByteUpDown Name="ItemParameterUpDown"
+                             Increment="1"
+                             Minimum="0"
+                             Maximum="255"
+                             Value="0"
+                             ValueChanged="OnUpDownValueChaged" />
+
+          </controls:FormPanel>
+
+        </StackPanel>
+      </ScrollViewer>
+    </Border>
+
+  </Grid>
+</UserControl>
