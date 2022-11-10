@@ -24,6 +24,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\app_icon_64.png" />
 	  <None Remove="Resources\Images\if_database.bmp" />
 	  <None Remove="Resources\Images\if_database.png" />
 	  <None Remove="Resources\Images\if_exit.bmp" />
@@ -71,6 +72,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
+	  <PackageReference Include="MdXaml" Version="1.16.2" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	  <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
 	  <PackageReference Include="PresentationTheme.Aero" Version="0.6.4" />
@@ -82,6 +84,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Resource Include="Resources\Images\app_icon_64.png" />
 	  <Resource Include="Resources\Images\if_database.png" />
 	  <Resource Include="Resources\Images\if_exit.png" />
 	  <Resource Include="Resources\Images\if_folder.png" />

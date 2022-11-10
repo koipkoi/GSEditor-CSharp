@@ -153,7 +153,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
               break;
 
             case nameof(AppInformationMenuItem):
-              // todo 앱 정보 추가
+              AppInformationDialog.Show(this);
               break;
           }
         }

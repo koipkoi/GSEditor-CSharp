@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ImageSource x:Key="GSEditor_Icon_AppIcon_64">./Images/app_icon_64.png</ImageSource>
   <ImageSource x:Key="GSEditor_Icon_Database">./Images/if_database.png</ImageSource>
   <ImageSource x:Key="GSEditor_Icon_Exit">./Images/if_exit.png</ImageSource>
   <ImageSource x:Key="GSEditor_Icon_Folder">./Images/if_folder.png</ImageSource>
