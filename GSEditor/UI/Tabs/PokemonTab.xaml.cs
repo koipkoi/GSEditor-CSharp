@@ -282,7 +282,7 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
       Moves.Add(new()
       {
         Level = $"{e.Level}",
-        Move = $"{_pokegold.Strings.MoveNames[e.MoveNo]}",
+        Move = $"{_pokegold.Strings.MoveNames[e.MoveNo - 1]}",
       });
     }
 
@@ -291,7 +291,6 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
   private void OnTextChanged(object _, TextChangedEventArgs __)
   {
-    var changed = false;
     var index = PokemonListBox.SelectedIndex;
 
     if (!_selfChanged && NameTextBox.Text.TryTextEncode(out var _))
@@ -301,13 +300,13 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
       PokemonListBox.Items[index] = _pokegold.Strings.PokemonNames[index];
       PokemonListBox.SelectedIndex = index;
       _selfChanged = false;
-      changed = true;
+      _pokegold.NotifyDataChanged();
     }
 
     if (!_selfChanged && SpecificNameTextBox.Text.TryTextEncode(out var _))
     {
       _pokegold.Pokedex[index].SpecificName = SpecificNameTextBox.Text;
-      changed = true;
+      _pokegold.NotifyDataChanged();
     }
 
     var maxLength = 0;
@@ -322,11 +321,8 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
     if (!_selfChanged && realDescription.TryTextEncode(out var _))
     {
       _pokegold.Pokedex[index].Description = realDescription;
-      changed = true;
-    }
-
-    if (changed)
       _pokegold.NotifyDataChanged();
+    }
   }
 
   private void OnComboBoxSelectionChanged(object _, SelectionChangedEventArgs __)

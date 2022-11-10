@@ -72,7 +72,6 @@ public partial class ItemsTab : UserControl, INotifyPropertyChanged
 
   private void OnTextBoxTextChanged(object _, TextChangedEventArgs __)
   {
-    var changed = false;
     var index = ItemsListBox.SelectedIndex;
 
     if (!_selfChanged && NameTextBox.Text.TryTextEncode(out var _))
@@ -83,7 +82,7 @@ public partial class ItemsTab : UserControl, INotifyPropertyChanged
       ItemsListBox.Items[index] = _pokegold.Strings.ItemNames[index];
       ItemsListBox.SelectedIndex = previousSelection;
       _selfChanged = false;
-      changed = true;
+      _pokegold.NotifyDataChanged();
     }
 
     var maxLength = 0;
@@ -98,11 +97,8 @@ public partial class ItemsTab : UserControl, INotifyPropertyChanged
     if (!_selfChanged && realDescription.TryTextEncode(out var _))
     {
       _pokegold.Strings.ItemDescriptions[index] = realDescription;
-      changed = true;
-    }
-
-    if (changed)
       _pokegold.NotifyDataChanged();
+    }
   }
 
   private void OnUpDownValueChaged(object _, RoutedPropertyChangedEventArgs<object> __)
