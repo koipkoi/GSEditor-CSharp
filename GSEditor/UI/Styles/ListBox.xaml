@@ -1,7 +1,12 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary x:Class="GSEditor.UI.Styles.ListBox"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Style x:Key="GSEditor_Style_ListBox_Colored"
          TargetType="ListBox">
+    <EventSetter Event="PreviewMouseRightButtonDown"
+                 Handler="OnListBoxPreviewMouseRightButtonDown" />
+    <EventSetter Event="ContextMenuOpening"
+                 Handler="OnListBoxContextMenuOpening" />
     <Setter Property="AlternationCount"
             Value="2" />
     <Setter Property="ItemContainerStyle">

@@ -20,6 +20,7 @@ public partial class AppInformationDialog : Window
     "* 포켓몬 이미지, 팔레트 편집 및 추출 추가\n" +
     "* 롬 파일 헤더 체크섬이 기록되도록 업데이트\n" +
     "* 기술 편집 탭 추가\n" +
+    "* 목록 검색 기능 추가\n" +
     "  \n" +
     "  \n" +
     "### 1.1.4\n" +
