@@ -124,6 +124,10 @@
         <tabs:ItemsTab />
       </TabItem>
 
+      <TabItem Header="기술">
+        <tabs:MovesTab />
+      </TabItem>
+
     </TabControl>
 
     <StatusBar Grid.Row="3">

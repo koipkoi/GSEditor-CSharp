@@ -1,0 +1,135 @@
+﻿<UserControl x:Class="GSEditor.UI.Tabs.MovesTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:GSEditor.UI.Controls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d"
+             d:DesignHeight="1280"
+             d:DesignWidth="650">
+  <Grid>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <ListBox Grid.Column="0"
+             Name="MovesListBox"
+             Width="144"
+             Margin="4"
+             Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
+             SelectionChanged="OnMovesListBoxSelectionChanged" />
+
+    <Border Grid.Column="1"
+            Margin="0, 4, 4, 4"
+            IsEnabled="{Binding IsListSelected}"
+            Style="{DynamicResource GSEditor_Style_Border_Default}">
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical"
+                    Margin="6, 6, 6, 56">
+
+          <Label Margin="0, 0, 0, 8"
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">기본 정보</Label>
+
+          <controls:FormPanel Width="240"
+                              Columns="1"
+                              ColumnSpacing="0"
+                              RowSpacing="4"
+                              HorizontalAlignment="Left">
+
+            <Label>이름：</Label>
+            <TextBox Name="NameTextBox"
+                     MaxLength="7"
+                     TextChanged="OnTextBoxTextChanged" />
+
+            <Label>타입：</Label>
+            <ComboBox Name="TypeComboBox"
+                      SelectedIndex="0"
+                      SelectionChanged="OnComboBoxSelectionChanged" />
+
+            <Label>위력：</Label>
+            <xctk:IntegerUpDown Name="PowerUpDown"
+                                Increment="1"
+                                Minimum="0"
+                                Maximum="255"
+                                Value="0"
+                                ValueChanged="OnUpDownValueChaged" />
+
+            <Label>명중률：</Label>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <xctk:IntegerUpDown Name="AccuracyUpDown"
+                                  Increment="1"
+                                  Minimum="0"
+                                  Maximum="255"
+                                  Value="0"
+                                  ValueChanged="OnUpDownValueChaged" />
+              <Label Grid.Column="1"
+                     Name="AccuracyPercentageLabel"
+                     MinWidth="50">100.00%</Label>
+            </Grid>
+
+            <Label>PP：</Label>
+            <xctk:IntegerUpDown Name="PPUpDown"
+                                Increment="1"
+                                Minimum="0"
+                                Maximum="255"
+                                Value="0"
+                                ValueChanged="OnUpDownValueChaged" />
+
+          </controls:FormPanel>
+
+          <Label Name="DescriptionLabel"
+                 Margin="0, 8, 0, 4">설명 (0/18)：</Label>
+          <TextBox Name="DescriptionTextBox"
+                   MinLines="2"
+                   MaxLines="2"
+                   AcceptsReturn="True"
+                   FontSize="11pt"
+                   FontFamily="consolas"
+                   TextChanged="OnTextBoxTextChanged" />
+
+          <Label Margin="0, 16, 0, 8"
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">효과</Label>
+
+          <controls:FormPanel Width="320"
+                              Columns="1"
+                              ColumnSpacing="0"
+                              RowSpacing="4"
+                              HorizontalAlignment="Left">
+
+            <Label>타입：</Label>
+            <ComboBox Name="EffectComboBox"
+                      SelectedIndex="0"
+                      SelectionChanged="OnComboBoxSelectionChanged" />
+
+            <Label>값：</Label>
+            <xctk:IntegerUpDown Name="EffectUpDown"
+                                Increment="1"
+                                Minimum="0"
+                                Maximum="255"
+                                Value="0"
+                                ValueChanged="OnUpDownValueChaged" />
+
+            <Label>애니메이션 값：</Label>
+            <xctk:IntegerUpDown Name="AnimationUpDown"
+                                Increment="1"
+                                Minimum="0"
+                                Maximum="255"
+                                Value="0"
+                                ValueChanged="OnUpDownValueChaged" />
+
+          </controls:FormPanel>
+          
+        </StackPanel>
+      </ScrollViewer>
+    </Border>
+
+  </Grid>
+</UserControl>
