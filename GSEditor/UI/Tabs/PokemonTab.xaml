@@ -238,8 +238,10 @@
                     Height="64"
                     VerticalAlignment="Center"
                     Click="OnImageClick">
-              <controls:GBImageBox x:Name="FrontImage"
-                                   IsHitTestVisible="False" />
+              <controls:IgnoreDpiPanel>
+                <controls:GBImageBox x:Name="FrontImage"
+                                     IsHitTestVisible="False" />
+              </controls:IgnoreDpiPanel>
             </Button>
             <Button Grid.Row="0"
                     Grid.Column="3"
@@ -247,10 +249,12 @@
                     Height="64"
                     VerticalAlignment="Center"
                     Click="OnImageClick">
-              <controls:GBImageBox x:Name="BackImage"
-                                   IsHitTestVisible="False"
-                                   Width="56"
-                                   Height="56" />
+              <controls:IgnoreDpiPanel>
+                <controls:GBImageBox x:Name="BackImage"
+                                     IsHitTestVisible="False"
+                                     Width="56"
+                                     Height="56" />
+              </controls:IgnoreDpiPanel>
             </Button>
             <Label Grid.Row="0"
                    Grid.Column="4"
@@ -261,10 +265,12 @@
                     Height="64"
                     VerticalAlignment="Center"
                     Click="OnImageClick">
-              <controls:GBImageBox x:Name="FrontShinyImage"
-                                   IsHitTestVisible="False"
-                                   Width="56"
-                                   Height="56" />
+              <controls:IgnoreDpiPanel>
+                <controls:GBImageBox x:Name="FrontShinyImage"
+                                     IsHitTestVisible="False"
+                                     Width="56"
+                                     Height="56" />
+              </controls:IgnoreDpiPanel>
             </Button>
             <Button Grid.Row="0"
                     Grid.Column="7"
@@ -272,10 +278,12 @@
                     Height="64"
                     VerticalAlignment="Center"
                     Click="OnImageClick">
-              <controls:GBImageBox x:Name="BackShinyImage"
-                                   IsHitTestVisible="False"
-                                   Width="56"
-                                   Height="56" />
+              <controls:IgnoreDpiPanel>
+                <controls:GBImageBox x:Name="BackShinyImage"
+                                     IsHitTestVisible="False"
+                                     Width="56"
+                                     Height="56" />
+              </controls:IgnoreDpiPanel>
             </Button>
             <xctk:ColorPicker Grid.Row="2"
                               Grid.Column="1"
