@@ -276,6 +276,8 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
       });
     }
 
+    _pokegold.Pokemons[index].LearnMoves.Sort((a, b) => a.Level.CompareTo(b.Level));
+
     Moves.Clear();
     foreach (var e in _pokegold.Pokemons[index].LearnMoves)
     {
@@ -529,6 +531,17 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
         }
         return;
       }
+
+      if (button.Name == nameof(EvolutionClearButton))
+      {
+        if (MessageBox.Show("정말로 전부 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+          return;
+
+        _pokegold.Pokemons[PokemonListBox.SelectedIndex].Evolutions.Clear();
+        _pokegold.NotifyDataChanged();
+        UpdateEvolutionMoves();
+        return;
+      }
     }
   }
 
@@ -589,6 +602,37 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
           _pokegold.NotifyDataChanged();
           UpdateEvolutionMoves();
         }
+        return;
+      }
+
+      if (button.Name == nameof(LearnMoveClearButton))
+      {
+        if (MessageBox.Show("정말로 전부 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+          return;
+
+        _pokegold.Pokemons[PokemonListBox.SelectedIndex].LearnMoves.Clear();
+        _pokegold.NotifyDataChanged();
+        UpdateEvolutionMoves();
+        return;
+      }
+
+      if (button.Name == nameof(LearnMoveImportButton))
+      {
+        var result = LearnMoveImportDialog.Show(this);
+        foreach (var e in result)
+        {
+          foreach (var e2 in _pokegold.Pokemons[PokemonListBox.SelectedIndex].LearnMoves)
+          {
+            if (e2.Level == e.Level && e2.MoveNo == e.MoveNo)
+              goto ignoreSameItem;
+          }
+
+          _pokegold.Pokemons[PokemonListBox.SelectedIndex].LearnMoves.Add(e);
+        ignoreSameItem:;
+        }
+
+        _pokegold.NotifyDataChanged();
+        UpdateEvolutionMoves();
         return;
       }
     }

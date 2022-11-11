@@ -1,0 +1,82 @@
+﻿<Window x:Class="GSEditor.UI.Windows.LearnMoveImportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="가져오기"
+        Height="380"
+        Width="560"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="SingleBorderWindow"
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+        SizeChanged="OnWindowSizeChanged">
+  <Grid Margin="2">
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+      <Button Padding="24, 4, 24, 4"
+              Margin="2"
+              Click="OnConfirmClick">확인</Button>
+      <Button Padding="24, 4, 24, 4"
+              Margin="2"
+              Click="OnCancelClick">취소</Button>
+    </StackPanel>
+
+    <ListBox Grid.Row="0"
+             Grid.Column="0"
+             Name="PokemonListBox"
+             Width="144"
+             Margin="2"
+             Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
+             SelectionChanged="OnPokemonListBoxSelectionChanged" />
+
+    <Grid Grid.Row="0"
+          Grid.Column="1"
+          Margin="2">
+
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <ListView Grid.Row="0"
+                Name="LearnMoveListView"
+                Style="{DynamicResource GSEditor_Style_ListBox_Colored}">
+        <ListView.View>
+          <GridView>
+            <GridView.ColumnHeaderContainerStyle>
+              <Style BasedOn="{StaticResource {x:Type GridViewColumnHeader}}"
+                     TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="IsHitTestVisible"
+                        Value="False" />
+              </Style>
+            </GridView.ColumnHeaderContainerStyle>
+            <GridViewColumn DisplayMemberBinding="{Binding Level}"
+                            Header="레벨" />
+            <GridViewColumn DisplayMemberBinding="{Binding Move}"
+                            Header="기술" />
+          </GridView>
+        </ListView.View>
+      </ListView>
+
+      <Button Grid.Row="1"
+              Margin="0, 4, 0, 0"
+              Padding="4"
+              Click="OnRemoveItemClick">선택항목 제외</Button>
+
+    </Grid>
+
+  </Grid>
+</Window>

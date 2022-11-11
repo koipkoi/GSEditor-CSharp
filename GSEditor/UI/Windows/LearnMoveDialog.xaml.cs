@@ -44,7 +44,7 @@ public partial class LearnMoveDialog : Window
     _result = new()
     {
       Level = (byte)(LevelUpDown.Value ?? 0),
-      MoveNo = (byte)(MoveComboBox.SelectedIndex),
+      MoveNo = (byte)(MoveComboBox.SelectedIndex + 1),
     };
     DialogResult = true;
     Close();

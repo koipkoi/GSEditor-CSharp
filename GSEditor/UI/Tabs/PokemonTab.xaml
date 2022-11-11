@@ -428,15 +428,19 @@
                       IsEnabled="False"
                       Click="OnEvolutionButtonClick">수정...</Button>
               <Button Name="EvolutionRemoveButton"
-                      Padding="24, 4, 24, 4"
+                      Padding="16, 4, 16, 4"
                       Margin="4, 4, 0, 0"
-                      Foreground="Red"
                       IsEnabled="False"
                       Click="OnEvolutionButtonClick">삭제</Button>
+              <Button Name="EvolutionClearButton"
+                      Padding="8, 4, 8, 4"
+                      Margin="4, 4, 0, 0"
+                      Foreground="Red"
+                      Click="OnEvolutionButtonClick">전체 삭제</Button>
             </StackPanel>
-            <Label Margin="0, 4, 0, 4">배우는 기술</Label>
+            <Label Margin="0, 8, 0, 4">배우는 기술</Label>
             <ListView Name="LearnMoveListView"
-                      Height="128"
+                      Height="240"
                       ItemsSource="{Binding Moves}"
                       Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
                       SelectionChanged="OnEvolutionLearnMoveSelectionChanged"
@@ -460,6 +464,10 @@
             </ListView>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
+              <Button Name="LearnMoveImportButton"
+                      Padding="24, 4, 24, 4"
+                      Margin="4, 4, 0, 0"
+                      Click="OnLearnMoveButtonClick">가져오기...</Button>
               <Button Name="LearnMoveAddButton"
                       Padding="24, 4, 24, 4"
                       Margin="4, 4, 0, 0"
@@ -470,11 +478,15 @@
                       IsEnabled="False"
                       Click="OnLearnMoveButtonClick">수정...</Button>
               <Button Name="LearnMoveRemoveButton"
-                      Padding="24, 4, 24, 4"
+                      Padding="16, 4, 16, 4"
                       Margin="4, 4, 0, 0"
-                      Foreground="Red"
                       IsEnabled="False"
                       Click="OnLearnMoveButtonClick">삭제</Button>
+              <Button Name="LearnMoveClearButton"
+                      Padding="8, 4, 8, 4"
+                      Margin="4, 4, 0, 0"
+                      Foreground="Red"
+                      Click="OnLearnMoveButtonClick">전체 삭제</Button>
             </StackPanel>
           </StackPanel>
         </StackPanel>
