@@ -365,7 +365,7 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
   private void OnImageClick(object sender, RoutedEventArgs _)
   {
-    if (sender is Button button && button.Content is GBImageBox gbImageBox)
+    if (sender is Button button && button.Content is IgnoreDpiPanel panel && panel.Child is GBImageBox gbImageBox)
     {
       var menu = new ContextMenu();
 

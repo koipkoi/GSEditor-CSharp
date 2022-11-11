@@ -39,15 +39,15 @@ public partial class EvolutionDialog : Window
     ExchangePokemonComboBox.SelectedIndex = 0;
     AffectionPokemonComboBox.SelectedIndex = 0;
 
+    Stats0.IsChecked = true;
+    Stats1.IsChecked = false;
+    Stats2.IsChecked = false;
+    Stats3.IsChecked = false;
+
+    StatsLevel.Value = 5;
+
     if (currentItem != null)
     {
-      Stats0.IsChecked = true;
-      Stats1.IsChecked = false;
-      Stats2.IsChecked = false;
-      Stats3.IsChecked = false;
-
-      StatsLevel.Value = 5;
-
       ItemPokemonComboBox.SelectedIndex = currentItem.PokemonNo - 1;
       ExchangePokemonComboBox.SelectedIndex = currentItem.PokemonNo - 1;
       AffectionPokemonComboBox.SelectedIndex = currentItem.PokemonNo - 1;
