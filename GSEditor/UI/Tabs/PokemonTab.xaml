@@ -73,12 +73,12 @@
               <ComboBox Name="GrowthRateComboBox"
                         FontFamily="consolas"
                         SelectionChanged="OnComboBoxSelectionChanged">
-                <ComboBoxItem>느　 　림 (156 ~ 1,250,000)</ComboBoxItem>
-                <ComboBoxItem>중간 느림 (135 ~ 1,059,860)</ComboBoxItem>
-                <ComboBoxItem>약간 느림 (523 ~ 949,930)</ComboBoxItem>
-                <ComboBoxItem>약간 빠름 (313 ~ 849,970)</ComboBoxItem>
                 <ComboBoxItem>중간 빠름 (125 ~ 1,000,000)</ComboBoxItem>
+                <ComboBoxItem>약간 빠름 (313 ~ 849,970)</ComboBoxItem>
+                <ComboBoxItem>약간 느림 (523 ~ 949,930)</ComboBoxItem>
+                <ComboBoxItem>중간 느림 (135 ~ 1,059,860)</ComboBoxItem>
                 <ComboBoxItem>빠　 　름 (100 ~ 800,000)</ComboBoxItem>
+                <ComboBoxItem>느　 　림 (156 ~ 1,250,000)</ComboBoxItem>
               </ComboBox>
 
               <Label>타입：</Label>

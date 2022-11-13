@@ -130,7 +130,7 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
       Item1ComboBox.SelectedIndex = _pokegold.Pokemons[index].Item1;
       Item2ComboBox.SelectedIndex = _pokegold.Pokemons[index].Item2;
       GenderRateComboBox.SelectedIndex = _pokegold.Pokemons[index].GetGenderRateType();
-      GrowthRateComboBox.SelectedIndex = _pokegold.Pokemons[index].GetGrowthRateType();
+      GrowthRateComboBox.SelectedIndex = _pokegold.Pokemons[index].GrowthRate;
       EggGroup1ComboBox.SelectedIndex = (_pokegold.Pokemons[index].EggGroup & 0xf0) >> 4;
       EggGroup2ComboBox.SelectedIndex = (_pokegold.Pokemons[index].EggGroup & 0x0f) >> 0;
       EXPUpDown.Value = _pokegold.Pokemons[index].Exp;
@@ -337,7 +337,7 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
       _pokegold.Pokemons[index].Item1 = (byte)Item1ComboBox.SelectedIndex;
       _pokegold.Pokemons[index].Item2 = (byte)Item2ComboBox.SelectedIndex;
       _pokegold.Pokemons[index].SetGenderRateType(GenderRateComboBox.SelectedIndex);
-      _pokegold.Pokemons[index].SetGrowthRateType(GrowthRateComboBox.SelectedIndex);
+      _pokegold.Pokemons[index].GrowthRate = (byte)GrowthRateComboBox.SelectedIndex;
       _pokegold.Pokemons[index].EggGroup = (byte)((EggGroup1ComboBox.SelectedIndex << 4) | EggGroup2ComboBox.SelectedIndex);
       _pokegold.NotifyDataChanged();
     }

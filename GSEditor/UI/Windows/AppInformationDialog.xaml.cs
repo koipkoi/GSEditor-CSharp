@@ -11,6 +11,10 @@ public partial class AppInformationDialog : Window
     "* 기술머신 편집\n" +
     "  \n" +
     "  \n" +
+    "### 1.2.1\n" +
+    "* 포켓몬 성장률 항목 수정\n" +
+    "  \n" +
+    "  \n" +
     "### 1.2.0\n" +
     "* UI 개선 및 재설계\n" +
     "* hidpi+ 지원 (배율이 지정되어 있는 높은 해상도의 모니터에서 지원)\n" +
