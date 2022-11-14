@@ -57,6 +57,7 @@ public partial class MovesTab : UserControl, INotifyPropertyChanged
     {
       _selfChanged = true;
 
+      NoTextBox.Text = $"{_pokegold.Moves[index].No}";
       NameTextBox.Text = _pokegold.Strings.MoveNames[index];
       DescriptionTextBox.Text = _pokegold.Strings.MoveDescriptions[index].Replace("[59]", "\n");
 
@@ -67,7 +68,6 @@ public partial class MovesTab : UserControl, INotifyPropertyChanged
 
       EffectComboBox.SelectedIndex = _pokegold.Moves[index].Effect;
       EffectUpDown.Value = _pokegold.Moves[index].EffectChance;
-      AnimationUpDown.Value = _pokegold.Moves[index].Animation;
 
       IsListSelected = true;
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsListSelected)));
@@ -116,8 +116,6 @@ public partial class MovesTab : UserControl, INotifyPropertyChanged
       _pokegold.Moves[index].Power = (byte)(PowerUpDown.Value ?? 0);
       _pokegold.Moves[index].Accuracy = (byte)(AccuracyUpDown.Value ?? 0);
       _pokegold.Moves[index].EffectChance = (byte)(EffectUpDown.Value ?? 0);
-      _pokegold.Moves[index].Animation = (byte)(AnimationUpDown.Value ?? 0);
-
       _pokegold.NotifyDataChanged();
     }
 

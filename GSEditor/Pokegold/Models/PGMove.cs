@@ -2,7 +2,7 @@
 
 public sealed class PGMove
 {
-  public byte Animation { get; set; }
+  public byte No { get; set; }
   public byte Effect { get; set; }
   public byte Power { get; set; }
   public byte MoveType { get; set; }
@@ -14,7 +14,7 @@ public sealed class PGMove
   {
     return new()
     {
-      Animation = bytes[0],
+      No = bytes[0],
       Effect = bytes[1],
       Power = bytes[2],
       MoveType = bytes[3],
@@ -26,6 +26,6 @@ public sealed class PGMove
 
   public byte[] ToBytes()
   {
-    return new byte[] { Animation, Effect, Power, MoveType, Accuracy, PP, EffectChance, };
+    return new byte[] { No, Effect, Power, MoveType, Accuracy, PP, EffectChance, };
   }
 }

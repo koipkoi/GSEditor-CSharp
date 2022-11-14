@@ -13,6 +13,7 @@ public partial class AppInformationDialog : Window
     "  \n" +
     "### 1.2.1\n" +
     "* 포켓몬 성장률 항목 수정\n" +
+    "* 기술 메뉴 항목 수정 (애니메이션 값 > 기술 번호)\n" +
     "  \n" +
     "  \n" +
     "### 1.2.0\n" +

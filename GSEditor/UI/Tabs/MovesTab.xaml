@@ -40,6 +40,10 @@
                               RowSpacing="4"
                               HorizontalAlignment="Left">
 
+            <Label>기술 번호：</Label>
+            <TextBox Name="NoTextBox"
+                     IsEnabled="False" />
+
             <Label>이름：</Label>
             <TextBox Name="NameTextBox"
                      MaxLength="7"
@@ -117,16 +121,8 @@
                                 Value="0"
                                 ValueChanged="OnUpDownValueChaged" />
 
-            <Label>애니메이션 값：</Label>
-            <xctk:IntegerUpDown Name="AnimationUpDown"
-                                Increment="1"
-                                Minimum="0"
-                                Maximum="255"
-                                Value="0"
-                                ValueChanged="OnUpDownValueChaged" />
-
           </controls:FormPanel>
-          
+
         </StackPanel>
       </ScrollViewer>
     </Border>
