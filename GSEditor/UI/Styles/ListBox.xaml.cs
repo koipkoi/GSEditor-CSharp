@@ -1,14 +1,12 @@
 ﻿using GSEditor.UI.Windows;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace GSEditor.UI.Styles;
 
 public partial class ListBox
 {
-  private void OnListBoxPreviewMouseRightButtonDown(object _, MouseButtonEventArgs e)
+  private void OnListBoxPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
   {
     e.Handled = true;
   }
@@ -18,14 +16,11 @@ public partial class ListBox
     if (sender is System.Windows.Controls.ListBox listBox && listBox.IsEnabled)
     {
       var result = ListBoxSearchDialog.Show(listBox, listBox.Items);
-      listBox.Dispatcher.BeginInvoke(DispatcherPriority.Normal, () =>
+      if (result != -1)
       {
-        if (result != -1)
-        {
-          listBox.SelectedIndex = result;
-          listBox.ScrollIntoView(listBox.SelectedItem);
-        }
-      });
+        listBox.SelectedIndex = result;
+        listBox.ScrollIntoView(listBox.SelectedItem);
+      }
     }
   }
 }

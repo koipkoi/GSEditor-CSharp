@@ -199,11 +199,20 @@
                                   ValueChanged="OnUpDownValueChanged" />
 
               <Label>포획률：</Label>
-              <xctk:IntegerUpDown Name="CatchRateUpDown"
-                                  FormatString="N0"
-                                  Increment="1"
-                                  Maximum="255"
-                                  ValueChanged="OnUpDownValueChanged" />
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <xctk:IntegerUpDown Name="CatchRateUpDown"
+                                    FormatString="N0"
+                                    Increment="1"
+                                    Maximum="255"
+                                    ValueChanged="OnUpDownValueChanged" />
+                <Label Grid.Column="1"
+                       Name="CatchRatePercentageLabel"
+                       MinWidth="50">100.00%</Label>
+              </Grid>
 
             </controls:FormPanel>
 
@@ -237,6 +246,7 @@
                     Width="64"
                     Height="64"
                     VerticalAlignment="Center"
+                    Tag="front"
                     Click="OnImageClick">
               <controls:IgnoreDpiPanel>
                 <controls:GBImageBox x:Name="FrontImage"
@@ -248,6 +258,7 @@
                     Width="64"
                     Height="64"
                     VerticalAlignment="Center"
+                    Tag="back"
                     Click="OnImageClick">
               <controls:IgnoreDpiPanel>
                 <controls:GBImageBox x:Name="BackImage"
@@ -264,6 +275,7 @@
                     Width="64"
                     Height="64"
                     VerticalAlignment="Center"
+                    Tag="shiny_front"
                     Click="OnImageClick">
               <controls:IgnoreDpiPanel>
                 <controls:GBImageBox x:Name="FrontShinyImage"
@@ -277,6 +289,7 @@
                     Width="64"
                     Height="64"
                     VerticalAlignment="Center"
+                    Tag="shiny_back"
                     Click="OnImageClick">
               <controls:IgnoreDpiPanel>
                 <controls:GBImageBox x:Name="BackShinyImage"

@@ -5,6 +5,7 @@ using GSEditor.UI.Windows;
 using GSEditor.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -329,9 +330,10 @@ public partial class PokemonTab : UserControl
 
   private void OnUpDownValueChanged(object _, RoutedPropertyChangedEventArgs<object> __)
   {
+    var index = PokemonListBox.SelectedIndex;
+
     this.RunSafe(() =>
     {
-      var index = PokemonListBox.SelectedIndex;
       if (index != -1)
       {
         _pokegold.Pokemons[index].Exp = (byte)(EXPUpDown.Value ?? 0);
@@ -350,6 +352,13 @@ public partial class PokemonTab : UserControl
         _pokegold.NotifyDataChanged();
       }
     });
+
+    // 포획률 퍼센티지 변경
+    if (index != -1)
+    {
+      var percentage = string.Format("{0:P2}", (double)_pokegold.Pokemons[index].CatchRate / 0xff);
+      CatchRatePercentageLabel.Content = percentage;
+    }
   }
 
   private void OnImageClick(object sender, RoutedEventArgs _)
@@ -427,7 +436,7 @@ public partial class PokemonTab : UserControl
         {
           Title = "png 저장",
           Filter = "png 파일|*png",
-          FileName = $"{index + 1}.png",
+          FileName = $"{button.Tag}_{index + 1}.png",
         };
         if (dialog.ShowDialog() ?? false)
           gbImageBox.GBImage!.WriteFile(dialog.FileName);
@@ -442,7 +451,7 @@ public partial class PokemonTab : UserControl
         {
           Title = "2bpp 저장",
           Filter = "2bpp 파일|*2bpp|bin 파일|*.bin|모든 파일|*.*",
-          FileName = $"{index + 1}.2bpp",
+          FileName = $"{button.Tag}_{index + 1}.2bpp",
         };
         if (dialog.ShowDialog() ?? false)
           File.WriteAllBytes(dialog.FileName, gbImageBox.GBImage!.Source!);

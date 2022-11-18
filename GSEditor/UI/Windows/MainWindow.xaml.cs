@@ -141,7 +141,6 @@ public partial class MainWindow : Window
               {
                 Title = "열기",
                 Filter = "실행 가능한 파일|*.exe|모든 파일|*.*",
-                FileName = _appSettings.EmulatorPath,
               };
               if (emulatorDialog.ShowDialog() ?? false)
                 _appSettings.EmulatorPath = emulatorDialog.FileName;
