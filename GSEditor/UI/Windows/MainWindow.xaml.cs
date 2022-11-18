@@ -1,4 +1,5 @@
 ﻿using GSEditor.Core;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.Windows;
@@ -7,29 +8,21 @@ using System.Windows.Input;
 
 namespace GSEditor.UI.Windows;
 
-public partial class MainWindow : Window, INotifyPropertyChanged
+public partial class MainWindow : Window
 {
-  private readonly List<KeyGesture> _menuKeyGestures = new() {
+  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
+  private readonly AppSettings _appSettings = App.Services.GetRequiredService<AppSettings>();
+  private readonly List<KeyGesture> _menuKeyGestures = new()
+  {
     new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl+O"),
     new KeyGesture(Key.S, ModifierKeys.Control, "Ctrl+S"),
     new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt+F4"),
-
     new KeyGesture(Key.F5, ModifierKeys.None, "F5"),
   };
-
-  private readonly Pokegold _pokegold = Injector.Get<Pokegold>();
-  private readonly AppSettings _appSettings = Injector.Get<AppSettings>();
-
-  public event PropertyChangedEventHandler? PropertyChanged;
-
-  public bool RomFileOpened { get; set; } = false;
-  public string RomFilename { get; set; } = "-";
 
   public MainWindow()
   {
     InitializeComponent();
-
-    DataContext = this;
 
     // 메뉴 숏컷 지정
     foreach (var keyGesture in _menuKeyGestures)
@@ -90,11 +83,13 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
   private void OnRomChanged(object? _, EventArgs __)
   {
-    RomFileOpened = _pokegold.IsOpened;
-    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RomFileOpened)));
+    FileNameState.Content = _pokegold.Filename;
 
-    RomFilename = _pokegold.Filename;
-    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RomFilename)));
+    SaveMenuItem.IsEnabled = _pokegold.IsOpened;
+    TestPlayMenuItem.IsEnabled = _pokegold.IsOpened;
+    SaveToolBarButton.IsEnabled = _pokegold.IsOpened;
+    TestPlayToolBarButton.IsEnabled = _pokegold.IsOpened;
+    MainTab.IsEnabled = _pokegold.IsOpened;
   }
 
   private void OnMenuItemClick(object? sender, RoutedEventArgs _)

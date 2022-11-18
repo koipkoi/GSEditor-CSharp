@@ -1,12 +1,13 @@
 ﻿using GSEditor.Core;
 using GSEditor.Core.PokegoldCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
 namespace GSEditor.UI.Windows;
 
 public partial class LearnMoveDialog : Window
 {
-  private readonly Pokegold _pokegold = Injector.Get<Pokegold>();
+  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
   private PGLearnMove? _result = null;
 
   private LearnMoveDialog(DependencyObject owner, PGLearnMove? defaultValue)

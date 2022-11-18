@@ -1,5 +1,6 @@
 ﻿using GSEditor.Core;
 using GSEditor.Core.PokegoldCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,7 +8,7 @@ namespace GSEditor.UI.Windows;
 
 public partial class LearnMoveImportDialog : Window
 {
-  private readonly Pokegold _pokegold = Injector.Get<Pokegold>();
+  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
   private readonly List<PGLearnMove> _result = new();
 
   private LearnMoveImportDialog()

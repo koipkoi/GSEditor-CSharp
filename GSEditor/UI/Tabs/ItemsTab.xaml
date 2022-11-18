@@ -23,8 +23,9 @@
              SelectionChanged="OnItemsSelectionChanged" />
 
     <Border Grid.Column="1"
+            Name="ContentBorder"
             Margin="0, 4, 4, 4"
-            IsEnabled="{Binding IsListSelected}"
+            IsEnabled="False"
             Style="{DynamicResource GSEditor_Style_Border_Default}">
       <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Auto">

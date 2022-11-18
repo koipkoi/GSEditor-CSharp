@@ -2,8 +2,9 @@
 using GSEditor.Core.PokegoldCore;
 using GSEditor.UI.Controls;
 using GSEditor.UI.Windows;
+using GSEditor.Utilities;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
-using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,26 +13,15 @@ using System.Windows.Media;
 
 namespace GSEditor.UI.Tabs;
 
-public partial class PokemonTab : UserControl, INotifyPropertyChanged
+public partial class PokemonTab : UserControl
 {
   private readonly System.Drawing.Color _pokemonWhiteColor = GBColor.FromBytes(new byte[] { 0xff, 0x7f, }).ToColor();
   private readonly System.Drawing.Color _pokemonBlackColor = GBColor.FromBytes(new byte[] { 0x00, 0x00, }).ToColor();
-
-  private readonly Pokegold _pokegold = Injector.Get<Pokegold>();
-  private bool _selfChanged = false;
-
-  public event PropertyChangedEventHandler? PropertyChanged;
-
-  public bool IsPokemonListSelected { get; set; } = false;
-  public bool IsUnown { get; set; } = false;
-  public BindingList<EvolutionItem> Evolutions { get; set; } = new();
-  public BindingList<LearnMoveItem> Moves { get; set; } = new();
+  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
 
   public PokemonTab()
   {
     InitializeComponent();
-
-    DataContext = this;
 
     Loaded += (_, __) => OnNeedTabUpdate();
     _pokegold.RegisterRomChanged(this, (_, _) => OnNeedTabUpdate());
@@ -39,132 +29,44 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
   private void OnNeedTabUpdate()
   {
-    _selfChanged = true;
-
     var previousSelection = PokemonListBox.SelectedIndex;
 
-    PokemonListBox.Items.Clear();
-    for (var i = 0; i < 251; i++)
+    this.RunSafe(() =>
     {
-      if (i < _pokegold.Strings.PokemonNames.Count)
+      PokemonListBox.Items.Clear();
+      for (var i = 0; i < 251; i++)
       {
-        var e = _pokegold.Strings.PokemonNames[i];
-        PokemonListBox.Items.Add(e);
+        if (i < _pokegold.Strings.PokemonNames.Count)
+        {
+          var e = _pokegold.Strings.PokemonNames[i];
+          PokemonListBox.Items.Add(e);
+        }
       }
-    }
 
-    Type1ComboBox.Items.Clear();
-    Type2ComboBox.Items.Clear();
-    foreach (var e in _pokegold.Strings.TypeNames)
-    {
-      Type1ComboBox.Items.Add(e);
-      Type2ComboBox.Items.Add(e);
-    }
+      Type1ComboBox.Items.Clear();
+      Type2ComboBox.Items.Clear();
+      foreach (var e in _pokegold.Strings.TypeNames)
+      {
+        Type1ComboBox.Items.Add(e);
+        Type2ComboBox.Items.Add(e);
+      }
 
-    Item1ComboBox.Items.Clear();
-    Item2ComboBox.Items.Clear();
-    Item1ComboBox.Items.Add("없음");
-    Item2ComboBox.Items.Add("없음");
-    foreach (var e in _pokegold.Strings.ItemNames)
-    {
-      Item1ComboBox.Items.Add(e);
-      Item2ComboBox.Items.Add(e);
-    }
-
-    _selfChanged = false;
+      Item1ComboBox.Items.Clear();
+      Item2ComboBox.Items.Clear();
+      Item1ComboBox.Items.Add("없음");
+      Item2ComboBox.Items.Add("없음");
+      foreach (var e in _pokegold.Strings.ItemNames)
+      {
+        Item1ComboBox.Items.Add(e);
+        Item2ComboBox.Items.Add(e);
+      }
+    });
 
     PokemonListBox.SelectedIndex = previousSelection;
   }
 
-  private void OnSizeChanged(object _, SizeChangedEventArgs __)
-  {
-    if (EvolutionListView.View is GridView evolutionGridView)
-    {
-      var totallyWidth = EvolutionListView.ActualWidth - 32;
-      evolutionGridView.Columns[0].Width = totallyWidth * 0.2;
-      evolutionGridView.Columns[1].Width = totallyWidth * 0.2;
-      evolutionGridView.Columns[2].Width = totallyWidth * 0.3;
-      evolutionGridView.Columns[3].Width = totallyWidth * 0.3;
-    }
-
-    if (LearnMoveListView.View is GridView learnMoveGridView)
-    {
-      var totallyWidth = LearnMoveListView.ActualWidth - 32;
-      learnMoveGridView.Columns[0].Width = totallyWidth * 0.3;
-      learnMoveGridView.Columns[1].Width = totallyWidth * 0.7;
-    }
-  }
-
-  private void NestedScrollImplEvent(object sender, MouseWheelEventArgs e)
-  {
-    if (sender is ListView listView && !e.Handled)
-    {
-      var border = (VisualTreeHelper.GetChild(listView, 0) as Border)!;
-      var scrollViewer = (VisualTreeHelper.GetChild(border, 0) as ScrollViewer)!;
-
-      if ((e.Delta > 0 && scrollViewer.VerticalOffset == 0) || (e.Delta < 0 && scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight))
-      {
-        e.Handled = true;
-
-        var parent = (scrollViewer.Parent as UIElement)!;
-        parent.RaiseEvent(new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-        {
-          RoutedEvent = MouseWheelEvent,
-          Source = scrollViewer,
-        });
-      }
-    }
-  }
-
-  private void OnPokemonListBoxSelected(object _, SelectionChangedEventArgs __)
-  {
-    var index = PokemonListBox.SelectedIndex;
-    if (!_selfChanged)
-    {
-      _selfChanged = true;
-
-      NumberTextBox.Text = $"{index + 1}";
-      NameTextBox.Text = _pokegold.Strings.PokemonNames[index];
-      Type1ComboBox.SelectedIndex = _pokegold.Pokemons[index].Type1;
-      Type2ComboBox.SelectedIndex = _pokegold.Pokemons[index].Type2;
-      Item1ComboBox.SelectedIndex = _pokegold.Pokemons[index].Item1;
-      Item2ComboBox.SelectedIndex = _pokegold.Pokemons[index].Item2;
-      GenderRateComboBox.SelectedIndex = _pokegold.Pokemons[index].GetGenderRateType();
-      GrowthRateComboBox.SelectedIndex = _pokegold.Pokemons[index].GrowthRate;
-      EggGroup1ComboBox.SelectedIndex = (_pokegold.Pokemons[index].EggGroup & 0xf0) >> 4;
-      EggGroup2ComboBox.SelectedIndex = (_pokegold.Pokemons[index].EggGroup & 0x0f) >> 0;
-      EXPUpDown.Value = _pokegold.Pokemons[index].Exp;
-      CatchRateUpDown.Value = _pokegold.Pokemons[index].CatchRate;
-
-      HPUpDown.Value = _pokegold.Pokemons[index].HP;
-      AttackUpDown.Value = _pokegold.Pokemons[index].Attack;
-      DefenceUpDown.Value = _pokegold.Pokemons[index].Defence;
-      SpAttackUpDown.Value = _pokegold.Pokemons[index].SpAttack;
-      SpDefenceUpDown.Value = _pokegold.Pokemons[index].SpDefence;
-      SpeedUpDown.Value = _pokegold.Pokemons[index].Speed;
-
-      SpecificNameTextBox.Text = _pokegold.Pokedex[index].SpecificName;
-      HeightUpDown.Value = _pokegold.Pokedex[index].Height / 10.0;
-      WeightUpDown.Value = _pokegold.Pokedex[index].Weight / 10.0;
-      DexDescriptionTextBox.Text = _pokegold.Pokedex[index].Description.Replace("[59]", "\n");
-
-      IsPokemonListSelected = true;
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPokemonListSelected)));
-
-      IsUnown = index == 200;
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUnown)));
-
-      UpdateEvolutionMoves();
-      UpdatePokemonImages();
-
-      _selfChanged = false;
-    }
-  }
-
   private void UpdatePokemonImages()
   {
-    _selfChanged = true;
-
     var index = PokemonListBox.SelectedIndex;
 
     FrontImage.GBImage = new()
@@ -224,20 +126,16 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
     ShinyColor1.SelectedColor = _pokegold.Colors.ShinyPokemons[index][0].ToWPFColor();
     ShinyColor2.SelectedColor = _pokegold.Colors.ShinyPokemons[index][1].ToWPFColor();
-
-    _selfChanged = false;
   }
 
   private void UpdateEvolutionMoves()
   {
-    _selfChanged = true;
-
     var index = PokemonListBox.SelectedIndex;
 
-    Evolutions.Clear();
+    EvolutionListView.Items.Clear();
     foreach (var e in _pokegold.Pokemons[index].Evolutions)
     {
-      Evolutions.Add(new()
+      EvolutionListView.Items.Add(new EvolutionItem
       {
         Pokemon = _pokegold.Strings.PokemonNames[e.PokemonNo - 1],
         Method = e.Type switch
@@ -278,91 +176,180 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
     _pokegold.Pokemons[index].LearnMoves.Sort((a, b) => a.Level.CompareTo(b.Level));
 
-    Moves.Clear();
+    LearnMoveListView.Items.Clear();
     foreach (var e in _pokegold.Pokemons[index].LearnMoves)
     {
-      Moves.Add(new()
+      LearnMoveListView.Items.Add(new LearnMoveItem
       {
         Level = $"{e.Level}",
         Move = $"{_pokegold.Strings.MoveNames[e.MoveNo - 1]}",
       });
     }
+  }
 
-    _selfChanged = false;
+  private void OnSizeChanged(object _, SizeChangedEventArgs __)
+  {
+    if (EvolutionListView.View is GridView evolutionGridView)
+    {
+      var totallyWidth = EvolutionListView.ActualWidth - 32;
+      evolutionGridView.Columns[0].Width = totallyWidth * 0.2;
+      evolutionGridView.Columns[1].Width = totallyWidth * 0.2;
+      evolutionGridView.Columns[2].Width = totallyWidth * 0.3;
+      evolutionGridView.Columns[3].Width = totallyWidth * 0.3;
+    }
+
+    if (LearnMoveListView.View is GridView learnMoveGridView)
+    {
+      var totallyWidth = LearnMoveListView.ActualWidth - 32;
+      learnMoveGridView.Columns[0].Width = totallyWidth * 0.3;
+      learnMoveGridView.Columns[1].Width = totallyWidth * 0.7;
+    }
+  }
+
+  private void NestedScrollImplEvent(object sender, MouseWheelEventArgs e)
+  {
+    if (sender is ListView listView && !e.Handled)
+    {
+      var border = (VisualTreeHelper.GetChild(listView, 0) as Border)!;
+      var scrollViewer = (VisualTreeHelper.GetChild(border, 0) as ScrollViewer)!;
+
+      if ((e.Delta > 0 && scrollViewer.VerticalOffset == 0) || (e.Delta < 0 && scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight))
+      {
+        e.Handled = true;
+
+        var parent = (scrollViewer.Parent as UIElement)!;
+        parent.RaiseEvent(new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+        {
+          RoutedEvent = MouseWheelEvent,
+          Source = scrollViewer,
+        });
+      }
+    }
+  }
+
+  private void OnPokemonListBoxSelected(object _, SelectionChangedEventArgs __)
+  {
+    this.RunSafe(() =>
+    {
+      var index = PokemonListBox.SelectedIndex;
+      if (index != -1)
+      {
+        NumberTextBox.Text = $"{index + 1}";
+        NameTextBox.Text = _pokegold.Strings.PokemonNames[index];
+        Type1ComboBox.SelectedIndex = _pokegold.Pokemons[index].Type1;
+        Type2ComboBox.SelectedIndex = _pokegold.Pokemons[index].Type2;
+        Item1ComboBox.SelectedIndex = _pokegold.Pokemons[index].Item1;
+        Item2ComboBox.SelectedIndex = _pokegold.Pokemons[index].Item2;
+        GenderRateComboBox.SelectedIndex = _pokegold.Pokemons[index].GetGenderRateType();
+        GrowthRateComboBox.SelectedIndex = _pokegold.Pokemons[index].GrowthRate;
+        EggGroup1ComboBox.SelectedIndex = (_pokegold.Pokemons[index].EggGroup & 0xf0) >> 4;
+        EggGroup2ComboBox.SelectedIndex = (_pokegold.Pokemons[index].EggGroup & 0x0f) >> 0;
+        EXPUpDown.Value = _pokegold.Pokemons[index].Exp;
+        CatchRateUpDown.Value = _pokegold.Pokemons[index].CatchRate;
+
+        HPUpDown.Value = _pokegold.Pokemons[index].HP;
+        AttackUpDown.Value = _pokegold.Pokemons[index].Attack;
+        DefenceUpDown.Value = _pokegold.Pokemons[index].Defence;
+        SpAttackUpDown.Value = _pokegold.Pokemons[index].SpAttack;
+        SpDefenceUpDown.Value = _pokegold.Pokemons[index].SpDefence;
+        SpeedUpDown.Value = _pokegold.Pokemons[index].Speed;
+
+        SpecificNameTextBox.Text = _pokegold.Pokedex[index].SpecificName;
+        HeightUpDown.Value = _pokegold.Pokedex[index].Height / 10.0;
+        WeightUpDown.Value = _pokegold.Pokedex[index].Weight / 10.0;
+        DexDescriptionTextBox.Text = _pokegold.Pokedex[index].Description.Replace("[59]", "\n");
+
+        UpdateEvolutionMoves();
+        UpdatePokemonImages();
+      }
+
+      ContentBorder.IsEnabled = index != -1;
+      ImagesGrid.Visibility = index != 200 ? Visibility.Visible : Visibility.Collapsed;
+      UnownGrid.Visibility = index == 200 ? Visibility.Visible : Visibility.Collapsed;
+    });
   }
 
   private void OnTextChanged(object _, TextChangedEventArgs __)
   {
-    var index = PokemonListBox.SelectedIndex;
-
-    if (!_selfChanged && NameTextBox.Text.TryTextEncode(out var _))
+    this.RunSafe(() =>
     {
-      _selfChanged = true;
-      _pokegold.Strings.PokemonNames[index] = NameTextBox.Text;
-      PokemonListBox.Items[index] = _pokegold.Strings.PokemonNames[index];
-      PokemonListBox.SelectedIndex = index;
-      _selfChanged = false;
-      _pokegold.NotifyDataChanged();
-    }
+      var index = PokemonListBox.SelectedIndex;
+      if (index != -1)
+      {
+        if (NameTextBox.Text.TryTextEncode(out var _))
+        {
+          _pokegold.Strings.PokemonNames[index] = NameTextBox.Text;
+          PokemonListBox.Items[index] = _pokegold.Strings.PokemonNames[index];
+          PokemonListBox.SelectedIndex = index;
+          _pokegold.NotifyDataChanged();
+        }
 
-    if (!_selfChanged && SpecificNameTextBox.Text.TryTextEncode(out var _))
-    {
-      _pokegold.Pokedex[index].SpecificName = SpecificNameTextBox.Text;
-      _pokegold.NotifyDataChanged();
-    }
+        if (SpecificNameTextBox.Text.TryTextEncode(out var _))
+        {
+          _pokegold.Pokedex[index].SpecificName = SpecificNameTextBox.Text;
+          _pokegold.NotifyDataChanged();
+        }
 
-    var maxLength = 0;
-    foreach (var line in DexDescriptionTextBox.Text.Split("\n"))
-    {
-      if (line.Length > maxLength)
-        maxLength = line.Length;
-    }
-    DexDescriptionLabel.Content = $"설명 ({maxLength}/18)：";
+        var maxLength = 0;
+        foreach (var line in DexDescriptionTextBox.Text.Split("\n"))
+        {
+          if (line.Length > maxLength)
+            maxLength = line.Length;
+        }
+        DexDescriptionLabel.Content = $"설명 ({maxLength}/18)：";
 
-    var realDescription = DexDescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
-    if (!_selfChanged && realDescription.TryTextEncode(out var _))
-    {
-      _pokegold.Pokedex[index].Description = realDescription;
-      _pokegold.NotifyDataChanged();
-    }
+        var realDescription = DexDescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
+        if (realDescription.TryTextEncode(out var _))
+        {
+          _pokegold.Pokedex[index].Description = realDescription;
+          _pokegold.NotifyDataChanged();
+        }
+      }
+    });
   }
 
   private void OnComboBoxSelectionChanged(object _, SelectionChangedEventArgs __)
   {
-    var index = PokemonListBox.SelectedIndex;
-    if (!_selfChanged)
+    this.RunSafe(() =>
     {
-      _pokegold.Pokemons[index].Type1 = (byte)Type1ComboBox.SelectedIndex;
-      _pokegold.Pokemons[index].Type2 = (byte)Type2ComboBox.SelectedIndex;
-      _pokegold.Pokemons[index].Item1 = (byte)Item1ComboBox.SelectedIndex;
-      _pokegold.Pokemons[index].Item2 = (byte)Item2ComboBox.SelectedIndex;
-      _pokegold.Pokemons[index].SetGenderRateType(GenderRateComboBox.SelectedIndex);
-      _pokegold.Pokemons[index].GrowthRate = (byte)GrowthRateComboBox.SelectedIndex;
-      _pokegold.Pokemons[index].EggGroup = (byte)((EggGroup1ComboBox.SelectedIndex << 4) | EggGroup2ComboBox.SelectedIndex);
-      _pokegold.NotifyDataChanged();
-    }
+      var index = PokemonListBox.SelectedIndex;
+      if (index != -1)
+      {
+        _pokegold.Pokemons[index].Type1 = (byte)Type1ComboBox.SelectedIndex;
+        _pokegold.Pokemons[index].Type2 = (byte)Type2ComboBox.SelectedIndex;
+        _pokegold.Pokemons[index].Item1 = (byte)Item1ComboBox.SelectedIndex;
+        _pokegold.Pokemons[index].Item2 = (byte)Item2ComboBox.SelectedIndex;
+        _pokegold.Pokemons[index].SetGenderRateType(GenderRateComboBox.SelectedIndex);
+        _pokegold.Pokemons[index].GrowthRate = (byte)GrowthRateComboBox.SelectedIndex;
+        _pokegold.Pokemons[index].EggGroup = (byte)((EggGroup1ComboBox.SelectedIndex << 4) | EggGroup2ComboBox.SelectedIndex);
+        _pokegold.NotifyDataChanged();
+      }
+    });
   }
 
   private void OnUpDownValueChanged(object _, RoutedPropertyChangedEventArgs<object> __)
   {
-    var index = PokemonListBox.SelectedIndex;
-    if (!_selfChanged)
+    this.RunSafe(() =>
     {
-      _pokegold.Pokemons[index].Exp = (byte)(EXPUpDown.Value ?? 0);
-      _pokegold.Pokemons[index].CatchRate = (byte)(CatchRateUpDown.Value ?? 0);
+      var index = PokemonListBox.SelectedIndex;
+      if (index != -1)
+      {
+        _pokegold.Pokemons[index].Exp = (byte)(EXPUpDown.Value ?? 0);
+        _pokegold.Pokemons[index].CatchRate = (byte)(CatchRateUpDown.Value ?? 0);
 
-      _pokegold.Pokemons[index].HP = (byte)(HPUpDown.Value ?? 0);
-      _pokegold.Pokemons[index].Attack = (byte)(AttackUpDown.Value ?? 0);
-      _pokegold.Pokemons[index].Defence = (byte)(DefenceUpDown.Value ?? 0);
-      _pokegold.Pokemons[index].SpAttack = (byte)(SpAttackUpDown.Value ?? 0);
-      _pokegold.Pokemons[index].SpDefence = (byte)(SpDefenceUpDown.Value ?? 0);
-      _pokegold.Pokemons[index].Speed = (byte)(SpeedUpDown.Value ?? 0);
+        _pokegold.Pokemons[index].HP = (byte)(HPUpDown.Value ?? 0);
+        _pokegold.Pokemons[index].Attack = (byte)(AttackUpDown.Value ?? 0);
+        _pokegold.Pokemons[index].Defence = (byte)(DefenceUpDown.Value ?? 0);
+        _pokegold.Pokemons[index].SpAttack = (byte)(SpAttackUpDown.Value ?? 0);
+        _pokegold.Pokemons[index].SpDefence = (byte)(SpDefenceUpDown.Value ?? 0);
+        _pokegold.Pokemons[index].Speed = (byte)(SpeedUpDown.Value ?? 0);
 
-      _pokegold.Pokedex[index].Height = (byte)((HeightUpDown.Value ?? 0) * 10);
-      _pokegold.Pokedex[index].Weight = (int)((WeightUpDown.Value ?? 0) * 10);
+        _pokegold.Pokedex[index].Height = (byte)((HeightUpDown.Value ?? 0) * 10);
+        _pokegold.Pokedex[index].Weight = (int)((WeightUpDown.Value ?? 0) * 10);
 
-      _pokegold.NotifyDataChanged();
-    }
+        _pokegold.NotifyDataChanged();
+      }
+    });
   }
 
   private void OnImageClick(object sender, RoutedEventArgs _)
@@ -468,17 +455,20 @@ public partial class PokemonTab : UserControl, INotifyPropertyChanged
 
   private void OnColorPickerValueChanged(object _, RoutedPropertyChangedEventArgs<Color?> __)
   {
-    if (!_selfChanged)
+    this.RunSafe(() =>
     {
       var index = PokemonListBox.SelectedIndex;
-      _pokegold.Colors.Pokemons[index][0] = GBColor.FromWPFColor(Color1.SelectedColor!.Value);
-      _pokegold.Colors.Pokemons[index][1] = GBColor.FromWPFColor(Color2.SelectedColor!.Value);
-      _pokegold.Colors.ShinyPokemons[index][0] = GBColor.FromWPFColor(ShinyColor1.SelectedColor!.Value);
-      _pokegold.Colors.ShinyPokemons[index][1] = GBColor.FromWPFColor(ShinyColor2.SelectedColor!.Value);
+      if (index != -1)
+      {
+        _pokegold.Colors.Pokemons[index][0] = GBColor.FromWPFColor(Color1.SelectedColor!.Value);
+        _pokegold.Colors.Pokemons[index][1] = GBColor.FromWPFColor(Color2.SelectedColor!.Value);
+        _pokegold.Colors.ShinyPokemons[index][0] = GBColor.FromWPFColor(ShinyColor1.SelectedColor!.Value);
+        _pokegold.Colors.ShinyPokemons[index][1] = GBColor.FromWPFColor(ShinyColor2.SelectedColor!.Value);
 
-      UpdatePokemonImages();
-      _pokegold.NotifyDataChanged();
-    }
+        UpdatePokemonImages();
+        _pokegold.NotifyDataChanged();
+      }
+    });
   }
 
   private void OnEvolutionLearnMoveSelectionChanged(object _, SelectionChangedEventArgs __)

@@ -15,6 +15,7 @@
 * MdXaml
 * Newtonsoft.Json & Bson
 * PresentationTheme.Aero
+* Microsoft.Extensions.DependencyInjection
 
 ### 2. [MS-PL](./Docs/Licenses/ms-pl.md)
 

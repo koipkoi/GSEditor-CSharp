@@ -29,9 +29,10 @@
                    Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
           </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="저장(_S)"
+        <MenuItem Name="SaveMenuItem"
+                  Header="저장(_S)"
                   InputGestureText="Ctrl+S"
-                  IsEnabled="{Binding RomFileOpened}"
+                  IsEnabled="False"
                   Click="OnMenuItemClick">
           <MenuItem.Icon>
             <Image Source="{DynamicResource GSEditor_Icon_Save}"
@@ -49,9 +50,10 @@
         </MenuItem>
       </MenuItem>
       <MenuItem Header="게임(_G)">
-        <MenuItem Header="테스트 플레이(_P)..."
+        <MenuItem Name="TestPlayMenuItem"
+                  Header="테스트 플레이(_P)..."
                   InputGestureText="F5"
-                  IsEnabled="{Binding RomFileOpened}"
+                  IsEnabled="False"
                   Click="OnMenuItemClick">
           <MenuItem.Icon>
             <Image Source="{DynamicResource GSEditor_Icon_Play}"
@@ -86,17 +88,19 @@
         <Image Source="{DynamicResource GSEditor_Icon_Folder}"
                Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
       </Button>
-      <Button Tag="Ctrl+S"
+      <Button Name="SaveToolBarButton"
+              Tag="Ctrl+S"
               ToolTip="저장"
-              IsEnabled="{Binding RomFileOpened}"
+              IsEnabled="False"
               Click="OnMenuItemClick">
         <Image Source="{DynamicResource GSEditor_Icon_Save}"
                Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
       </Button>
       <Separator />
-      <Button Tag="F5"
+      <Button Name="TestPlayToolBarButton"
+              Tag="F5"
               ToolTip="테스트 플레이..."
-              IsEnabled="{Binding RomFileOpened}"
+              IsEnabled="False"
               Click="OnMenuItemClick">
         <Image Source="{DynamicResource GSEditor_Icon_Play}"
                Style="{DynamicResource GSEditor_Style_Image_GrayOutOnDisabled}" />
@@ -111,10 +115,10 @@
     </ToolBar>
 
     <TabControl Grid.Row="2"
-                x:Name="MainTab"
+                Name="MainTab"
                 Padding="0"
                 Margin="2"
-                IsEnabled="{Binding RomFileOpened}">
+                IsEnabled="False">
 
       <TabItem Header="포켓몬">
         <tabs:PokemonTab />
@@ -130,13 +134,16 @@
 
     </TabControl>
 
-    <StatusBar Grid.Row="3">
+    <StatusBar Grid.Row="3"
+               Padding="2, 4, 2, 4">
       <StatusBarItem Name="FileModifyState"
                      Padding="2, 0, 2, 0"
                      Margin="0"
                      Content="[변경됨]"
                      Visibility="Collapsed" />
-      <StatusBarItem Content="{Binding RomFilename}" />
+      <StatusBarItem Name="FileNameState"
+                     Padding="2, 0, 2, 0"
+                     Content="-" />
     </StatusBar>
 
   </Grid>
