@@ -337,7 +337,7 @@
           </Grid>
           <Grid Name="UnownGrid"
                 Visibility="Collapsed">
-            <Label Margin="0, 16, 0, 16">안농은 편집할 수 없습니다.</Label>
+            <Label Margin="0, 16, 0, 16">[안농] 메뉴를 선택하여 편집해주세요.</Label>
           </Grid>
           <Label Margin="0, 16, 0, 8"
                  Style="{DynamicResource GSEditor_Style_Label_Section}">도감</Label>

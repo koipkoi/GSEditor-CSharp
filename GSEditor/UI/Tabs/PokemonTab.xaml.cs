@@ -5,7 +5,6 @@ using GSEditor.UI.Windows;
 using GSEditor.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
-using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;

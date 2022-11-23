@@ -132,6 +132,10 @@
         <tabs:MovesTab />
       </TabItem>
 
+      <TabItem Header="안농">
+        <tabs:UnownTab />
+      </TabItem>
+
     </TabControl>
 
     <StatusBar Grid.Row="3"

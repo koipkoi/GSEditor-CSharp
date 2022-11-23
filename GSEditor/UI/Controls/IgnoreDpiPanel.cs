@@ -20,10 +20,14 @@ public sealed class IgnoreDpiPanel : Decorator
 
   private void Adjustment()
   {
-    var m = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice;
-    var dpiTransform = new ScaleTransform(1 / m.M11, 1 / m.M22);
-    if (dpiTransform.CanFreeze)
-      dpiTransform.Freeze();
-    LayoutTransform = dpiTransform;
+    var s = PresentationSource.FromVisual(this);
+    if (s != null)
+    {
+      var m = s.CompositionTarget.TransformToDevice;
+      var dpiTransform = new ScaleTransform(1 / m.M11, 1 / m.M22);
+      if (dpiTransform.CanFreeze)
+        dpiTransform.Freeze();
+      LayoutTransform = dpiTransform;
+    }
   }
 }
