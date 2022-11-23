@@ -2,9 +2,17 @@
 
 포켓몬스터 골드 버전 에디터입니다.
 
+## 기능
+
+* 포켓몬 편집
+* 안농 편집
+* 아이템 편집
+* 기술 편집
+
 ## 미리보기
 
-![](./Docs/Images/readme.png)
+![](./Docs/Images/readme_0.png)
+![](./Docs/Images/readme_1.png)
 
 ## 라이선스
 
