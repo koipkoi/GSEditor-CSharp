@@ -14,6 +14,7 @@ public sealed partial class Pokegold
     new PokedexConverter(),
     new PokemonsConverter(),
     new StringsConverter(),
+    new TMHMsConverter(),
   };
 
   public bool Read(string filename)

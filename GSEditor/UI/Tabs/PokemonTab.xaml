@@ -339,6 +339,7 @@
                 Visibility="Collapsed">
             <Label Margin="0, 16, 0, 16">[안농] 메뉴를 선택하여 편집해주세요.</Label>
           </Grid>
+
           <Label Margin="0, 16, 0, 8"
                  Style="{DynamicResource GSEditor_Style_Label_Section}">도감</Label>
           <Grid>
@@ -399,6 +400,7 @@
                      FontFamily="consolas"
                      TextChanged="OnTextChanged" />
           </Grid>
+
           <Label Margin="0, 16, 0, 8"
                  Style="{DynamicResource GSEditor_Style_Label_Section}">진화 &amp; 배우는 기술</Label>
           <StackPanel Orientation="Vertical">
@@ -503,6 +505,64 @@
                       Click="OnLearnMoveButtonClick">전체 삭제</Button>
             </StackPanel>
           </StackPanel>
+
+          <Label Margin="0, 16, 0, 8"
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">기술머신 &amp; 비전머신</Label>
+          <StackPanel Orientation="Horizontal"
+                      Margin="0, 0, 0, 8">
+            <Button Name="TMHMCheckAllButton"
+                    Padding="16, 4, 16, 4"
+                    Margin="0, 0, 4, 0"
+                    Click="OnTMHMButtonClick">모두 체크</Button>
+            <Button Name="TMHMClearButton"
+                    Padding="16, 4, 16, 4"
+                    Margin="0, 0, 4, 0"
+                    Click="OnTMHMButtonClick">모두 해제</Button>
+          </StackPanel>
+          <UniformGrid Name="TMHMContainer"
+                       Columns="3">
+            <xctk:CheckListBox Name="TMHM0"
+                               Height="160"
+                               Margin="0, 0, 4, 4"
+                               PreviewMouseWheel="NestedScrollImplEvent"
+                               ItemSelectionChanged="OnTMHMsSelectionChanged" />
+            <xctk:CheckListBox Name="TMHM1"
+                               Height="160"
+                               Margin="0, 0, 4, 4"
+                               PreviewMouseWheel="NestedScrollImplEvent"
+                               ItemSelectionChanged="OnTMHMsSelectionChanged" />
+            <xctk:CheckListBox Name="TMHM2"
+                               Height="160"
+                               Margin="0, 0, 4, 4"
+                               PreviewMouseWheel="NestedScrollImplEvent"
+                               ItemSelectionChanged="OnTMHMsSelectionChanged" />
+            <xctk:CheckListBox Name="TMHM3"
+                               Height="160"
+                               Margin="0, 0, 4, 4"
+                               PreviewMouseWheel="NestedScrollImplEvent"
+                               ItemSelectionChanged="OnTMHMsSelectionChanged" />
+            <xctk:CheckListBox Name="TMHM4"
+                               Height="160"
+                               Margin="0, 0, 4, 4"
+                               PreviewMouseWheel="NestedScrollImplEvent"
+                               ItemSelectionChanged="OnTMHMsSelectionChanged" />
+            <xctk:CheckListBox Name="TMHM5"
+                               Height="160"
+                               Margin="0, 0, 4, 4"
+                               PreviewMouseWheel="NestedScrollImplEvent"
+                               ItemSelectionChanged="OnTMHMsSelectionChanged" />
+            <xctk:CheckListBox Name="TMHM6"
+                               Height="160"
+                               Margin="0, 0, 4, 4"
+                               PreviewMouseWheel="NestedScrollImplEvent"
+                               ItemSelectionChanged="OnTMHMsSelectionChanged" />
+            <xctk:CheckListBox Name="TMHM7"
+                               Height="160"
+                               Margin="0, 0, 4, 4"
+                               PreviewMouseWheel="NestedScrollImplEvent"
+                               ItemSelectionChanged="OnTMHMsSelectionChanged" />
+          </UniformGrid>
+
         </StackPanel>
       </ScrollViewer>
     </Border>

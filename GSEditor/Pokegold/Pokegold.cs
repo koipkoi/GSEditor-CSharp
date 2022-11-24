@@ -14,5 +14,6 @@ public sealed partial class Pokegold
   public List<PGMove> Moves { get; } = new();
   public List<PGPokedex> Pokedex { get; } = new();
   public List<PGPokemon> Pokemons { get; } = new();
+  public List<byte> TMHMs { get; } = new();
   public Strings Strings { get; } = new();
 }

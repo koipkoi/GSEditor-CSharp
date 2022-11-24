@@ -5,11 +5,15 @@ using GSEditor.UI.Windows;
 using GSEditor.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
+using System;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Xceed.Wpf.Toolkit;
+using Xceed.Wpf.Toolkit.Primitives;
 
 namespace GSEditor.UI.Tabs;
 
@@ -18,10 +22,23 @@ public partial class PokemonTab : UserControl
   private readonly System.Drawing.Color _pokemonWhiteColor = GBColor.FromBytes(new byte[] { 0xff, 0x7f, }).ToColor();
   private readonly System.Drawing.Color _pokemonBlackColor = GBColor.FromBytes(new byte[] { 0x00, 0x00, }).ToColor();
   private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
+  private readonly List<CheckListBox> _tmhmList;
 
   public PokemonTab()
   {
     InitializeComponent();
+
+    _tmhmList = new()
+    {
+      TMHM0,
+      TMHM1,
+      TMHM2,
+      TMHM3,
+      TMHM4,
+      TMHM5,
+      TMHM6,
+      TMHM7,
+    };
 
     Loaded += (_, __) => OnNeedTabUpdate();
     _pokegold.RegisterRomChanged(this, (_, _) => OnNeedTabUpdate());
@@ -59,6 +76,20 @@ public partial class PokemonTab : UserControl
       {
         Item1ComboBox.Items.Add(e);
         Item2ComboBox.Items.Add(e);
+      }
+
+      if (_pokegold.IsOpened)
+      {
+        foreach (var e in _tmhmList)
+          e.Items.Clear();
+
+        for (var i = 0; i < 57; i++)
+        {
+          var label = (i < 50 ? "기술" : "비전");
+          var number = (i < 50 ? i + 1 : i - 49).ToString().PadLeft(2, '0');
+          var name = _pokegold.Strings.MoveNames[_pokegold.TMHMs[i] - 1];
+          _tmhmList[i / 8].Items.Add($"{label}{number} [{name}]");
+        }
       }
     });
 
@@ -204,6 +235,8 @@ public partial class PokemonTab : UserControl
       learnMoveGridView.Columns[0].Width = totallyWidth * 0.3;
       learnMoveGridView.Columns[1].Width = totallyWidth * 0.7;
     }
+
+    TMHMContainer.Columns = (int)(ActualWidth / 220);
   }
 
   private void NestedScrollImplEvent(object sender, MouseWheelEventArgs e)
@@ -212,7 +245,23 @@ public partial class PokemonTab : UserControl
     {
       var border = (VisualTreeHelper.GetChild(listView, 0) as Border)!;
       var scrollViewer = (VisualTreeHelper.GetChild(border, 0) as ScrollViewer)!;
+      if ((e.Delta > 0 && scrollViewer.VerticalOffset == 0) || (e.Delta < 0 && scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight))
+      {
+        e.Handled = true;
 
+        var parent = (scrollViewer.Parent as UIElement)!;
+        parent.RaiseEvent(new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+        {
+          RoutedEvent = MouseWheelEvent,
+          Source = scrollViewer,
+        });
+      }
+    }
+
+    if (sender is CheckListBox listBox && !e.Handled)
+    {
+      var border = (VisualTreeHelper.GetChild(listBox, 0) as Border)!;
+      var scrollViewer = (VisualTreeHelper.GetChild(border, 0) as ScrollViewer)!;
       if ((e.Delta > 0 && scrollViewer.VerticalOffset == 0) || (e.Delta < 0 && scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight))
       {
         e.Handled = true;
@@ -258,6 +307,16 @@ public partial class PokemonTab : UserControl
         HeightUpDown.Value = _pokegold.Pokedex[index].Height / 10.0;
         WeightUpDown.Value = _pokegold.Pokedex[index].Weight / 10.0;
         DexDescriptionTextBox.Text = _pokegold.Pokedex[index].Description.Replace("[59]", "\n");
+
+        foreach (var e in _tmhmList)
+          e.SelectedItems.Clear();
+
+        for (var i = 0; i < 57; i++)
+        {
+          var item = _tmhmList[i / 8].Items[i % 8];
+          if (_pokegold.Pokemons[index].TMHMs[i])
+            _tmhmList[i / 8].SelectedItems.Add(item);
+        }
 
         UpdateEvolutionMoves();
         UpdatePokemonImages();
@@ -387,7 +446,7 @@ public partial class PokemonTab : UserControl
             {
               if (newImage.Columns != newImage.Rows || newImage.Columns < 5 || newImage.Columns > 7 || newImage.Rows < 5 || newImage.Rows > 7)
               {
-                MessageBox.Show("이미지 사이즈가 올바르지 않습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("이미지 사이즈가 올바르지 않습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
               }
 
@@ -398,7 +457,7 @@ public partial class PokemonTab : UserControl
             {
               if (newImage.Columns != 6 || newImage.Rows != 6)
               {
-                MessageBox.Show("이미지 사이즈가 올바르지 않습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("이미지 사이즈가 올바르지 않습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
               }
 
@@ -520,7 +579,7 @@ public partial class PokemonTab : UserControl
         var index = EvolutionListView.SelectedIndex;
         if (index != -1)
         {
-          if (MessageBox.Show("정말로 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+          if (System.Windows.MessageBox.Show("정말로 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
             return;
 
           _pokegold.Pokemons[PokemonListBox.SelectedIndex].Evolutions.RemoveAt(index);
@@ -532,7 +591,7 @@ public partial class PokemonTab : UserControl
 
       if (button.Name == nameof(EvolutionClearButton))
       {
-        if (MessageBox.Show("정말로 전부 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+        if (System.Windows.MessageBox.Show("정말로 전부 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
           return;
 
         _pokegold.Pokemons[PokemonListBox.SelectedIndex].Evolutions.Clear();
@@ -593,7 +652,7 @@ public partial class PokemonTab : UserControl
         var index = LearnMoveListView.SelectedIndex;
         if (index != -1)
         {
-          if (MessageBox.Show("정말로 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+          if (System.Windows.MessageBox.Show("정말로 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
             return;
 
           _pokegold.Pokemons[PokemonListBox.SelectedIndex].LearnMoves.RemoveAt(index);
@@ -605,7 +664,7 @@ public partial class PokemonTab : UserControl
 
       if (button.Name == nameof(LearnMoveClearButton))
       {
-        if (MessageBox.Show("정말로 전부 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+        if (System.Windows.MessageBox.Show("정말로 전부 삭제하겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
           return;
 
         _pokegold.Pokemons[PokemonListBox.SelectedIndex].LearnMoves.Clear();
@@ -649,6 +708,55 @@ public partial class PokemonTab : UserControl
         _pokegold.Pokemons[index].LearnMoves[lmIndex] = result;
         _pokegold.NotifyDataChanged();
         UpdateEvolutionMoves();
+      }
+    }
+  }
+
+  private void OnTMHMsSelectionChanged(object _, ItemSelectionChangedEventArgs __)
+  {
+    this.RunSafe(() =>
+    {
+      var index = PokemonListBox.SelectedIndex;
+      if (index != -1)
+      {
+        for (var i = 0; i < 57; i++)
+          _pokegold.Pokemons[index].TMHMs[i] = false;
+
+        for (var i = 0; i < _tmhmList.Count; i++)
+        {
+          foreach (var e in _tmhmList[i].SelectedItems)
+            _pokegold.Pokemons[index].TMHMs[(i * 8) + _tmhmList[i].SelectedItems.IndexOf(e)] = true;
+        }
+
+        _pokegold.NotifyDataChanged();
+      }
+    });
+  }
+
+  private void OnTMHMButtonClick(object sender, RoutedEventArgs _)
+  {
+    var index = PokemonListBox.SelectedIndex;
+    if (index != -1)
+    {
+      if (sender is Button button)
+      {
+        if (button.Name == nameof(TMHMCheckAllButton))
+        {
+          foreach (var e in _tmhmList)
+            e.SelectedItems.Clear();
+
+          for (var i = 0; i < 57; i++)
+          {
+            var item = _tmhmList[i / 8].Items[i % 8];
+            _tmhmList[i / 8].SelectedItems.Add(item);
+          }
+        }
+
+        if (button.Name == nameof(TMHMClearButton))
+        {
+          foreach (var e in _tmhmList)
+            e.SelectedItems.Clear();
+        }
       }
     }
   }

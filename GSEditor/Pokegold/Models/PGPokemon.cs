@@ -2,6 +2,7 @@
 
 public sealed class PGPokemon
 {
+  private static readonly byte[] bits = new byte[] { 1, 2, 4, 8, 16, 32, 64, 128 };
   private static readonly byte[] reverseBits = new byte[] { 128, 64, 32, 16, 8, 4, 2, 1 };
   private static readonly Dictionary<byte, int> _genderRates = new()
   {
@@ -86,7 +87,7 @@ public sealed class PGPokemon
       for (var j = 0; j < 8; j++)
       {
         var index = (i * 8) + j;
-        newItem.TMHMs[index] = (bytes[24 + i] & reverseBits[j]) != 0;
+        newItem.TMHMs[index] = (bytes[24 + i] & bits[j]) != 0;
       }
     }
 
@@ -135,7 +136,7 @@ public sealed class PGPokemon
       for (var j = 0; j < 8; j++)
       {
         if (TMHMs[(i * 8) + j])
-          bytes[24 + i] = (byte)(bytes[24 + i] | reverseBits[j]);
+          bytes[24 + i] = (byte)(bytes[24 + i] | bits[j]);
       }
     }
 
