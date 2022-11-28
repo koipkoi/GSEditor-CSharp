@@ -136,6 +136,10 @@
         <tabs:UnownTab />
       </TabItem>
 
+      <TabItem Header="기술머신">
+        <tabs:TMHMsTab />
+      </TabItem>
+
     </TabControl>
 
     <StatusBar Grid.Row="3"
