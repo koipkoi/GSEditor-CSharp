@@ -6,7 +6,11 @@ namespace GSEditor.UI.Windows;
 public partial class AppInformationDialog : Window
 {
   public static readonly string AppVersions = "" +
-    "### v1.2.3 (예정)\n" +
+    "### v1.2.4 (예정)\n" +
+    "* 기술머신 메뉴 포켓몬 상세 설정 추가\n" +
+    "  \n" +
+    "  \n" +
+    "### v1.2.3\n" +
     "* 기술머신 메뉴 추가\n" +
     "  \n" +
     "  \n" +
