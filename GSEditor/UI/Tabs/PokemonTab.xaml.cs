@@ -347,14 +347,6 @@ public partial class PokemonTab : UserControl
           _pokegold.NotifyDataChanged();
         }
 
-        var maxLength = 0;
-        foreach (var line in DexDescriptionTextBox.Text.Split("\n"))
-        {
-          if (line.Length > maxLength)
-            maxLength = line.Length;
-        }
-        DexDescriptionLabel.Content = $"설명 ({maxLength}/18)：";
-
         var realDescription = DexDescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
         if (realDescription.TryTextEncode(out var _))
         {
@@ -363,6 +355,14 @@ public partial class PokemonTab : UserControl
         }
       }
     });
+
+    var maxLength = 0;
+    foreach (var line in DexDescriptionTextBox.Text.Split("\n"))
+    {
+      if (line.Length > maxLength)
+        maxLength = line.Length;
+    }
+    DexDescriptionLabel.Content = $"설명 ({maxLength}/18)：";
   }
 
   private void OnComboBoxSelectionChanged(object _, SelectionChangedEventArgs __)

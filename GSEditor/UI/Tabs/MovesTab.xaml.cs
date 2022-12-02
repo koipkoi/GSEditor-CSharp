@@ -84,14 +84,6 @@ public partial class MovesTab : UserControl
         _pokegold.NotifyDataChanged();
       }
 
-      var maxLength = 0;
-      foreach (var line in DescriptionTextBox.Text.Split("\n"))
-      {
-        if (line.Length > maxLength)
-          maxLength = line.Length;
-      }
-      DescriptionLabel.Content = $"설명 ({maxLength}/18)：";
-
       var realDescription = DescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
       if (realDescription.TryTextEncode(out var _))
       {
@@ -99,6 +91,14 @@ public partial class MovesTab : UserControl
         _pokegold.NotifyDataChanged();
       }
     });
+
+    var maxLength = 0;
+    foreach (var line in DescriptionTextBox.Text.Split("\n"))
+    {
+      if (line.Length > maxLength)
+        maxLength = line.Length;
+    }
+    DescriptionLabel.Content = $"설명 ({maxLength}/18)：";
   }
 
   private void OnUpDownValueChaged(object _, RoutedPropertyChangedEventArgs<object> __)
