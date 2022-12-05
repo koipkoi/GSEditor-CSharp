@@ -6,8 +6,10 @@ namespace GSEditor.UI.Windows;
 public partial class AppInformationDialog : Window
 {
   public static readonly string AppVersions = "" +
-    "### v1.2.4 (예정)\n" +
+    "### v1.2.4\n" +
     "* 기술머신 메뉴 포켓몬 상세 설정 추가\n" +
+    "* 설명란의 길이가 처음에 표시안되는 문제 수정\n" +
+    "* 비전, 기술머신 목록 홀수, 짝수 구분되도록 변경 및 버그 수정\n" +
     "  \n" +
     "  \n" +
     "### v1.2.3\n" +
