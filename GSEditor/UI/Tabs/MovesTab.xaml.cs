@@ -47,10 +47,10 @@ public partial class MovesTab : UserControl
 
   private void OnMovesListBoxSelectionChanged(object _, SelectionChangedEventArgs __)
   {
-    this.RunSafe(() =>
+    var index = MovesListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = MovesListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         NoTextBox.Text = $"{_pokegold.Moves[index].No}";
         NameTextBox.Text = _pokegold.Strings.MoveNames[index];
@@ -63,34 +63,36 @@ public partial class MovesTab : UserControl
 
         EffectComboBox.SelectedIndex = _pokegold.Moves[index].Effect;
         EffectUpDown.Value = _pokegold.Moves[index].EffectChance;
-      }
+      });
+    }
 
-      ContentPanel.IsEnabled = index != -1;
-    });
+    ContentPanel.IsEnabled = index != -1;
   }
 
   private void OnTextBoxTextChanged(object _, TextChangedEventArgs __)
   {
-    this.RunSafe(() =>
+    var index = MovesListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = MovesListBox.SelectedIndex;
-
-      if (NameTextBox.Text.TryTextEncode(out var _))
+      this.RunSafe(() =>
       {
-        var previousSelection = MovesListBox.SelectedIndex;
-        _pokegold.Strings.MoveNames[index] = NameTextBox.Text;
-        MovesListBox.Items[index] = _pokegold.Strings.MoveNames[index];
-        MovesListBox.SelectedIndex = previousSelection;
-        _pokegold.NotifyDataChanged();
-      }
+        if (NameTextBox.Text.TryTextEncode(out var _))
+        {
+          var previousSelection = MovesListBox.SelectedIndex;
+          _pokegold.Strings.MoveNames[index] = NameTextBox.Text;
+          MovesListBox.Items[index] = _pokegold.Strings.MoveNames[index];
+          MovesListBox.SelectedIndex = previousSelection;
+          _pokegold.NotifyDataChanged();
+        }
 
-      var realDescription = DescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
-      if (realDescription.TryTextEncode(out var _))
-      {
-        _pokegold.Strings.MoveDescriptions[index] = realDescription;
-        _pokegold.NotifyDataChanged();
-      }
-    });
+        var realDescription = DescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
+        if (realDescription.TryTextEncode(out var _))
+        {
+          _pokegold.Strings.MoveDescriptions[index] = realDescription;
+          _pokegold.NotifyDataChanged();
+        }
+      });
+    }
 
     var maxLength = 0;
     foreach (var line in DescriptionTextBox.Text.Split("\n"))
@@ -104,22 +106,18 @@ public partial class MovesTab : UserControl
   private void OnUpDownValueChaged(object _, RoutedPropertyChangedEventArgs<object> __)
   {
     var index = MovesListBox.SelectedIndex;
-
-    this.RunSafe(() =>
+    if (index != -1)
     {
-      if (index != -1)
+      this.RunSafe(() =>
       {
         _pokegold.Moves[index].PP = (byte)(PPUpDown.Value ?? 0);
         _pokegold.Moves[index].Power = (byte)(PowerUpDown.Value ?? 0);
         _pokegold.Moves[index].Accuracy = (byte)(AccuracyUpDown.Value ?? 0);
         _pokegold.Moves[index].EffectChance = (byte)(EffectUpDown.Value ?? 0);
         _pokegold.NotifyDataChanged();
-      }
-    });
+      });
 
-    // 명중률 퍼센티지 변경
-    if (index != -1)
-    {
+      // 명중률 퍼센티지 변경
       var accuracyPercentage = string.Format("{0:P2}", (double)_pokegold.Moves[index].Accuracy / 0xff);
       AccuracyPercentageLabel.Content = accuracyPercentage;
     }
@@ -127,15 +125,15 @@ public partial class MovesTab : UserControl
 
   private void OnComboBoxSelectionChanged(object _, SelectionChangedEventArgs __)
   {
-    this.RunSafe(() =>
+    var index = MovesListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = MovesListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         _pokegold.Moves[index].MoveType = (byte)TypeComboBox.SelectedIndex;
         _pokegold.Moves[index].Effect = (byte)EffectComboBox.SelectedIndex;
         _pokegold.NotifyDataChanged();
-      }
-    });
+      });
+    }
   }
 }

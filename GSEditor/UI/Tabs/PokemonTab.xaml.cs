@@ -276,10 +276,10 @@ public partial class PokemonTab : UserControl
 
   private void OnPokemonListBoxSelected(object _, SelectionChangedEventArgs __)
   {
-    this.RunSafe(() =>
+    var index = PokemonListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = PokemonListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         NumberTextBox.Text = $"{index + 1}";
         NameTextBox.Text = _pokegold.Strings.PokemonNames[index];
@@ -318,20 +318,20 @@ public partial class PokemonTab : UserControl
 
         UpdateEvolutionMoves();
         UpdatePokemonImages();
-      }
+      });
+    }
 
-      ContentBorder.IsEnabled = index != -1;
-      ImagesGrid.Visibility = index != 200 ? Visibility.Visible : Visibility.Collapsed;
-      UnownGrid.Visibility = index == 200 ? Visibility.Visible : Visibility.Collapsed;
-    });
+    ContentBorder.IsEnabled = index != -1;
+    ImagesGrid.Visibility = index != 200 ? Visibility.Visible : Visibility.Collapsed;
+    UnownGrid.Visibility = index == 200 ? Visibility.Visible : Visibility.Collapsed;
   }
 
   private void OnTextChanged(object _, TextChangedEventArgs __)
   {
-    this.RunSafe(() =>
+    var index = PokemonListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = PokemonListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         if (NameTextBox.Text.TryTextEncode(out var _))
         {
@@ -353,8 +353,8 @@ public partial class PokemonTab : UserControl
           _pokegold.Pokedex[index].Description = realDescription;
           _pokegold.NotifyDataChanged();
         }
-      }
-    });
+      });
+    }
 
     var maxLength = 0;
     foreach (var line in DexDescriptionTextBox.Text.Split("\n"))
@@ -367,10 +367,10 @@ public partial class PokemonTab : UserControl
 
   private void OnComboBoxSelectionChanged(object _, SelectionChangedEventArgs __)
   {
-    this.RunSafe(() =>
+    var index = PokemonListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = PokemonListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         _pokegold.Pokemons[index].Type1 = (byte)Type1ComboBox.SelectedIndex;
         _pokegold.Pokemons[index].Type2 = (byte)Type2ComboBox.SelectedIndex;
@@ -380,17 +380,17 @@ public partial class PokemonTab : UserControl
         _pokegold.Pokemons[index].GrowthRate = (byte)GrowthRateComboBox.SelectedIndex;
         _pokegold.Pokemons[index].EggGroup = (byte)((EggGroup1ComboBox.SelectedIndex << 4) | EggGroup2ComboBox.SelectedIndex);
         _pokegold.NotifyDataChanged();
-      }
-    });
+      });
+    }
   }
 
   private void OnUpDownValueChanged(object _, RoutedPropertyChangedEventArgs<object> __)
   {
     var index = PokemonListBox.SelectedIndex;
 
-    this.RunSafe(() =>
+    if (index != -1)
     {
-      if (index != -1)
+      this.RunSafe(() =>
       {
         _pokegold.Pokemons[index].Exp = (byte)(EXPUpDown.Value ?? 0);
         _pokegold.Pokemons[index].CatchRate = (byte)(CatchRateUpDown.Value ?? 0);
@@ -406,12 +406,9 @@ public partial class PokemonTab : UserControl
         _pokegold.Pokedex[index].Weight = (int)((WeightUpDown.Value ?? 0) * 10);
 
         _pokegold.NotifyDataChanged();
-      }
-    });
+      });
 
-    // 포획률 퍼센티지 변경
-    if (index != -1)
-    {
+      // 포획률 퍼센티지 변경
       var percentage = string.Format("{0:P2}", (double)_pokegold.Pokemons[index].CatchRate / 0xff);
       CatchRatePercentageLabel.Content = percentage;
     }
@@ -520,10 +517,10 @@ public partial class PokemonTab : UserControl
 
   private void OnColorPickerValueChanged(object _, RoutedPropertyChangedEventArgs<Color?> __)
   {
-    this.RunSafe(() =>
+    var index = PokemonListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = PokemonListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         _pokegold.Colors.Pokemons[index][0] = GBColor.FromWPFColor(Color1.SelectedColor!.Value);
         _pokegold.Colors.Pokemons[index][1] = GBColor.FromWPFColor(Color2.SelectedColor!.Value);
@@ -532,8 +529,8 @@ public partial class PokemonTab : UserControl
 
         UpdatePokemonImages();
         _pokegold.NotifyDataChanged();
-      }
-    });
+      });
+    }
   }
 
   private void OnEvolutionLearnMoveSelectionChanged(object _, SelectionChangedEventArgs __)
@@ -712,10 +709,10 @@ public partial class PokemonTab : UserControl
 
   private void OnTMHMsSelectionChanged(object _, ItemSelectionChangedEventArgs __)
   {
-    this.RunSafe(() =>
+    var index = PokemonListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = PokemonListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         for (var i = 0; i < 57; i++)
           _pokegold.Pokemons[index].TMHMs[i] = false;
@@ -727,8 +724,8 @@ public partial class PokemonTab : UserControl
         }
 
         _pokegold.NotifyDataChanged();
-      }
-    });
+      });
+    }
   }
 
   private void OnTMHMButtonClick(object sender, RoutedEventArgs _)

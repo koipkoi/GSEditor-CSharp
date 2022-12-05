@@ -11,7 +11,14 @@ public static class LockAction
       if (!_lock.Contains(lockKey))
       {
         _lock.Add(lockKey);
-        action();
+        try
+        {
+          action();
+        }
+        catch (Exception)
+        {
+          // ignored
+        }
         _lock.Remove(lockKey);
       }
     }

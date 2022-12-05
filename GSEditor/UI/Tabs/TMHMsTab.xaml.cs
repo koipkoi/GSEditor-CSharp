@@ -65,27 +65,26 @@ public partial class TMHMsTab : UserControl
 
   private void OnTMHMsSelectionChanged(object _, SelectionChangedEventArgs __)
   {
-    this.RunSafe(() =>
+    var index = TMHMsListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = TMHMsListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         MoveComboBox.SelectedIndex = _pokegold.TMHMs[index] - 1;
-        // todo
-      }
+      });
+    }
 
-      ContentBorder.IsEnabled = index != -1;
-    });
+    ContentBorder.IsEnabled = index != -1;
   }
 
   private void OnComboBoxSelectionChanged(object _, SelectionChangedEventArgs __)
   {
     var previousSelection = TMHMsListBox.SelectedIndex;
 
-    this.RunSafe(() =>
+    var index = TMHMsListBox.SelectedIndex;
+    if (index != -1)
     {
-      var index = TMHMsListBox.SelectedIndex;
-      if (index != -1)
+      this.RunSafe(() =>
       {
         _pokegold.TMHMs[index] = (byte)(MoveComboBox.SelectedIndex + 1);
 
@@ -95,8 +94,8 @@ public partial class TMHMsTab : UserControl
         TMHMsListBox.Items[index] = $"{label}{number} [{name}]";
 
         _pokegold.NotifyDataChanged();
-      }
-    });
+      });
+    }
 
     TMHMsListBox.SelectedIndex = previousSelection;
   }
