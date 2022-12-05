@@ -8,6 +8,10 @@
                  Handler="OnListBoxPreviewMouseRightButtonDown" />
     <EventSetter Event="ContextMenuOpening"
                  Handler="OnListBoxContextMenuOpening" />
+    <Setter Property="VirtualizingPanel.IsVirtualizing"
+            Value="True" />
+    <Setter Property="VirtualizingPanel.VirtualizationMode"
+            Value="Recycling" />
     <Setter Property="AlternationCount"
             Value="2" />
     <Setter Property="ItemContainerStyle">
@@ -39,6 +43,10 @@
 
   <Style x:Key="GSEditor_Style_CheckListBox_Colored"
          TargetType="xctk:CheckListBox">
+    <Setter Property="VirtualizingPanel.IsVirtualizing"
+            Value="True" />
+    <Setter Property="VirtualizingPanel.VirtualizationMode"
+            Value="Recycling" />
     <Setter Property="AlternationCount"
             Value="2" />
     <Setter Property="ItemContainerStyle">

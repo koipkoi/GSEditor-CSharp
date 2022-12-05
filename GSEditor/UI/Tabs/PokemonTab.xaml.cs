@@ -720,7 +720,7 @@ public partial class PokemonTab : UserControl
         for (var i = 0; i < _tmhmList.Count; i++)
         {
           foreach (var e in _tmhmList[i].SelectedItems)
-            _pokegold.Pokemons[index].TMHMs[(i * 8) + _tmhmList[i].SelectedItems.IndexOf(e)] = true;
+            _pokegold.Pokemons[index].TMHMs[(i * 8) + _tmhmList[i].Items.IndexOf(e)] = true;
         }
 
         _pokegold.NotifyDataChanged();
