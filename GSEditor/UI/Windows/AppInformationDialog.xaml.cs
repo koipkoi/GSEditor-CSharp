@@ -6,6 +6,12 @@ namespace GSEditor.UI.Windows;
 public partial class AppInformationDialog : Window
 {
   public static readonly string AppVersions = "" +
+    "### v1.2.5\n" +
+    "* 메뉴 순서 변경 (포켓몬, 아이템, 안농, 기술, 기술머신 > 포켓몬, 안농, 아이템, 기술, 기술머신)\n" +
+    "* 콤보상자 홀수, 짝수 구분되도록 스타일 변경\n" +
+    "* 콤보상자에서 오른쪽 클릭을 이용하여 항목을 찾을 수 있도록 변경\n" +
+    "  \n" +
+    "  \n" +
     "### v1.2.4\n" +
     "* 기술머신 메뉴 포켓몬 상세 설정 추가\n" +
     "* 설명란의 길이가 처음에 표시안되는 문제 수정\n" +

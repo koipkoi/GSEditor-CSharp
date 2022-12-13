@@ -1,6 +1,6 @@
-﻿[assembly: System.Reflection.AssemblyFileVersion("1.2.4.0")]
-[assembly: System.Reflection.AssemblyVersion("1.2.4.0")]
-[assembly: System.Reflection.AssemblyInformationalVersion("1.2.4.0")]
+﻿[assembly: System.Reflection.AssemblyFileVersion("1.2.5.0")]
+[assembly: System.Reflection.AssemblyVersion("1.2.5.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.2.5.0")]
 
 [assembly: System.Reflection.AssemblyProduct("GS 에디터")]
 [assembly: System.Reflection.AssemblyTitle("포켓몬스터 금 게임 에디터")]
