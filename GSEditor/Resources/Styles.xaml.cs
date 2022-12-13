@@ -35,6 +35,13 @@ public partial class Styles
         listBox.ScrollIntoView(listBox.SelectedItem);
       }
     }
+
+    if (sender is ComboBox comboBox && comboBox.IsEnabled)
+    {
+      var result = ListBoxSearchDialog.Show(comboBox, comboBox.Items);
+      if (result != -1)
+        comboBox.SelectedIndex = result;
+    }
   }
 
   private void OnSelectorPreviewMouseWheel(object sender, MouseWheelEventArgs e)

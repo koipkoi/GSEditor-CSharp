@@ -1,0 +1,569 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=netstandard">
+
+  <x:Array x:Key="GSEditor_Strings_GenderRateTypes"
+           Type="{x:Type s:String}">
+    <s:String>0% (수컷)</s:String>
+    <s:String>12.5%</s:String>
+    <s:String>25%</s:String>
+    <s:String>37.5%</s:String>
+    <s:String>50% (중간)</s:String>
+    <s:String>62.5%</s:String>
+    <s:String>75%</s:String>
+    <s:String>87.5%</s:String>
+    <s:String>100% (암컷)</s:String>
+    <s:String>없음</s:String>
+  </x:Array>
+
+  <x:Array x:Key="GSEditor_Strings_GrowthRateTypes"
+           Type="{x:Type s:String}">
+    <s:String>중간 빠름 (125 ~ 1,000,000)</s:String>
+    <s:String>약간 빠름 (313 ~ 849,970)</s:String>
+    <s:String>약간 느림 (523 ~ 949,930)</s:String>
+    <s:String>중간 느림 (135 ~ 1,059,860)</s:String>
+    <s:String>빠름 (100 ~ 800,000)</s:String>
+    <s:String>느림 (156 ~ 1,250,000)</s:String>
+  </x:Array>
+
+  <x:Array x:Key="GSEditor_Strings_EggGroupTypes"
+           Type="{x:Type s:String}">
+    <s:String>없음</s:String>
+    <s:String>괴물</s:String>
+    <s:String>양서류</s:String>
+    <s:String>벌레</s:String>
+    <s:String>비행</s:String>
+    <s:String>땅</s:String>
+    <s:String>요정</s:String>
+    <s:String>식물</s:String>
+    <s:String>인간형</s:String>
+    <s:String>뱀</s:String>
+    <s:String>광물</s:String>
+    <s:String>불완전</s:String>
+    <s:String>물고기</s:String>
+    <s:String>메타몽</s:String>
+    <s:String>드래곤</s:String>
+    <s:String>불명</s:String>
+  </x:Array>
+
+  <x:Array x:Key="GSEditor_Strings_ItemEffects"
+           Type="{x:Type s:String}">
+    <s:String>00 - 없음</s:String>
+    <s:String>01 - HP 회복</s:String>
+    <s:String>02 - ?</s:String>
+    <s:String>03 - HP 회복 (개수 소모 없음)</s:String>
+    <s:String>04 - ?</s:String>
+    <s:String>05 - ?</s:String>
+    <s:String>06 - PP 회복</s:String>
+    <s:String>07 - ?</s:String>
+    <s:String>08 - 야생 포켓몬과 만날 확률 낮아짐</s:String>
+    <s:String>09 - ?</s:String>
+    <s:String>0A - 독상태 회복</s:String>
+    <s:String>0B - 얼음상태 회복</s:String>
+    <s:String>0C - 화상상태 회복</s:String>
+    <s:String>0D - 잠듦상태 회복</s:String>
+    <s:String>0E - 마비상태 회복</s:String>
+    <s:String>0F - 모든 상태이상 회복</s:String>
+    <s:String>10 - 혼란상태 회복</s:String>
+    <s:String>11 - ?</s:String>
+    <s:String>12 - ?</s:String>
+    <s:String>13 - ?</s:String>
+    <s:String>14 - ?</s:String>
+    <s:String>15 - ?</s:String>
+    <s:String>16 - ?</s:String>
+    <s:String>17 - ?</s:String>
+    <s:String>18 - ?</s:String>
+    <s:String>19 - ?</s:String>
+    <s:String>1A - ?</s:String>
+    <s:String>1B - ?</s:String>
+    <s:String>1C - ?</s:String>
+    <s:String>1D - ?</s:String>
+    <s:String>1E - ?</s:String>
+    <s:String>1F - ?</s:String>
+    <s:String>20 - ?</s:String>
+    <s:String>21 - ?</s:String>
+    <s:String>22 - ?</s:String>
+    <s:String>23 - ?</s:String>
+    <s:String>24 - ?</s:String>
+    <s:String>25 - ?</s:String>
+    <s:String>26 - ?</s:String>
+    <s:String>27 - ?</s:String>
+    <s:String>28 - ?</s:String>
+    <s:String>29 - ?</s:String>
+    <s:String>2A - 메타몽의 방어력 상승</s:String>
+    <s:String>2B - ?</s:String>
+    <s:String>2C - ?</s:String>
+    <s:String>2D - ?</s:String>
+    <s:String>2E - ?</s:String>
+    <s:String>2F - ?</s:String>
+    <s:String>30 - ?</s:String>
+    <s:String>31 - ?</s:String>
+    <s:String>32 - 노말 타입 기술 위력 상승</s:String>
+    <s:String>33 - 격투 타입 기술 위력 상승</s:String>
+    <s:String>34 - 비행 타입 기술 위력 상승</s:String>
+    <s:String>35 - 독 타입 기술 위력 상승</s:String>
+    <s:String>36 - 땅 타입 기술 위력 상승</s:String>
+    <s:String>37 - 바위 타입 기술 위력 상승</s:String>
+    <s:String>38 - 벌레 타입 기술 위력 상승</s:String>
+    <s:String>39 - 고스트 타입 기술 위력 상승</s:String>
+    <s:String>3A - 화염 타입 기술 위력 상승</s:String>
+    <s:String>3B - 물 타입 기술 위력 상승</s:String>
+    <s:String>3C - 풀 타입 기술 위력 상승</s:String>
+    <s:String>3D - 전기 타입 기술 위력 상승</s:String>
+    <s:String>3E - 에스퍼 타입 기술 위력 상승</s:String>
+    <s:String>3F - 얼음 타입 기술 위력 상승</s:String>
+    <s:String>40 - 드래곤 타입 기술 위력 상승</s:String>
+    <s:String>41 - 악 타입 기술 위력 상승</s:String>
+    <s:String>42 - 강철 타입 기술 위력 상승</s:String>
+    <s:String>43 - ?</s:String>
+    <s:String>44 - ?</s:String>
+    <s:String>45 - ?</s:String>
+    <s:String>46 - ?</s:String>
+    <s:String>47 - ?</s:String>
+    <s:String>48 - 야생 포켓몬 전투에서 반드시 도망</s:String>
+    <s:String>49 - 급소에 명중하기 쉽게된다</s:String>
+    <s:String>4A - 포켓몬이 선제 공격한다</s:String>
+    <s:String>4B - 상대 포켓몬의 기가 죽는다</s:String>
+    <s:String>4C - 지닌 포켓몬이 배틀 참여 시 돈 2배</s:String>
+    <s:String>4D - 상대 포켓몬의 명중률을 낮춘다</s:String>
+    <s:String>4E - ?</s:String>
+    <s:String>4F - HP를 1 남기고 버틸 때가 있다</s:String>
+    <s:String>50 - ?</s:String>
+    <s:String>51 - ?</s:String>
+    <s:String>52 - ?</s:String>
+    <s:String>53 - ?</s:String>
+    <s:String>54 - ?</s:String>
+    <s:String>55 - ?</s:String>
+    <s:String>56 - ?</s:String>
+    <s:String>57 - ?</s:String>
+    <s:String>58 - ?</s:String>
+    <s:String>59 - ?</s:String>
+    <s:String>5A - ?</s:String>
+    <s:String>5B - ?</s:String>
+    <s:String>5C - ?</s:String>
+    <s:String>5D - ?</s:String>
+    <s:String>5E - ?</s:String>
+    <s:String>5F - ?</s:String>
+    <s:String>60 - ?</s:String>
+    <s:String>61 - ?</s:String>
+    <s:String>62 - ?</s:String>
+    <s:String>63 - ?</s:String>
+    <s:String>64 - ?</s:String>
+    <s:String>65 - ?</s:String>
+    <s:String>66 - ?</s:String>
+    <s:String>67 - ?</s:String>
+    <s:String>68 - ?</s:String>
+    <s:String>69 - ?</s:String>
+    <s:String>6A - ?</s:String>
+    <s:String>6B - ?</s:String>
+    <s:String>6C - ?</s:String>
+    <s:String>6D - ?</s:String>
+    <s:String>6E - ?</s:String>
+    <s:String>6F - ?</s:String>
+    <s:String>70 - ?</s:String>
+    <s:String>71 - ?</s:String>
+    <s:String>72 - ?</s:String>
+    <s:String>73 - ?</s:String>
+    <s:String>74 - ?</s:String>
+    <s:String>75 - ?</s:String>
+    <s:String>76 - ?</s:String>
+    <s:String>77 - ?</s:String>
+    <s:String>78 - ?</s:String>
+    <s:String>79 - ?</s:String>
+    <s:String>7A - ?</s:String>
+    <s:String>7B - ?</s:String>
+    <s:String>7C - ?</s:String>
+    <s:String>7D - ?</s:String>
+    <s:String>7E - ?</s:String>
+    <s:String>7F - ?</s:String>
+    <s:String>80 - ?</s:String>
+    <s:String>81 - ?</s:String>
+    <s:String>82 - ?</s:String>
+    <s:String>83 - ?</s:String>
+    <s:String>84 - ?</s:String>
+    <s:String>85 - ?</s:String>
+    <s:String>86 - ?</s:String>
+    <s:String>87 - ?</s:String>
+    <s:String>88 - ?</s:String>
+    <s:String>89 - ?</s:String>
+    <s:String>8A - ?</s:String>
+    <s:String>8B - ?</s:String>
+    <s:String>8C - ?</s:String>
+    <s:String>8D - ?</s:String>
+    <s:String>8E - ?</s:String>
+    <s:String>8F - ?</s:String>
+    <s:String>90 - ?</s:String>
+    <s:String>91 - ?</s:String>
+    <s:String>92 - ?</s:String>
+    <s:String>93 - ?</s:String>
+    <s:String>94 - ?</s:String>
+    <s:String>95 - ?</s:String>
+    <s:String>96 - ?</s:String>
+    <s:String>97 - ?</s:String>
+    <s:String>98 - ?</s:String>
+    <s:String>99 - ?</s:String>
+    <s:String>9A - ?</s:String>
+    <s:String>9B - ?</s:String>
+    <s:String>9C - ?</s:String>
+    <s:String>9D - ?</s:String>
+    <s:String>9E - ?</s:String>
+    <s:String>9F - ?</s:String>
+    <s:String>A0 - ?</s:String>
+    <s:String>A1 - ?</s:String>
+    <s:String>A2 - ?</s:String>
+    <s:String>A3 - ?</s:String>
+    <s:String>A4 - ?</s:String>
+    <s:String>A5 - ?</s:String>
+    <s:String>A6 - ?</s:String>
+    <s:String>A7 - ?</s:String>
+    <s:String>A8 - ?</s:String>
+    <s:String>A9 - ?</s:String>
+    <s:String>AA - ?</s:String>
+    <s:String>AB - ?</s:String>
+    <s:String>AC - ?</s:String>
+    <s:String>AD - ?</s:String>
+    <s:String>AE - ?</s:String>
+    <s:String>AF - ?</s:String>
+    <s:String>B0 - ?</s:String>
+    <s:String>B1 - ?</s:String>
+    <s:String>B2 - ?</s:String>
+    <s:String>B3 - ?</s:String>
+    <s:String>B4 - ?</s:String>
+    <s:String>B5 - ?</s:String>
+    <s:String>B6 - ?</s:String>
+    <s:String>B7 - ?</s:String>
+    <s:String>B8 - ?</s:String>
+    <s:String>B9 - ?</s:String>
+    <s:String>BA - ?</s:String>
+    <s:String>BB - ?</s:String>
+    <s:String>BC - ?</s:String>
+    <s:String>BD - ?</s:String>
+    <s:String>BE - ?</s:String>
+    <s:String>BF - ?</s:String>
+    <s:String>C0 - ?</s:String>
+    <s:String>C1 - ?</s:String>
+    <s:String>C2 - ?</s:String>
+    <s:String>C3 - ?</s:String>
+    <s:String>C4 - ?</s:String>
+    <s:String>C5 - ?</s:String>
+    <s:String>C6 - ?</s:String>
+    <s:String>C7 - ?</s:String>
+    <s:String>C8 - ?</s:String>
+    <s:String>C9 - ?</s:String>
+    <s:String>CA - ?</s:String>
+    <s:String>CB - ?</s:String>
+    <s:String>CC - ?</s:String>
+    <s:String>CD - ?</s:String>
+    <s:String>CE - ?</s:String>
+    <s:String>CF - ?</s:String>
+    <s:String>D0 - ?</s:String>
+    <s:String>D1 - ?</s:String>
+    <s:String>D2 - ?</s:String>
+    <s:String>D3 - ?</s:String>
+    <s:String>D4 - ?</s:String>
+    <s:String>D5 - ?</s:String>
+    <s:String>D6 - ?</s:String>
+    <s:String>D7 - ?</s:String>
+    <s:String>D8 - ?</s:String>
+    <s:String>D9 - ?</s:String>
+    <s:String>DA - ?</s:String>
+    <s:String>DB - ?</s:String>
+    <s:String>DC - ?</s:String>
+    <s:String>DD - ?</s:String>
+    <s:String>DE - ?</s:String>
+    <s:String>DF - ?</s:String>
+    <s:String>E0 - ?</s:String>
+    <s:String>E1 - ?</s:String>
+    <s:String>E2 - ?</s:String>
+    <s:String>E3 - ?</s:String>
+    <s:String>E4 - ?</s:String>
+    <s:String>E5 - ?</s:String>
+    <s:String>E6 - ?</s:String>
+    <s:String>E7 - ?</s:String>
+    <s:String>E8 - ?</s:String>
+    <s:String>E9 - ?</s:String>
+    <s:String>EA - ?</s:String>
+    <s:String>EB - ?</s:String>
+    <s:String>EC - ?</s:String>
+    <s:String>ED - ?</s:String>
+    <s:String>EE - ?</s:String>
+    <s:String>EF - ?</s:String>
+    <s:String>F0 - ?</s:String>
+    <s:String>F1 - ?</s:String>
+    <s:String>F2 - ?</s:String>
+    <s:String>F3 - ?</s:String>
+    <s:String>F4 - ?</s:String>
+    <s:String>F5 - ?</s:String>
+    <s:String>F6 - ?</s:String>
+    <s:String>F7 - ?</s:String>
+    <s:String>F8 - ?</s:String>
+    <s:String>F9 - ?</s:String>
+    <s:String>FA - ?</s:String>
+    <s:String>FB - ?</s:String>
+    <s:String>FC - ?</s:String>
+    <s:String>FD - ?</s:String>
+    <s:String>FE - ?</s:String>
+    <s:String>FF - ?</s:String>
+  </x:Array>
+
+  <x:Array x:Key="GSEditor_Strings_MoveEffects"
+           Type="{x:Type s:String}">
+    <s:String>00 - 보통 공격</s:String>
+    <s:String>01 - 잠듦 공격</s:String>
+    <s:String>02 - 독 공격</s:String>
+    <s:String>03 - 흡혈 공격</s:String>
+    <s:String>04 - 화상 공격</s:String>
+    <s:String>05 - 얼음 공격</s:String>
+    <s:String>06 - 마비 공격</s:String>
+    <s:String>07 - 자폭</s:String>
+    <s:String>08 - 꿈먹기</s:String>
+    <s:String>09 - 따라하기</s:String>
+    <s:String>0A - 공격력 상승</s:String>
+    <s:String>0B - 방어력 상승</s:String>
+    <s:String>0C - 스피드 상승</s:String>
+    <s:String>0D - 특수공격 상승</s:String>
+    <s:String>0E - 특수방어 상승</s:String>
+    <s:String>0F - 명중률 상승</s:String>
+    <s:String>10 - 회피율 상승</s:String>
+    <s:String>11 - 항상 공격 성공</s:String>
+    <s:String>12 - 공격력 하락</s:String>
+    <s:String>13 - 방어력 하락</s:String>
+    <s:String>14 - 스피드 하락</s:String>
+    <s:String>15 - 특수공격 하락</s:String>
+    <s:String>16 - 특수방어 하락</s:String>
+    <s:String>17 - 명중률 하락</s:String>
+    <s:String>18 - 회피율 하락</s:String>
+    <s:String>19 - 상태 원상복귀</s:String>
+    <s:String>1A - 참기</s:String>
+    <s:String>1B - 날뜀(혼란할 때까지 반복)</s:String>
+    <s:String>1C - 강제 포켓몬 변경</s:String>
+    <s:String>1D - 여러번 맞춤</s:String>
+    <s:String>1E - 텍스쳐</s:String>
+    <s:String>1F - 기죽일 수 있음</s:String>
+    <s:String>20 - 회복</s:String>
+    <s:String>21 - 맹독</s:String>
+    <s:String>22 - 고양이돈받기</s:String>
+    <s:String>23 - 빛의장막</s:String>
+    <s:String>24 - 트라이어택</s:String>
+    <s:String>25 - ?</s:String>
+    <s:String>26 - 일격필살</s:String>
+    <s:String>27 - 칼바람</s:String>
+    <s:String>28 - 분노의앞니</s:String>
+    <s:String>29 - 고정 데미지</s:String>
+    <s:String>2A - 지속 데미지</s:String>
+    <s:String>2B - ?</s:String>
+    <s:String>2C - 더블어택</s:String>
+    <s:String>2D - 점프킥</s:String>
+    <s:String>2E - 흰안개</s:String>
+    <s:String>2F - 기충전</s:String>
+    <s:String>30 - 공격 시 반동을 입음</s:String>
+    <s:String>31 - 이상한 빛</s:String>
+    <s:String>32 - 공격력 크게 상승</s:String>
+    <s:String>33 - 방어력 크게 상승</s:String>
+    <s:String>34 - 스피드 크게 상승</s:String>
+    <s:String>35 - 특수공격 크게 상승</s:String>
+    <s:String>36 - 특수방어 크게 상승</s:String>
+    <s:String>37 - 명중률 크게 상승</s:String>
+    <s:String>38 - 회피율 크게 상승</s:String>
+    <s:String>39 - 변신</s:String>
+    <s:String>3A - 공격력 크게 하락</s:String>
+    <s:String>3B - 방어력 크게 하락</s:String>
+    <s:String>3C - 스피드 크게 하락</s:String>
+    <s:String>3D - 특수공격 크게 하락</s:String>
+    <s:String>3E - 특수방어 크게 하락</s:String>
+    <s:String>3F - 명중률 크게 하락</s:String>
+    <s:String>40 - 회피율 크게 하락</s:String>
+    <s:String>41 - 리플렉터</s:String>
+    <s:String>42 - 독</s:String>
+    <s:String>43 - 마비</s:String>
+    <s:String>44 - 공격 시 공격력 하락</s:String>
+    <s:String>45 - 공격 시 방어력 하락</s:String>
+    <s:String>46 - 공격 시 스피드 하락</s:String>
+    <s:String>47 - 공격 시 특수공격 하락</s:String>
+    <s:String>48 - 공격 시 특수방어 하락</s:String>
+    <s:String>49 - 공격 시 명중률 하락</s:String>
+    <s:String>4A - 공격 시 회피율 하락</s:String>
+    <s:String>4B - 불새</s:String>
+    <s:String>4C - 공격 시 혼란에 빠뜨림</s:String>
+    <s:String>4D - 여러번 맞추면서 독에 빠뜨림</s:String>
+    <s:String>4E - ?</s:String>
+    <s:String>4F - 대타출동</s:String>
+    <s:String>50 - 파괴광선</s:String>
+    <s:String>51 - 분노</s:String>
+    <s:String>52 - 흉내내기</s:String>
+    <s:String>53 - 손가락흔들기</s:String>
+    <s:String>54 - 씨뿌리기</s:String>
+    <s:String>55 - 튀어오르기</s:String>
+    <s:String>56 - 사슬묶기</s:String>
+    <s:String>57 - 레벨비례 데미지</s:String>
+    <s:String>58 - 사이코웨이브</s:String>
+    <s:String>59 - 카운터</s:String>
+    <s:String>5A - 앵콜</s:String>
+    <s:String>5B - 아픔나누기</s:String>
+    <s:String>5C - 코골이</s:String>
+    <s:String>5D - 텍스쳐2</s:String>
+    <s:String>5E - 록온</s:String>
+    <s:String>5F - 스케치</s:String>
+    <s:String>60 - 상대 얼음을 녹임</s:String>
+    <s:String>61 - 잠꼬대</s:String>
+    <s:String>62 - 길동무</s:String>
+    <s:String>63 - 기사회생</s:String>
+    <s:String>64 - 원한</s:String>
+    <s:String>65 - 칼등치기</s:String>
+    <s:String>66 - 치료방울</s:String>
+    <s:String>67 - 반드시 먼저 공격</s:String>
+    <s:String>68 - 트리플킥</s:String>
+    <s:String>69 - 도둑질</s:String>
+    <s:String>6A - 검은눈빛</s:String>
+    <s:String>6B - 악몽</s:String>
+    <s:String>6C - 화염자동차</s:String>
+    <s:String>6D - 저주</s:String>
+    <s:String>6E - ?</s:String>
+    <s:String>6F - 방어</s:String>
+    <s:String>70 - 압정뿌리기</s:String>
+    <s:String>71 - 꿰뚫어보기</s:String>
+    <s:String>72 - 멸망의 노래</s:String>
+    <s:String>73 - 모래바람</s:String>
+    <s:String>74 - 버티기</s:String>
+    <s:String>75 - 구르기</s:String>
+    <s:String>76 - 뽐내기</s:String>
+    <s:String>77 - 연속자르기</s:String>
+    <s:String>78 - 헤롱헤롱</s:String>
+    <s:String>79 - 은혜갚기</s:String>
+    <s:String>7A - 프레젠트</s:String>
+    <s:String>7B - 화풀이</s:String>
+    <s:String>7C - 신비의부적</s:String>
+    <s:String>7D - 성스러운불꽃</s:String>
+    <s:String>7E - 매그니튜드</s:String>
+    <s:String>7F - 바턴터치</s:String>
+    <s:String>80 - 따라가때리기</s:String>
+    <s:String>81 - 고속스핀</s:String>
+    <s:String>82 - ?</s:String>
+    <s:String>83 - ?</s:String>
+    <s:String>84 - 아침햇살</s:String>
+    <s:String>85 - 광합성</s:String>
+    <s:String>86 - 달의불빛</s:String>
+    <s:String>87 - 잠재파워</s:String>
+    <s:String>88 - 비바라기</s:String>
+    <s:String>89 - 쾌청</s:String>
+    <s:String>8A - 공격 후 방어력 상승</s:String>
+    <s:String>8B - 공격 후 공격력 상승</s:String>
+    <s:String>8C - 공격 후 스탯 상승</s:String>
+    <s:String>8D - 속이다</s:String>
+    <s:String>8E - 배북</s:String>
+    <s:String>8F - 자기암시</s:String>
+    <s:String>90 - 미러코트</s:String>
+    <s:String>91 - 로케트박치기</s:String>
+    <s:String>92 - 회오리</s:String>
+    <s:String>93 - 지진</s:String>
+    <s:String>94 - 미래예지</s:String>
+    <s:String>95 - 바람일으키기</s:String>
+    <s:String>96 - 짓밟기</s:String>
+    <s:String>97 - 솔라빔</s:String>
+    <s:String>98 - 번개</s:String>
+    <s:String>99 - 순간이동</s:String>
+    <s:String>9A - 집단구타</s:String>
+    <s:String>9B - 공중날기</s:String>
+    <s:String>9C - 웅크리기</s:String>
+    <s:String>9D - ?</s:String>
+    <s:String>9E - ?</s:String>
+    <s:String>9F - ?</s:String>
+    <s:String>A0 - ?</s:String>
+    <s:String>A1 - ?</s:String>
+    <s:String>A2 - ?</s:String>
+    <s:String>A3 - ?</s:String>
+    <s:String>A4 - ?</s:String>
+    <s:String>A5 - ?</s:String>
+    <s:String>A6 - ?</s:String>
+    <s:String>A7 - ?</s:String>
+    <s:String>A8 - ?</s:String>
+    <s:String>A9 - ?</s:String>
+    <s:String>AA - ?</s:String>
+    <s:String>AB - ?</s:String>
+    <s:String>AC - ?</s:String>
+    <s:String>AD - ?</s:String>
+    <s:String>AE - ?</s:String>
+    <s:String>AF - ?</s:String>
+    <s:String>B0 - ?</s:String>
+    <s:String>B1 - ?</s:String>
+    <s:String>B2 - ?</s:String>
+    <s:String>B3 - ?</s:String>
+    <s:String>B4 - ?</s:String>
+    <s:String>B5 - ?</s:String>
+    <s:String>B6 - ?</s:String>
+    <s:String>B7 - ?</s:String>
+    <s:String>B8 - ?</s:String>
+    <s:String>B9 - ?</s:String>
+    <s:String>BA - ?</s:String>
+    <s:String>BB - ?</s:String>
+    <s:String>BC - ?</s:String>
+    <s:String>BD - ?</s:String>
+    <s:String>BE - ?</s:String>
+    <s:String>BF - ?</s:String>
+    <s:String>C0 - ?</s:String>
+    <s:String>C1 - ?</s:String>
+    <s:String>C2 - ?</s:String>
+    <s:String>C3 - ?</s:String>
+    <s:String>C4 - ?</s:String>
+    <s:String>C5 - ?</s:String>
+    <s:String>C6 - ?</s:String>
+    <s:String>C7 - ?</s:String>
+    <s:String>C8 - ?</s:String>
+    <s:String>C9 - ?</s:String>
+    <s:String>CA - ?</s:String>
+    <s:String>CB - ?</s:String>
+    <s:String>CC - ?</s:String>
+    <s:String>CD - ?</s:String>
+    <s:String>CE - ?</s:String>
+    <s:String>CF - ?</s:String>
+    <s:String>D0 - ?</s:String>
+    <s:String>D1 - ?</s:String>
+    <s:String>D2 - ?</s:String>
+    <s:String>D3 - ?</s:String>
+    <s:String>D4 - ?</s:String>
+    <s:String>D5 - ?</s:String>
+    <s:String>D6 - ?</s:String>
+    <s:String>D7 - ?</s:String>
+    <s:String>D8 - ?</s:String>
+    <s:String>D9 - ?</s:String>
+    <s:String>DA - ?</s:String>
+    <s:String>DB - ?</s:String>
+    <s:String>DC - ?</s:String>
+    <s:String>DD - ?</s:String>
+    <s:String>DE - ?</s:String>
+    <s:String>DF - ?</s:String>
+    <s:String>E0 - ?</s:String>
+    <s:String>E1 - ?</s:String>
+    <s:String>E2 - ?</s:String>
+    <s:String>E3 - ?</s:String>
+    <s:String>E4 - ?</s:String>
+    <s:String>E5 - ?</s:String>
+    <s:String>E6 - ?</s:String>
+    <s:String>E7 - ?</s:String>
+    <s:String>E8 - ?</s:String>
+    <s:String>E9 - ?</s:String>
+    <s:String>EA - ?</s:String>
+    <s:String>EB - ?</s:String>
+    <s:String>EC - ?</s:String>
+    <s:String>ED - ?</s:String>
+    <s:String>EE - ?</s:String>
+    <s:String>EF - ?</s:String>
+    <s:String>F0 - ?</s:String>
+    <s:String>F1 - ?</s:String>
+    <s:String>F2 - ?</s:String>
+    <s:String>F3 - ?</s:String>
+    <s:String>F4 - ?</s:String>
+    <s:String>F5 - ?</s:String>
+    <s:String>F6 - ?</s:String>
+    <s:String>F7 - ?</s:String>
+    <s:String>F8 - ?</s:String>
+    <s:String>F9 - ?</s:String>
+    <s:String>FA - ?</s:String>
+    <s:String>FB - ?</s:String>
+    <s:String>FC - ?</s:String>
+    <s:String>FD - ?</s:String>
+    <s:String>FE - ?</s:String>
+    <s:String>FF - ?</s:String>
+  </x:Array>
+
+</ResourceDictionary>

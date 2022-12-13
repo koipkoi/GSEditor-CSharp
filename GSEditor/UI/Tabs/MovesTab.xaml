@@ -53,7 +53,8 @@
             <Label>타입：</Label>
             <ComboBox Name="TypeComboBox"
                       SelectedIndex="0"
-                      SelectionChanged="OnComboBoxSelectionChanged" />
+                      SelectionChanged="OnComboBoxSelectionChanged"
+                      Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
 
             <Label>위력：</Label>
             <xctk:IntegerUpDown Name="PowerUpDown"
@@ -112,7 +113,9 @@
             <Label>타입：</Label>
             <ComboBox Name="EffectComboBox"
                       SelectedIndex="0"
-                      SelectionChanged="OnComboBoxSelectionChanged" />
+                      ItemsSource="{DynamicResource GSEditor_Strings_MoveEffects}"
+                      SelectionChanged="OnComboBoxSelectionChanged"
+                      Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
 
             <Label>값：</Label>
             <xctk:IntegerUpDown Name="EffectUpDown"

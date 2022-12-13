@@ -23,7 +23,6 @@ public partial class MovesTab : UserControl
   {
     var previousMovesSelection = MovesListBox.SelectedIndex;
     var previousTypeSelection = TypeComboBox.SelectedIndex;
-    var previousEffect = EffectComboBox.SelectedIndex;
 
     this.RunSafe(() =>
     {
@@ -34,15 +33,10 @@ public partial class MovesTab : UserControl
       TypeComboBox.Items.Clear();
       foreach (var e in _pokegold.Strings.TypeNames)
         TypeComboBox.Items.Add(e);
-
-      EffectComboBox.Items.Clear();
-      foreach (var e in Properties.Resources.MoveEffects.Replace("\r\n", "\n").Split("\n"))
-        EffectComboBox.Items.Add(e);
     });
 
     MovesListBox.SelectedIndex = previousMovesSelection;
     TypeComboBox.SelectedIndex = previousTypeSelection;
-    EffectComboBox.SelectedIndex = previousEffect;
   }
 
   private void OnMovesListBoxSelectionChanged(object _, SelectionChangedEventArgs __)

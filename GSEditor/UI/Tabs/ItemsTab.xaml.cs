@@ -22,21 +22,15 @@ public partial class ItemsTab : UserControl
   private void OnNeedTabUpdate()
   {
     var previousItemsSelection = ItemsListBox.SelectedIndex;
-    var previousgiveEffectSelection = GiveEffectComboBox.SelectedIndex;
 
     this.RunSafe(() =>
     {
       ItemsListBox.Items.Clear();
       foreach (var e in _pokegold.Strings.ItemNames)
         ItemsListBox.Items.Add(e);
-
-      GiveEffectComboBox.Items.Clear();
-      foreach (var e in Properties.Resources.GiveItemEffects.Replace("\r\n", "\n").Split("\n"))
-        GiveEffectComboBox.Items.Add(e);
     });
 
     ItemsListBox.SelectedIndex = previousItemsSelection;
-    GiveEffectComboBox.SelectedIndex = previousgiveEffectSelection;
   }
 
   private void OnItemsSelectionChanged(object _, SelectionChangedEventArgs __)

@@ -34,7 +34,8 @@
           <ComboBox Name="MoveComboBox"
                     Width="240"
                     HorizontalAlignment="Left"
-                    SelectionChanged="OnComboBoxSelectionChanged" />
+                    SelectionChanged="OnComboBoxSelectionChanged"
+                    Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
 
           <Label Margin="0, 16, 0, 8"
                  Style="{DynamicResource GSEditor_Style_Label_Section}">배울 수 있는 포켓몬</Label>

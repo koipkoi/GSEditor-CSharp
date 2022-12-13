@@ -57,7 +57,8 @@
             <Label>가방 분류：</Label>
             <ComboBox Name="GroupComboBox"
                       SelectedIndex="0"
-                      SelectionChanged="OnComboBoxSelectionChanged">
+                      SelectionChanged="OnComboBoxSelectionChanged"
+                      Style="{DynamicResource GSEditor_Style_ComboBox_Colored}">
               <ComboBoxItem>없음</ComboBoxItem>
               <ComboBoxItem>도구</ComboBoxItem>
               <ComboBoxItem>중요한</ComboBoxItem>
@@ -87,7 +88,8 @@
 
             <Label>필드：</Label>
             <ComboBox Name="FieldMenuComboBox"
-                      SelectionChanged="OnComboBoxSelectionChanged">
+                      SelectionChanged="OnComboBoxSelectionChanged"
+                      Style="{DynamicResource GSEditor_Style_ComboBox_Colored}">
               <ComboBoxItem>사용할 수 없음</ComboBoxItem>
               <ComboBoxItem>?</ComboBoxItem>
               <ComboBoxItem>?</ComboBoxItem>
@@ -99,7 +101,8 @@
 
             <Label>배틀：</Label>
             <ComboBox Name="BattleMenuComboBox"
-                      SelectionChanged="OnComboBoxSelectionChanged">
+                      SelectionChanged="OnComboBoxSelectionChanged"
+                      Style="{DynamicResource GSEditor_Style_ComboBox_Colored}">
               <ComboBoxItem>사용할 수 없음</ComboBoxItem>
               <ComboBoxItem>?</ComboBoxItem>
               <ComboBoxItem>?</ComboBoxItem>
@@ -120,11 +123,14 @@
 
             <Label>지닌 도구 효과：</Label>
             <ComboBox Name="GiveEffectComboBox"
-                      SelectionChanged="OnComboBoxSelectionChanged" />
+                      ItemsSource="{DynamicResource GSEditor_Strings_ItemEffects}"
+                      SelectionChanged="OnComboBoxSelectionChanged"
+                      Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
 
             <Label>판매·등록 설정：</Label>
             <ComboBox Name="RegisterAndSellComboBox"
-                      SelectionChanged="OnComboBoxSelectionChanged">
+                      SelectionChanged="OnComboBoxSelectionChanged"
+                      Style="{DynamicResource GSEditor_Style_ComboBox_Colored}">
               <ComboBoxItem>없음</ComboBoxItem>
               <ComboBoxItem>등록 불가</ComboBoxItem>
               <ComboBoxItem>판매 불가</ComboBoxItem>

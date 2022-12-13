@@ -76,6 +76,79 @@
     </Setter>
   </Style>
 
+  <Style x:Key="GSEditor_Style_ComboBox_Colored"
+         TargetType="ComboBox">
+    <Setter Property="VirtualizingPanel.IsVirtualizing"
+            Value="True" />
+    <Setter Property="VirtualizingPanel.VirtualizationMode"
+            Value="Recycling" />
+    <Setter Property="AlternationCount"
+            Value="2" />
+    <Setter Property="ItemContainerStyle">
+      <Setter.Value>
+        <Style TargetType="ListBoxItem">
+          <Style.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="0">
+              <Setter Property="Background"
+                      Value="AliceBlue" />
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="1">
+              <Setter Property="Background"
+                      Value="White" />
+            </Trigger>
+            <Trigger Property="IsFocused"
+                     Value="True">
+              <Setter Property="Background"
+                      Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+              <Setter Property="Foreground"
+                      Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="GSEditor_Style_ComboBox_ColoredWithFinder"
+         TargetType="ComboBox">
+    <EventSetter Event="PreviewMouseRightButtonDown"
+                 Handler="OnSelectorPreviewMouseRightButtonDown" />
+    <EventSetter Event="ContextMenuOpening"
+                 Handler="OnSelectorContextMenuOpening" />
+    <Setter Property="VirtualizingPanel.IsVirtualizing"
+            Value="True" />
+    <Setter Property="VirtualizingPanel.VirtualizationMode"
+            Value="Recycling" />
+    <Setter Property="AlternationCount"
+            Value="2" />
+    <Setter Property="ItemContainerStyle">
+      <Setter.Value>
+        <Style TargetType="ListBoxItem">
+          <Style.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="0">
+              <Setter Property="Background"
+                      Value="AliceBlue" />
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="1">
+              <Setter Property="Background"
+                      Value="White" />
+            </Trigger>
+            <Trigger Property="IsFocused"
+                     Value="True">
+              <Setter Property="Background"
+                      Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+              <Setter Property="Foreground"
+                      Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
   <Style x:Key="GSEditor_Style_ListBox_Colored"
          TargetType="ListBox">

@@ -56,90 +56,49 @@
               <Label>성비율：</Label>
               <ComboBox Name="GenderRateComboBox"
                         FontFamily="consolas"
-                        SelectionChanged="OnComboBoxSelectionChanged">
-                <ComboBoxItem>0% (수컷)</ComboBoxItem>
-                <ComboBoxItem>12.5%</ComboBoxItem>
-                <ComboBoxItem>25%</ComboBoxItem>
-                <ComboBoxItem>37.5%</ComboBoxItem>
-                <ComboBoxItem>50% (중간)</ComboBoxItem>
-                <ComboBoxItem>62.5%</ComboBoxItem>
-                <ComboBoxItem>75%</ComboBoxItem>
-                <ComboBoxItem>87.5%</ComboBoxItem>
-                <ComboBoxItem>100% (암컷)</ComboBoxItem>
-                <ComboBoxItem>없음</ComboBoxItem>
-              </ComboBox>
+                        ItemsSource="{DynamicResource GSEditor_Strings_GenderRateTypes}"
+                        SelectionChanged="OnComboBoxSelectionChanged"
+                        Style="{DynamicResource GSEditor_Style_ComboBox_Colored}" />
 
               <Label>성장률：</Label>
               <ComboBox Name="GrowthRateComboBox"
-                        FontFamily="consolas"
-                        SelectionChanged="OnComboBoxSelectionChanged">
-                <ComboBoxItem>중간 빠름 (125 ~ 1,000,000)</ComboBoxItem>
-                <ComboBoxItem>약간 빠름 (313 ~ 849,970)</ComboBoxItem>
-                <ComboBoxItem>약간 느림 (523 ~ 949,930)</ComboBoxItem>
-                <ComboBoxItem>중간 느림 (135 ~ 1,059,860)</ComboBoxItem>
-                <ComboBoxItem>빠　 　름 (100 ~ 800,000)</ComboBoxItem>
-                <ComboBoxItem>느　 　림 (156 ~ 1,250,000)</ComboBoxItem>
-              </ComboBox>
+                        ItemsSource="{DynamicResource GSEditor_Strings_GrowthRateTypes}"
+                        SelectionChanged="OnComboBoxSelectionChanged"
+                        Style="{DynamicResource GSEditor_Style_ComboBox_Colored}" />
 
               <Label>타입：</Label>
               <UniformGrid Columns="2">
                 <ComboBox Name="Type1ComboBox"
-                          SelectionChanged="OnComboBoxSelectionChanged" />
+                          SelectionChanged="OnComboBoxSelectionChanged"
+                          Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
                 <ComboBox Name="Type2ComboBox"
                           Margin="4, 0, 0, 0"
-                          SelectionChanged="OnComboBoxSelectionChanged" />
+                          SelectionChanged="OnComboBoxSelectionChanged"
+                          Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
               </UniformGrid>
 
               <Label>소지품：</Label>
               <UniformGrid Columns="2">
                 <ComboBox Name="Item2ComboBox"
-                          SelectionChanged="OnComboBoxSelectionChanged" />
+                          SelectionChanged="OnComboBoxSelectionChanged"
+                          Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
                 <ComboBox Name="Item1ComboBox"
                           Margin="4, 0, 0, 0"
-                          SelectionChanged="OnComboBoxSelectionChanged" />
+                          SelectionChanged="OnComboBoxSelectionChanged"
+                          Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
               </UniformGrid>
 
               <Label>교배 그룹：</Label>
               <UniformGrid Columns="2">
                 <ComboBox Name="EggGroup1ComboBox"
-                          SelectionChanged="OnComboBoxSelectionChanged">
-                  <ComboBoxItem>없음</ComboBoxItem>
-                  <ComboBoxItem>괴물</ComboBoxItem>
-                  <ComboBoxItem>양서류</ComboBoxItem>
-                  <ComboBoxItem>벌레</ComboBoxItem>
-                  <ComboBoxItem>비행</ComboBoxItem>
-                  <ComboBoxItem>땅</ComboBoxItem>
-                  <ComboBoxItem>요정</ComboBoxItem>
-                  <ComboBoxItem>식물</ComboBoxItem>
-                  <ComboBoxItem>인간형</ComboBoxItem>
-                  <ComboBoxItem>뱀</ComboBoxItem>
-                  <ComboBoxItem>광물</ComboBoxItem>
-                  <ComboBoxItem>불완전</ComboBoxItem>
-                  <ComboBoxItem>물고기</ComboBoxItem>
-                  <ComboBoxItem>메타몽</ComboBoxItem>
-                  <ComboBoxItem>드래곤</ComboBoxItem>
-                  <ComboBoxItem>불명</ComboBoxItem>
-                </ComboBox>
+                          ItemsSource="{DynamicResource GSEditor_Strings_EggGroupTypes}"
+                          SelectionChanged="OnComboBoxSelectionChanged"
+                          Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
                 <ComboBox Name="EggGroup2ComboBox"
                           Margin="4, 0, 0, 0"
-                          SelectionChanged="OnComboBoxSelectionChanged">
-                  <ComboBoxItem>없음</ComboBoxItem>
-                  <ComboBoxItem>괴물</ComboBoxItem>
-                  <ComboBoxItem>양서류</ComboBoxItem>
-                  <ComboBoxItem>벌레</ComboBoxItem>
-                  <ComboBoxItem>비행</ComboBoxItem>
-                  <ComboBoxItem>땅</ComboBoxItem>
-                  <ComboBoxItem>요정</ComboBoxItem>
-                  <ComboBoxItem>식물</ComboBoxItem>
-                  <ComboBoxItem>인간형</ComboBoxItem>
-                  <ComboBoxItem>뱀</ComboBoxItem>
-                  <ComboBoxItem>광물</ComboBoxItem>
-                  <ComboBoxItem>불완전</ComboBoxItem>
-                  <ComboBoxItem>물고기</ComboBoxItem>
-                  <ComboBoxItem>메타몽</ComboBoxItem>
-                  <ComboBoxItem>드래곤</ComboBoxItem>
-                  <ComboBoxItem>불명</ComboBoxItem>
-                </ComboBox>
+                          ItemsSource="{DynamicResource GSEditor_Strings_EggGroupTypes}"
+                          SelectionChanged="OnComboBoxSelectionChanged"
+                          Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
               </UniformGrid>
 
             </controls:FormPanel>
