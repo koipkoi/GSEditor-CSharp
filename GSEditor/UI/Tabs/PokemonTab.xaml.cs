@@ -237,43 +237,6 @@ public partial class PokemonTab : UserControl
     TMHMContainer.Columns = (int)(ActualWidth / 220);
   }
 
-  private void NestedScrollImplEvent(object sender, MouseWheelEventArgs e)
-  {
-    if (sender is ListView listView && !e.Handled)
-    {
-      var border = (VisualTreeHelper.GetChild(listView, 0) as Border)!;
-      var scrollViewer = (VisualTreeHelper.GetChild(border, 0) as ScrollViewer)!;
-      if ((e.Delta > 0 && scrollViewer.VerticalOffset == 0) || (e.Delta < 0 && scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight))
-      {
-        e.Handled = true;
-
-        var parent = (scrollViewer.Parent as UIElement)!;
-        parent.RaiseEvent(new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-        {
-          RoutedEvent = MouseWheelEvent,
-          Source = scrollViewer,
-        });
-      }
-    }
-
-    if (sender is CheckListBox listBox && !e.Handled)
-    {
-      var border = (VisualTreeHelper.GetChild(listBox, 0) as Border)!;
-      var scrollViewer = (VisualTreeHelper.GetChild(border, 0) as ScrollViewer)!;
-      if ((e.Delta > 0 && scrollViewer.VerticalOffset == 0) || (e.Delta < 0 && scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight))
-      {
-        e.Handled = true;
-
-        var parent = (scrollViewer.Parent as UIElement)!;
-        parent.RaiseEvent(new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-        {
-          RoutedEvent = MouseWheelEvent,
-          Source = scrollViewer,
-        });
-      }
-    }
-  }
-
   private void OnPokemonListBoxSelected(object _, SelectionChangedEventArgs __)
   {
     var index = PokemonListBox.SelectedIndex;

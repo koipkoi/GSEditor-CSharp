@@ -1,5 +1,4 @@
-﻿using GSEditor.Properties;
-using System.Text;
+﻿using System.Text;
 
 namespace GSEditor.Core.PokegoldCore;
 
@@ -10,7 +9,7 @@ public static class TextConverter
 
   static TextConverter()
   {
-    var lines = Resources.Charmap.Replace("\r\n", "\n").Split("\n");
+    var lines = Properties.Resources.Charmap.Replace("\r\n", "\n").Split("\n");
     foreach (var line in lines)
     {
       var keyValue = line.Split('=');

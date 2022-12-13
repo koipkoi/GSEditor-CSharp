@@ -410,8 +410,7 @@
                       ItemsSource="{Binding Evolutions}"
                       Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
                       SelectionChanged="OnEvolutionLearnMoveSelectionChanged"
-                      MouseDoubleClick="OnEvolutionListViewDoubleClick"
-                      PreviewMouseWheel="NestedScrollImplEvent">
+                      MouseDoubleClick="OnEvolutionListViewDoubleClick">
               <ListView.View>
                 <GridView>
                   <GridView.ColumnHeaderContainerStyle>
@@ -460,8 +459,7 @@
                       ItemsSource="{Binding Moves}"
                       Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
                       SelectionChanged="OnEvolutionLearnMoveSelectionChanged"
-                      MouseDoubleClick="OnLearnMoveListViewDoubleClick"
-                      PreviewMouseWheel="NestedScrollImplEvent">
+                      MouseDoubleClick="OnLearnMoveListViewDoubleClick">
               <ListView.View>
                 <GridView>
                   <GridView.ColumnHeaderContainerStyle>
@@ -525,49 +523,41 @@
                                Height="160"
                                Margin="0, 0, 4, 4"
                                Style="{DynamicResource GSEditor_Style_CheckListBox_Colored}"
-                               PreviewMouseWheel="NestedScrollImplEvent"
                                ItemSelectionChanged="OnTMHMsSelectionChanged" />
             <xctk:CheckListBox Name="TMHM1"
                                Height="160"
                                Margin="0, 0, 4, 4"
                                Style="{DynamicResource GSEditor_Style_CheckListBox_Colored}"
-                               PreviewMouseWheel="NestedScrollImplEvent"
                                ItemSelectionChanged="OnTMHMsSelectionChanged" />
             <xctk:CheckListBox Name="TMHM2"
                                Height="160"
                                Margin="0, 0, 4, 4"
                                Style="{DynamicResource GSEditor_Style_CheckListBox_Colored}"
-                               PreviewMouseWheel="NestedScrollImplEvent"
                                ItemSelectionChanged="OnTMHMsSelectionChanged" />
             <xctk:CheckListBox Name="TMHM3"
                                Height="160"
                                Margin="0, 0, 4, 4"
                                Style="{DynamicResource GSEditor_Style_CheckListBox_Colored}"
-                               PreviewMouseWheel="NestedScrollImplEvent"
                                ItemSelectionChanged="OnTMHMsSelectionChanged" />
             <xctk:CheckListBox Name="TMHM4"
                                Height="160"
                                Margin="0, 0, 4, 4"
                                Style="{DynamicResource GSEditor_Style_CheckListBox_Colored}"
-                               PreviewMouseWheel="NestedScrollImplEvent"
                                ItemSelectionChanged="OnTMHMsSelectionChanged" />
             <xctk:CheckListBox Name="TMHM5"
                                Height="160"
                                Margin="0, 0, 4, 4"
                                Style="{DynamicResource GSEditor_Style_CheckListBox_Colored}"
-                               PreviewMouseWheel="NestedScrollImplEvent"
                                ItemSelectionChanged="OnTMHMsSelectionChanged" />
             <xctk:CheckListBox Name="TMHM6"
                                Height="160"
                                Margin="0, 0, 4, 4"
                                Style="{DynamicResource GSEditor_Style_CheckListBox_Colored}"
-                               PreviewMouseWheel="NestedScrollImplEvent"
                                ItemSelectionChanged="OnTMHMsSelectionChanged" />
             <xctk:CheckListBox Name="TMHM7"
                                Height="160"
                                Margin="0, 0, 4, 4"
                                Style="{DynamicResource GSEditor_Style_CheckListBox_Colored}"
-                               PreviewMouseWheel="NestedScrollImplEvent"
                                ItemSelectionChanged="OnTMHMsSelectionChanged" />
           </UniformGrid>
 

@@ -79,9 +79,8 @@
     </Menu>
 
     <ToolBar Grid.Row="1"
-             ToolBarTray.IsLocked="True"
              Name="MainToolBar"
-             Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+             Style="{DynamicResource GSEditor_Style_ToolBar_Locked}">
       <Button Tag="Ctrl+O"
               ToolTip="열기..."
               Click="OnMenuItemClick">

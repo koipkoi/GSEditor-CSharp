@@ -1,0 +1,151 @@
+﻿<ResourceDictionary x:Class="GSEditor.Resources.Styles"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
+
+  <Style x:Key="GSEditor_Style_ToolBar_Locked"
+         TargetType="ToolBar">
+    <EventSetter Event="Loaded"
+                 Handler="OnToolBarLoaded" />
+    <Setter Property="ToolBarTray.IsLocked"
+            Value="True" />
+    <Setter Property="Background"
+            Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+  </Style>
+
+  <Style x:Key="GSEditor_Style_Border_Default"
+         TargetType="Border">
+    <Setter Property="BorderThickness"
+            Value="1" />
+    <Setter Property="BorderBrush"
+            Value="Gray" />
+    <Setter Property="Background"
+            Value="White" />
+    <Style.Triggers>
+      <Trigger Property="IsEnabled"
+               Value="False">
+        <Setter Property="BorderBrush"
+                Value="LightGray" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style x:Key="GSEditor_Style_Image_GrayOutOnDisabled"
+         TargetType="Image">
+    <Style.Triggers>
+      <Trigger Property="IsEnabled"
+               Value="False">
+        <Setter Property="Opacity"
+                Value="0.5" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style x:Key="GSEditor_Style_Label_Section"
+         TargetType="Label">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Label">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+                   Margin="0"
+                   Padding="0"
+                   Content="{TemplateBinding Content}" />
+            <Grid Grid.Column="1"
+                  RenderOptions.BitmapScalingMode="NearestNeighbor"
+                  x:Name="Separator"
+                  Margin="8, 0, 0, 0"
+                  Height="0.5"
+                  Background="Gray"
+                  VerticalAlignment="Center" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+              <Setter TargetName="Separator"
+                      Property="Background"
+                      Value="LightGray" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+
+  <Style x:Key="GSEditor_Style_ListBox_Colored"
+         TargetType="ListBox">
+    <EventSetter Event="PreviewMouseRightButtonDown"
+                 Handler="OnSelectorPreviewMouseRightButtonDown" />
+    <EventSetter Event="ContextMenuOpening"
+                 Handler="OnSelectorContextMenuOpening" />
+    <EventSetter Event="PreviewMouseWheel"
+                 Handler="OnSelectorPreviewMouseWheel" />
+    <Setter Property="VirtualizingPanel.IsVirtualizing"
+            Value="True" />
+    <Setter Property="VirtualizingPanel.VirtualizationMode"
+            Value="Recycling" />
+    <Setter Property="AlternationCount"
+            Value="2" />
+    <Setter Property="ItemContainerStyle">
+      <Setter.Value>
+        <Style TargetType="ListBoxItem">
+          <Style.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="0">
+              <Setter Property="Background"
+                      Value="AliceBlue" />
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="1">
+              <Setter Property="Background"
+                      Value="White" />
+            </Trigger>
+            <Trigger Property="IsSelected"
+                     Value="True">
+              <Setter Property="Background"
+                      Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+              <Setter Property="Foreground"
+                      Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="GSEditor_Style_CheckListBox_Colored"
+         TargetType="xctk:CheckListBox">
+    <EventSetter Event="PreviewMouseWheel"
+                 Handler="OnSelectorPreviewMouseWheel" />
+    <Setter Property="VirtualizingPanel.IsVirtualizing"
+            Value="True" />
+    <Setter Property="VirtualizingPanel.VirtualizationMode"
+            Value="Recycling" />
+    <Setter Property="AlternationCount"
+            Value="2" />
+    <Setter Property="ItemContainerStyle">
+      <Setter.Value>
+        <Style TargetType="xctk:SelectorItem">
+          <Style.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="0">
+              <Setter Property="Background"
+                      Value="AliceBlue" />
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="1">
+              <Setter Property="Background"
+                      Value="White" />
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>

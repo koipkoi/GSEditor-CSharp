@@ -32,13 +32,6 @@ public partial class MainWindow : Window
       CommandBindings.Add(new CommandBinding(menuItemShortcutCommand, (_, __) => OnMenuItemShortcutExecute(keyGesture.DisplayString, null)));
     }
 
-    // 불필요 툴바 오버플로 영역 제거
-    MainToolBar.Loaded += (_, __) =>
-    {
-      if (MainToolBar.Template.FindName("OverflowGrid", MainToolBar) is FrameworkElement overflowGrid)
-        overflowGrid.Visibility = Visibility.Collapsed;
-    };
-
     _pokegold.RomChanged += OnRomChanged;
     _pokegold.DataChanged += OnDataChanged;
   }
