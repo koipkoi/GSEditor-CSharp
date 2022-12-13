@@ -11,7 +11,6 @@
         ResizeMode="CanResizeWithGrip"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
   <Grid>
-
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -123,16 +122,16 @@
         <tabs:PokemonTab />
       </TabItem>
 
+      <TabItem Header="안농">
+        <tabs:UnownTab />
+      </TabItem>
+
       <TabItem Header="아이템">
         <tabs:ItemsTab />
       </TabItem>
 
       <TabItem Header="기술">
         <tabs:MovesTab />
-      </TabItem>
-
-      <TabItem Header="안농">
-        <tabs:UnownTab />
       </TabItem>
 
       <TabItem Header="기술머신">
@@ -154,5 +153,4 @@
     </StatusBar>
 
   </Grid>
-
 </Window>
