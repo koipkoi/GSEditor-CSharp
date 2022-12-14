@@ -396,7 +396,10 @@ public partial class PokemonTab : UserControl
           if (GBImage.TryLoadFromFile(dialog.FileName, out var newImage))
           {
             if (newImage == null)
+            {
+              System.Windows.MessageBox.Show("이미지 파일의 형식이 올바르지 않습니다.", "알림", MessageBoxButton.OK, MessageBoxImage.Error);
               return;
+            }
 
             var index = PokemonListBox.SelectedIndex;
 
@@ -404,7 +407,7 @@ public partial class PokemonTab : UserControl
             {
               if (newImage.Columns != newImage.Rows || newImage.Columns < 5 || newImage.Columns > 7 || newImage.Rows < 5 || newImage.Rows > 7)
               {
-                System.Windows.MessageBox.Show("이미지 사이즈가 올바르지 않습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("이미지 사이즈가 올바르지 않습니다.\n40x40, 48x48, 56x56 중 하나의 사이즈로 맞춰주세요.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
               }
 
@@ -415,7 +418,7 @@ public partial class PokemonTab : UserControl
             {
               if (newImage.Columns != 6 || newImage.Rows != 6)
               {
-                System.Windows.MessageBox.Show("이미지 사이즈가 올바르지 않습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("이미지 사이즈가 올바르지 않습니다.\n48x48 사이즈로 맞춰주세요.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
               }
 

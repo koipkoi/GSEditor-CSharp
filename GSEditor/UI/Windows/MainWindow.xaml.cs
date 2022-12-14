@@ -98,13 +98,22 @@ public partial class MainWindow : Window
     switch (shortcut)
     {
       case "Ctrl+O":
+        if (_pokegold.IsOpened && _pokegold.IsChanged)
+        {
+          if (MessageBox.Show("이미 작업중인 파일이 열려있습니다.\n다른 파일로 열겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+            return;
+        }
+
         var openFileDialog = new OpenFileDialog
         {
           Title = "열기",
           Filter = "지원하는 파일|*.gb;*.gbc;*.bin|모든 파일|*.*",
         };
         if (openFileDialog.ShowDialog() ?? false)
-          _pokegold.Read(openFileDialog.FileName);
+        {
+          if (!_pokegold.Read(openFileDialog.FileName))
+            MessageBox.Show("오류가 발생하여 롬 파일을 불러올 수 없습니다.", "알림", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
         break;
 
       case "Ctrl+S":
