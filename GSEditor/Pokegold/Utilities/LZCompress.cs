@@ -34,6 +34,8 @@ public static class LZCompress
     return newOutput;
   }
 
+  private static readonly byte[] _emptyBytes = new byte[0x240];
+
   public static byte[] LZDecompress(this byte[] compressedBytes)
   {
     var bytes = new List<byte>();
@@ -49,119 +51,126 @@ public static class LZCompress
       var commandByte = (byte)(firstByte & 0xe0);
       var length = firstByte & 0x1f;
 
-    procCommand:
-      switch (commandByte)
+      try
       {
-        default:
-          // 예외처리
-          return bytes.ToArray();
+      procCommand:
+        switch (commandByte)
+        {
+          default:
+            // 예외처리
+            return _emptyBytes;
 
-        case 0:
-          // 지정한 크기만큼 바이트 나열
-          {
-            for (var i = 0; i < length + 1; i++)
-              bytes.Add(compressedBytes[index++]);
-            break;
-          }
-
-        case 0x20:
-          // 특정 바이트 채우기
-          {
-            var b = compressedBytes[index++];
-            for (var i = 0; i < length + 1; i++)
-              bytes.Add(b);
-            break;
-          }
-
-        case 0x40:
-          // 2가지 바이트를 개수만큼 번갈아가며 채우기
-          {
-            var b1 = compressedBytes[index++];
-            var b2 = compressedBytes[index++];
-            for (var i = 0; i < length + 1; i++)
+          case 0:
+            // 지정한 크기만큼 바이트 나열
             {
-              if (i % 2 == 0)
-                bytes.Add(b1);
+              for (var i = 0; i < length + 1; i++)
+                bytes.Add(compressedBytes[index++]);
+              break;
+            }
+
+          case 0x20:
+            // 특정 바이트 채우기
+            {
+              var b = compressedBytes[index++];
+              for (var i = 0; i < length + 1; i++)
+                bytes.Add(b);
+              break;
+            }
+
+          case 0x40:
+            // 2가지 바이트를 개수만큼 번갈아가며 채우기
+            {
+              var b1 = compressedBytes[index++];
+              var b2 = compressedBytes[index++];
+              for (var i = 0; i < length + 1; i++)
+              {
+                if (i % 2 == 0)
+                  bytes.Add(b1);
+                else
+                  bytes.Add(b2);
+              }
+              break;
+            }
+
+          case 0x60:
+            // 0 채우기
+            {
+              for (var i = 0; i < length + 1; i++)
+                bytes.Add(0);
+              break;
+            }
+
+          case 0x80:
+            // 바이트 재사용 (타입 1)
+            {
+              var b = compressedBytes[index++];
+              if ((b & 0x80) == 0)
+              {
+                var address = (b * 0x100) + compressedBytes[index++] + 1;
+                for (var i = 0; i < length + 1; i++)
+                  bytes.Add(bytes[address + i - 1]);
+              }
               else
-                bytes.Add(b2);
+              {
+                for (var i = 0; i < length + 1; i++)
+                  bytes.Add(bytes[bytes.Count - (b & 0x7f) - 1]);
+              }
+              break;
             }
-            break;
-          }
 
-        case 0x60:
-          // 0 채우기
-          {
-            for (var i = 0; i < length + 1; i++)
-              bytes.Add(0);
-            break;
-          }
+          case 0xa0:
+            // 바이트 재사용 (타입 2)
+            {
+              var b = compressedBytes[index++];
+              if ((b & 0x80) == 0)
+              {
+                var address = (b * 0x100) + compressedBytes[index++] + 1;
+                for (var i = 0; i < length + 1; i++)
+                  bytes.Add(_bitOrderFlippingBytes[bytes[address + i - 1]]);
+              }
+              else
+              {
+                for (var i = 0; i < length + 1; i++)
+                  bytes.Add(_bitOrderFlippingBytes[bytes[bytes.Count - (b & 0x7f) - 1]]);
+              }
+              break;
+            }
 
-        case 0x80:
-          // 바이트 재사용 (타입 1)
-          {
-            var b = compressedBytes[index++];
-            if ((b & 0x80) == 0)
+          case 0xc0:
+            // 바이트 재사용 (타입 3)
             {
-              var address = (b * 0x100) + compressedBytes[index++] + 1;
-              for (var i = 0; i < length + 1; i++)
-                bytes.Add(bytes[address + i - 1]);
+              var b = compressedBytes[index++];
+              if ((b & 0x80) == 0)
+              {
+                var address = (b * 0x100) + compressedBytes[index++] + 1;
+                for (var i = 0; i < length + 1; i++)
+                  bytes.Add(bytes[address - i - 1]);
+              }
+              else
+              {
+                var count = bytes.Count;
+                for (var i = 0; i < length + 1; i++)
+                  bytes.Add(bytes[count - (b & 0x7f) - i - 1]);
+              }
+              break;
             }
-            else
-            {
-              for (var i = 0; i < length + 1; i++)
-                bytes.Add(bytes[bytes.Count - (b & 0x7f) - 1]);
-            }
-            break;
-          }
 
-        case 0xa0:
-          // 바이트 재사용 (타입 2)
-          {
-            var b = compressedBytes[index++];
-            if ((b & 0x80) == 0)
+          case 0xe0:
             {
-              var address = (b * 0x100) + compressedBytes[index++] + 1;
-              for (var i = 0; i < length + 1; i++)
-                bytes.Add(_bitOrderFlippingBytes[bytes[address + i - 1]]);
+              firstByte = (byte)((firstByte & 0x1c) * 8);
+              commandByte = (byte)(firstByte & 0xe0);
+              length = (length & 3) * 0x100 + compressedBytes[index++];
+              goto procCommand;
             }
-            else
-            {
-              for (var i = 0; i < length + 1; i++)
-                bytes.Add(_bitOrderFlippingBytes[bytes[bytes.Count - (b & 0x7f) - 1]]);
-            }
-            break;
-          }
-
-        case 0xc0:
-          // 바이트 재사용 (타입 3)
-          {
-            var b = compressedBytes[index++];
-            if ((b & 0x80) == 0)
-            {
-              var address = (b * 0x100) + compressedBytes[index++] + 1;
-              for (var i = 0; i < length + 1; i++)
-                bytes.Add(bytes[address - i - 1]);
-            }
-            else
-            {
-              var count = bytes.Count;
-              for (var i = 0; i < length + 1; i++)
-                bytes.Add(bytes[count - (b & 0x7f) - i - 1]);
-            }
-            break;
-          }
-
-        case 0xe0:
-          {
-            firstByte = (byte)((firstByte & 0x1c) * 8);
-            commandByte = (byte)(firstByte & 0xe0);
-            length = (length & 3) * 0x100 + compressedBytes[index++];
-            goto procCommand;
-          }
+        }
+      }
+      catch
+      {
+        return _emptyBytes;
       }
     }
 
-    return bytes.ToArray();
+    return _emptyBytes;
   }
 }
 

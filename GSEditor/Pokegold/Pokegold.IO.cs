@@ -79,6 +79,8 @@ public sealed partial class Pokegold
 
   public byte[] GetBytes(int address, int length)
   {
+    if (address < 0 || length == 0 || address + length > _data.Length)
+      return Array.Empty<byte>();
     var result = new byte[length];
     for (var i = 0; i < length; i++)
       result[i] = _data[address + i];

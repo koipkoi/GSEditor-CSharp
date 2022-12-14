@@ -21,12 +21,14 @@ public sealed class PGEvolution
         case 2:
         case 3:
         case 4:
-          arrays.Add(new byte[] { bytes[i], bytes[i + 1], bytes[i + 2], });
+          if (i + 2 < bytes.Length)
+            arrays.Add(new byte[] { bytes[i], bytes[i + 1], bytes[i + 2], });
           i += 2;
           break;
 
         case 5:
-          arrays.Add(new byte[] { bytes[i], bytes[i + 1], bytes[i + 2], bytes[i + 3], });
+          if (i + 3< bytes.Length)
+            arrays.Add(new byte[] { bytes[i], bytes[i + 1], bytes[i + 2], bytes[i + 3], });
           i += 3;
           break;
       }
@@ -37,31 +39,40 @@ public sealed class PGEvolution
     foreach (var e in arrays)
     {
       var newItem = ParseItem(e);
-      result.Add(newItem);
+      if (newItem != null)
+        result.Add(newItem);
     }
 
     return result;
   }
 
-  private static PGEvolution ParseItem(byte[] bytes)
+  private static PGEvolution? ParseItem(byte[] bytes)
   {
     var newItem = new PGEvolution { Type = bytes[0] };
     switch (newItem.Type)
     {
       case 1:
+        if (bytes.Length != 3)
+          return null;
         newItem.Level = bytes[1];
         newItem.PokemonNo = bytes[2];
         break;
       case 2:
       case 3:
+        if (bytes.Length != 3)
+          return null;
         newItem.ItemNo = bytes[1];
         newItem.PokemonNo = bytes[2];
         break;
       case 4:
+        if (bytes.Length != 3)
+          return null;
         newItem.Affection = bytes[1];
         newItem.PokemonNo = bytes[2];
         break;
       case 5:
+        if (bytes.Length != 4)
+          return null;
         newItem.Level = bytes[1];
         newItem.BaseStats = bytes[2];
         newItem.PokemonNo = bytes[3];

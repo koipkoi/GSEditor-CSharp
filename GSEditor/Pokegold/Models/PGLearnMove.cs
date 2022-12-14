@@ -10,12 +10,15 @@ public sealed class PGLearnMove
     var result = new List<PGLearnMove>();
     for (var i = 0; i < bytes.Length; i += 2)
     {
-      var newItem = new PGLearnMove
+      if (i + 1 < bytes.Length)
       {
-        Level = bytes[i],
-        MoveNo = bytes[i + 1],
-      };
-      result.Add(newItem);
+        var newItem = new PGLearnMove
+        {
+          Level = bytes[i],
+          MoveNo = bytes[i + 1],
+        };
+        result.Add(newItem);
+      }
     }
     return result;
   }
