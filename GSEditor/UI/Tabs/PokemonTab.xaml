@@ -3,23 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:GSEditor.UI.Controls"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:controls="clr-namespace:GSEditor.UI.Controls"
+             xmlns:vm="clr-namespace:GSEditor.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="2000"
              d:DesignWidth="650"
              SizeChanged="OnSizeChanged">
+  <UserControl.DataContext>
+    <vm:EmptyViewModel />
+  </UserControl.DataContext>
+
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
+
     <ListBox Grid.Column="0"
              Name="PokemonListBox"
              Width="144"
              Margin="4"
              Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
              SelectionChanged="OnPokemonListBoxSelected" />
+
     <Border Grid.Column="1"
             Name="ContentBorder"
             Margin="0, 4, 4, 4"
@@ -523,5 +530,6 @@
         </StackPanel>
       </ScrollViewer>
     </Border>
+
   </Grid>
 </UserControl>

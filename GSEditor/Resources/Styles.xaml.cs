@@ -28,7 +28,7 @@ public partial class Styles
   {
     if (sender is ListBox listBox && listBox.IsEnabled)
     {
-      var result = ListBoxSearchDialog.Show(listBox, listBox.Items);
+      var result = SelectorFinderDialog.Show(listBox, listBox.Items);
       if (result != -1)
       {
         listBox.SelectedIndex = result;
@@ -38,7 +38,7 @@ public partial class Styles
 
     if (sender is ComboBox comboBox && comboBox.IsEnabled)
     {
-      var result = ListBoxSearchDialog.Show(comboBox, comboBox.Items);
+      var result = SelectorFinderDialog.Show(comboBox, comboBox.Items);
       if (result != -1)
         comboBox.SelectedIndex = result;
     }

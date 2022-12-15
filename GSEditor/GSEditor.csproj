@@ -50,27 +50,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Lunar Compress.dll">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Update="Properties\Resources.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Resources.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Update="Properties\Resources.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
 	  <PackageReference Include="MdXaml" Version="1.16.2" />
 	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
@@ -82,6 +61,13 @@
 
 	<ItemGroup>
 	  <Page Include="App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\GSEditor.Common\GSEditor.Common.csproj" />
+	  <ProjectReference Include="..\GSEditor.Contract\GSEditor.Contract.csproj" />
+	  <ProjectReference Include="..\GSEditor.Models\GSEditor.Models.csproj" />
+	  <ProjectReference Include="..\GSEditor.Services\GSEditor.Services.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

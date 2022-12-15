@@ -1,5 +1,5 @@
-﻿using GSEditor.Core;
-using GSEditor.Core.PokegoldCore;
+﻿using GSEditor.Contract.Services;
+using GSEditor.Models.Pokegold;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -7,17 +7,17 @@ namespace GSEditor.UI.Windows;
 
 public partial class LearnMoveDialog : Window
 {
-  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
-  private PGLearnMove? _result = null;
+  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
 
-  private LearnMoveDialog(DependencyObject owner, PGLearnMove? defaultValue)
+  public LearnMove? Result { get; set; }
+
+  public LearnMoveDialog(LearnMove? defaultValue)
   {
-    Owner = GetWindow(owner);
     Title = defaultValue != null ? "배우는 기술 수정" : "배우는 기술 추가";
 
     InitializeComponent();
 
-    foreach (var e in _pokegold.Strings.MoveNames)
+    foreach (var e in _pokegold.Data.Strings.MoveNames)
       MoveComboBox.Items.Add(e);
 
     if (defaultValue != null)
@@ -32,17 +32,9 @@ public partial class LearnMoveDialog : Window
     }
   }
 
-  public static PGLearnMove? Show(DependencyObject owner, PGLearnMove? defaultValue = null)
-  {
-    var dialog = new LearnMoveDialog(owner, defaultValue);
-    if (dialog.ShowDialog() ?? false)
-      return dialog._result;
-    return null;
-  }
-
   private void OnConfirmClick(object _, RoutedEventArgs __)
   {
-    _result = new()
+    Result = new()
     {
       Level = (byte)(LevelUpDown.Value ?? 0),
       MoveNo = (byte)(MoveComboBox.SelectedIndex + 1),

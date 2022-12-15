@@ -1,7 +1,8 @@
-﻿using GSEditor.Core;
+﻿using GSEditor.Contract.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,8 +11,10 @@ namespace GSEditor.UI.Windows;
 
 public partial class MainWindow : Window
 {
-  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
-  private readonly AppSettings _appSettings = App.Services.GetRequiredService<AppSettings>();
+  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
+  private readonly ISettingsService _appSettings = App.Services.GetRequiredService<ISettingsService>();
+  private readonly IDialogService _dialogs = App.Services.GetRequiredService<IDialogService>();
+
   private readonly List<KeyGesture> _menuKeyGestures = new()
   {
     new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl+O"),
@@ -42,19 +45,19 @@ public partial class MainWindow : Window
 
     if (_pokegold.IsChanged)
     {
-      switch (MessageBox.Show("변경 내용을 저장하시겠습니까?", "알림", MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+      switch (_dialogs.ShowYesNoCancel("알림", "변경 내용을 저장하시겠습니까?"))
       {
-        case MessageBoxResult.Yes:
+        case YesNoCancelResult.Yes:
           e.Cancel = false;
-          _pokegold.Write(_pokegold.Filename);
+          _pokegold.Write();
           break;
 
-        case MessageBoxResult.No:
+        case YesNoCancelResult.No:
           e.Cancel = false;
           break;
 
         default:
-        case MessageBoxResult.Cancel:
+        case YesNoCancelResult.Cancel:
           e.Cancel = true;
           break;
       }
@@ -76,8 +79,7 @@ public partial class MainWindow : Window
 
   private void OnRomChanged(object? _, EventArgs __)
   {
-    FileNameState.Content = _pokegold.Filename;
-
+    FileNameState.Content = _pokegold.FileName;
     SaveMenuItem.IsEnabled = _pokegold.IsOpened;
     TestPlayMenuItem.IsEnabled = _pokegold.IsOpened;
     SaveToolBarButton.IsEnabled = _pokegold.IsOpened;
@@ -100,25 +102,21 @@ public partial class MainWindow : Window
       case "Ctrl+O":
         if (_pokegold.IsOpened && _pokegold.IsChanged)
         {
-          if (MessageBox.Show("이미 작업중인 파일이 열려있습니다.\n다른 파일로 열겠습니까?", "알림", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.Cancel)
+          if (!_dialogs.ShowQuestion("알림", "이미 작업중인 파일이 열려있습니다.\n다른 파일로 열겠습니까?"))
             return;
         }
 
-        var openFileDialog = new OpenFileDialog
+        var fileName = _dialogs.ShowOpenFile("열기", "지원하는 파일|*.gb;*.gbc;*.bin|모든 파일|*.*");
+        if (fileName != null)
         {
-          Title = "열기",
-          Filter = "지원하는 파일|*.gb;*.gbc;*.bin|모든 파일|*.*",
-        };
-        if (openFileDialog.ShowDialog() ?? false)
-        {
-          if (!_pokegold.Read(openFileDialog.FileName))
-            MessageBox.Show("오류가 발생하여 롬 파일을 불러올 수 없습니다.", "알림", MessageBoxButton.OK, MessageBoxImage.Error);
+          if (!_pokegold.Open(fileName))
+            _dialogs.ShowError("알림", "오류가 발생하여 롬 파일을 불러올 수 없습니다.");
         }
         break;
 
       case "Ctrl+S":
         if (_pokegold.IsOpened)
-          _pokegold.Write(_pokegold.Filename);
+          _pokegold.Write();
         break;
 
       case "Alt+F4":
@@ -128,8 +126,20 @@ public partial class MainWindow : Window
       case "F5":
         if (_pokegold.IsOpened)
         {
-          if (!_pokegold.StartTestPlay(_appSettings.EmulatorPath))
-            MessageBox.Show("에뮬레이터가 설정되어있지 않아 실패했습니다.", "알림", MessageBoxButton.OK, MessageBoxImage.Error);
+          var emulatorPath = _appSettings.AppSettings.EmulatorPath;
+          if (emulatorPath == null || !File.Exists(emulatorPath))
+            _dialogs.ShowError("알림", "에뮬레이터가 설정되어있지 않아 실패했습니다.");
+
+          try
+          {
+            _pokegold.Run(emulatorPath!);
+          }
+          catch
+          {
+            // todo 알림 개선
+            // _dialogs.ShowError("알림", "지원하지 않는 에뮬레이터로 실행하였습니다.\n다른 에뮬레이터로 실행해주세요.");
+            _dialogs.ShowError("알림", "에뮬레이터가 설정되어있지 않아 실패했습니다.");
+          }
         }
         break;
 
@@ -145,11 +155,12 @@ public partial class MainWindow : Window
                 Filter = "실행 가능한 파일|*.exe|모든 파일|*.*",
               };
               if (emulatorDialog.ShowDialog() ?? false)
-                _appSettings.EmulatorPath = emulatorDialog.FileName;
+                _appSettings.AppSettings.EmulatorPath = emulatorDialog.FileName;
+              _appSettings.Apply();
               break;
 
             case nameof(AppInformationMenuItem):
-              AppInformationDialog.Show(this);
+              _dialogs.ShowAppInfo();
               break;
           }
         }

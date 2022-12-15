@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<Platforms>x86</Platforms>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\GSEditor.Common\GSEditor.Common.csproj" />
+	  <ProjectReference Include="..\GSEditor.Contract\GSEditor.Contract.csproj" />
+	  <ProjectReference Include="..\GSEditor.Models\GSEditor.Models.csproj" />
+	</ItemGroup>
+
+</Project>

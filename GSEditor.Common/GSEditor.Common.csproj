@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	<Platforms>x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GSEditor.Contract\GSEditor.Contract.csproj" />
+    <ProjectReference Include="..\GSEditor.Models\GSEditor.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Lunar Compress.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

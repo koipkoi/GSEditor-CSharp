@@ -1,6 +1,7 @@
 ﻿<Window x:Class="GSEditor.UI.Windows.LearnMoveImportDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:GSEditor.ViewModels"
         Title="가져오기"
         Height="380"
         Width="560"
@@ -10,8 +11,11 @@
         WindowStyle="SingleBorderWindow"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
         SizeChanged="OnWindowSizeChanged">
-  <Grid Margin="2">
+  <Window.DataContext>
+    <vm:EmptyViewModel />
+  </Window.DataContext>
 
+  <Grid Margin="2">
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
@@ -45,7 +49,6 @@
     <Grid Grid.Row="0"
           Grid.Column="1"
           Margin="2">
-
       <Grid.RowDefinitions>
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />

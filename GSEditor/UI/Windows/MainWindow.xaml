@@ -4,12 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tabs="clr-namespace:GSEditor.UI.Tabs"
+        xmlns:vm="clr-namespace:GSEditor.ViewModels"
         mc:Ignorable="d"
         d:DesignHeight="560"
         d:DesignWidth="640"
         Title="GS 에디터"
         ResizeMode="CanResizeWithGrip"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+  <Window.DataContext>
+    <vm:EmptyViewModel />
+  </Window.DataContext>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />

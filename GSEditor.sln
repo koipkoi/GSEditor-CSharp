@@ -5,6 +5,14 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSEditor", "GSEditor\GSEditor.csproj", "{75CE283A-AF22-4AE9-B60E-C1EFE0FDB30C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSEditor.Contract", "GSEditor.Contract\GSEditor.Contract.csproj", "{B5F6C3AD-2881-4248-853A-C81A1860C6AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSEditor.Models", "GSEditor.Models\GSEditor.Models.csproj", "{E9E97957-C1A8-44DC-B367-49FB3F696AD5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSEditor.Services", "GSEditor.Services\GSEditor.Services.csproj", "{4913B8F9-EF2E-4BE7-89C2-25D5F495178B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSEditor.Common", "GSEditor.Common\GSEditor.Common.csproj", "{AF6B3BEE-7187-4E5E-A664-589BC5422DB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +23,22 @@ Global
 		{75CE283A-AF22-4AE9-B60E-C1EFE0FDB30C}.Debug|x86.Build.0 = Debug|x86
 		{75CE283A-AF22-4AE9-B60E-C1EFE0FDB30C}.Release|x86.ActiveCfg = Release|x86
 		{75CE283A-AF22-4AE9-B60E-C1EFE0FDB30C}.Release|x86.Build.0 = Release|x86
+		{B5F6C3AD-2881-4248-853A-C81A1860C6AD}.Debug|x86.ActiveCfg = Debug|x86
+		{B5F6C3AD-2881-4248-853A-C81A1860C6AD}.Debug|x86.Build.0 = Debug|x86
+		{B5F6C3AD-2881-4248-853A-C81A1860C6AD}.Release|x86.ActiveCfg = Release|Any CPU
+		{B5F6C3AD-2881-4248-853A-C81A1860C6AD}.Release|x86.Build.0 = Release|Any CPU
+		{E9E97957-C1A8-44DC-B367-49FB3F696AD5}.Debug|x86.ActiveCfg = Debug|x86
+		{E9E97957-C1A8-44DC-B367-49FB3F696AD5}.Debug|x86.Build.0 = Debug|x86
+		{E9E97957-C1A8-44DC-B367-49FB3F696AD5}.Release|x86.ActiveCfg = Release|Any CPU
+		{E9E97957-C1A8-44DC-B367-49FB3F696AD5}.Release|x86.Build.0 = Release|Any CPU
+		{4913B8F9-EF2E-4BE7-89C2-25D5F495178B}.Debug|x86.ActiveCfg = Debug|x86
+		{4913B8F9-EF2E-4BE7-89C2-25D5F495178B}.Debug|x86.Build.0 = Debug|x86
+		{4913B8F9-EF2E-4BE7-89C2-25D5F495178B}.Release|x86.ActiveCfg = Release|Any CPU
+		{4913B8F9-EF2E-4BE7-89C2-25D5F495178B}.Release|x86.Build.0 = Release|Any CPU
+		{AF6B3BEE-7187-4E5E-A664-589BC5422DB9}.Debug|x86.ActiveCfg = Debug|x86
+		{AF6B3BEE-7187-4E5E-A664-589BC5422DB9}.Debug|x86.Build.0 = Debug|x86
+		{AF6B3BEE-7187-4E5E-A664-589BC5422DB9}.Release|x86.ActiveCfg = Release|Any CPU
+		{AF6B3BEE-7187-4E5E-A664-589BC5422DB9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

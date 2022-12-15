@@ -3,23 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:GSEditor.UI.Controls"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:controls="clr-namespace:GSEditor.UI.Controls"
+             xmlns:vm="clr-namespace:GSEditor.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="1280"
              d:DesignWidth="650">
+  <UserControl.DataContext>
+    <vm:EmptyViewModel />
+  </UserControl.DataContext>
 
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
+
     <ListBox Grid.Column="0"
              Name="UnownListBox"
              Width="144"
              Margin="4"
              Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
              SelectionChanged="OnUnownListBoxSelected" />
+
     <Border Grid.Column="1"
             Name="ContentBorder"
             Margin="0, 4, 4, 4"
@@ -61,7 +67,7 @@
                               DisplayColorAndName="False"
                               SelectedColorChanged="OnColorPickerValueChanged" />
           </StackPanel>
-          
+
           <Label Margin="0, 16, 0, 8"
                  Style="{DynamicResource GSEditor_Style_Label_Section}">이미지 &amp; 색상</Label>
           <StackPanel Orientation="Horizontal">
@@ -117,9 +123,10 @@
               </controls:IgnoreDpiPanel>
             </Button>
           </StackPanel>
-          
+
         </StackPanel>
       </ScrollViewer>
     </Border>
+
   </Grid>
 </UserControl>

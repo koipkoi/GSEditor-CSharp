@@ -1,5 +1,5 @@
-﻿using GSEditor.Core;
-using GSEditor.Core.PokegoldCore;
+﻿using GSEditor.Contract.Services;
+using GSEditor.Models.Pokegold;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,22 +8,16 @@ namespace GSEditor.UI.Windows;
 
 public partial class LearnMoveImportDialog : Window
 {
-  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
-  private readonly List<PGLearnMove> _result = new();
+  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
 
-  private LearnMoveImportDialog()
+  public List<LearnMove> Result { get; } = new();
+
+  public LearnMoveImportDialog()
   {
     InitializeComponent();
 
     for (var i = 0; i < 251; i++)
-      PokemonListBox.Items.Add(_pokegold.Strings.PokemonNames[i]);
-  }
-
-  public static List<PGLearnMove> Show(DependencyObject owner)
-  {
-    var window = new LearnMoveImportDialog { Owner = GetWindow(owner), };
-    window.ShowDialog();
-    return window._result;
+      PokemonListBox.Items.Add(_pokegold.Data.Strings.PokemonNames[i]);
   }
 
   private void OnWindowSizeChanged(object _, SizeChangedEventArgs __)
@@ -43,16 +37,16 @@ public partial class LearnMoveImportDialog : Window
     {
       LearnMoveListView.SelectedIndex = -1;
 
-      _result.Clear();
+      Result.Clear();
       LearnMoveListView.Items.Clear();
 
-      foreach (var e in _pokegold.Pokemons[index].LearnMoves)
+      foreach (var e in _pokegold.Data.Pokemons[index].LearnMoves)
       {
-        _result.Add(e);
+        Result.Add(e);
         LearnMoveListView.Items.Add(new LearnMoveItem
         {
           Level = $"{e.Level}",
-          Move = $"{_pokegold.Strings.MoveNames[e.MoveNo - 1]}",
+          Move = $"{_pokegold.Data.Strings.MoveNames[e.MoveNo - 1]}",
         });
       }
     }
@@ -64,7 +58,7 @@ public partial class LearnMoveImportDialog : Window
     if (index != -1)
     {
       LearnMoveListView.Items.RemoveAt(index);
-      _result.RemoveAt(index);
+      Result.RemoveAt(index);
     }
   }
 
@@ -75,7 +69,7 @@ public partial class LearnMoveImportDialog : Window
 
   private void OnCancelClick(object _, RoutedEventArgs __)
   {
-    _result.Clear();
+    Result.Clear();
     Close();
   }
 }

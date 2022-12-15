@@ -1,9 +1,8 @@
-﻿using GSEditor.Core;
-using GSEditor.Core.PokegoldCore;
+﻿using GSEditor.Common.Utilities;
+using GSEditor.Contract.Services;
+using GSEditor.Models.Pokegold;
 using GSEditor.UI.Controls;
-using GSEditor.Utilities;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,9 +12,9 @@ namespace GSEditor.UI.Tabs;
 
 public partial class UnownTab : UserControl
 {
-  private readonly System.Drawing.Color _pokemonWhiteColor = GBColor.FromBytes(new byte[] { 0xff, 0x7f, }).ToColor();
-  private readonly System.Drawing.Color _pokemonBlackColor = GBColor.FromBytes(new byte[] { 0x00, 0x00, }).ToColor();
-  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
+  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
+  private readonly IDialogService _dialogs = App.Services.GetRequiredService<IDialogService>();
+  private readonly IPopupMenuService _popupMenus = App.Services.GetRequiredService<IPopupMenuService>();
 
   public UnownTab()
   {
@@ -38,102 +37,82 @@ public partial class UnownTab : UserControl
 
   private void OnImageClick(object sender, RoutedEventArgs _)
   {
+    var index = UnownListBox.SelectedIndex;
+    if (index == -1)
+    {
+      // todo 알림 개선
+      // _dialogs.ShowError("오류", "잘못된 접근입니다.");
+      return;
+    }
+
     if (sender is Button button && button.Content is IgnoreDpiPanel panel && panel.Child is GBImageBox gbImageBox)
     {
-      var menu = new ContextMenu();
+      _popupMenus.Show(new PopupMenuItem.Builder()
+        .Add("이미지 변경...", () =>
+        {
+          var fileName = _dialogs.ShowOpenFile("이미지 변경", "png 파일|*png");
+          if (fileName == null)
+            return;
 
-      var headerMenu = new MenuItem { Header = "이미지 변경..." };
-      headerMenu.Click += (_, __) =>
-      {
-        var dialog = new OpenFileDialog
-        {
-          Title = "이미지 변경",
-          Filter = "png 파일|*png",
-        };
-        if (dialog.ShowDialog() ?? false)
-        {
-          if (GBImage.TryLoadFromFile(dialog.FileName, out var newImage))
+          if (!GBImage.TryLoadFromFile(fileName, out var newImage) || newImage == null)
           {
-            if (newImage == null)
+            _dialogs.ShowError("오류", "이미지 파일의 형식이 올바르지 않습니다.");
+            return;
+          }
+          if (gbImageBox.Name == nameof(FrontImage) || gbImageBox.Name == nameof(FrontShinyImage))
+          {
+            if (newImage.Columns != _pokegold.Data.Pokemons[200].ImageTileSize || newImage.Rows != _pokegold.Data.Pokemons[200].ImageTileSize)
+            {
+              _dialogs.ShowError("오류", "이미지 사이즈가 올바르지 않습니다.\n40x40 사이즈로 맞춰주세요.");
               return;
-
-            var index = UnownListBox.SelectedIndex;
-
-            if (gbImageBox.Name == nameof(FrontImage) || gbImageBox.Name == nameof(FrontShinyImage))
-            {
-              if (newImage.Columns != _pokegold.Pokemons[200].GetImageTileSize() || newImage.Rows != _pokegold.Pokemons[200].GetImageTileSize())
-              {
-                MessageBox.Show("이미지 사이즈가 올바르지 않습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-              }
-
-              _pokegold.Images.Unowns[index] = newImage.Source;
             }
 
-            if (gbImageBox.Name == nameof(BackImage) || gbImageBox.Name == nameof(BackShinyImage))
-            {
-              if (newImage.Columns != 6 || newImage.Rows != 6)
-              {
-                MessageBox.Show("이미지 사이즈가 올바르지 않습니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-              }
+            _pokegold.Data.Images.Unowns[index] = newImage.Source;
+            _pokegold.Data.Pokemons[index].ImageTileSize = (byte)newImage.Rows;
+          }
 
-              _pokegold.Images.UnownBacksides[index] = newImage.Source;
+          if (gbImageBox.Name == nameof(BackImage) || gbImageBox.Name == nameof(BackShinyImage))
+          {
+            if (newImage.Columns != 6 || newImage.Rows != 6)
+            {
+              _dialogs.ShowError("오류", "이미지 사이즈가 올바르지 않습니다.\n48x48 사이즈로 맞춰주세요.");
+              return;
             }
 
-            _pokegold.Pokemons[index].SetImageTileSize(newImage.Rows);
+            _pokegold.Data.Images.UnownBacksides[index] = newImage.Source;
+          }
 
-            if (gbImageBox.Name == nameof(FrontShinyImage) || gbImageBox.Name == nameof(BackShinyImage))
-            {
-              _pokegold.Colors.ShinyPokemons[200][0] = GBColor.FromColor(newImage.Colors[1]);
-              _pokegold.Colors.ShinyPokemons[200][1] = GBColor.FromColor(newImage.Colors[2]);
-            }
-            else
-            {
-              _pokegold.Colors.Pokemons[200][0] = GBColor.FromColor(newImage.Colors[1]);
-              _pokegold.Colors.Pokemons[200][1] = GBColor.FromColor(newImage.Colors[2]);
-            }
+          if (gbImageBox.Name == nameof(FrontShinyImage) || gbImageBox.Name == nameof(BackShinyImage))
+          {
+            _pokegold.Data.Colors.ShinyPokemons[200][0] = newImage.Colors[1];
+            _pokegold.Data.Colors.ShinyPokemons[200][1] = newImage.Colors[2];
+          }
+          else
+          {
+            _pokegold.Data.Colors.Pokemons[200][0] = newImage.Colors[1];
+            _pokegold.Data.Colors.Pokemons[200][1] = newImage.Colors[2];
+          }
 
+          this.RunSafe(() =>
+          {
             UpdatePokemonImages();
             _pokegold.NotifyDataChanged();
-          }
-        }
-      };
-      menu.Items.Add(headerMenu);
-
-      menu.Items.Add(new Separator());
-
-      var pngMenu = new MenuItem { Header = "png 저장..." };
-      pngMenu.Click += (_, __) =>
-      {
-        var index = UnownListBox.SelectedIndex;
-        var dialog = new SaveFileDialog
+          });
+        })
+        .Add("-")
+        .Add("png 저장...", () =>
         {
-          Title = "png 저장",
-          Filter = "png 파일|*png",
-          FileName = $"unown_{button.Tag}_{index + 1}.png",
-        };
-        if (dialog.ShowDialog() ?? false)
-          gbImageBox.GBImage!.WriteFile(dialog.FileName);
-      };
-      menu.Items.Add(pngMenu);
-
-      var binMenu = new MenuItem { Header = "2bpp 저장..." };
-      binMenu.Click += (_, __) =>
-      {
-        var index = UnownListBox.SelectedIndex;
-        var dialog = new SaveFileDialog
+          var fileName = _dialogs.ShowSaveFile("png 저장", "png 파일|*png", $"unown_{button.Tag}_{index + 1}.png");
+          if (fileName != null)
+            gbImageBox.GBImage!.WriteFile(fileName);
+        })
+        .Add("2bpp 저장...", () =>
         {
-          Title = "2bpp 저장",
-          Filter = "2bpp 파일|*2bpp|bin 파일|*.bin|모든 파일|*.*",
-          FileName = $"unown_{button.Tag}_{index + 1}.2bpp",
-        };
-        if (dialog.ShowDialog() ?? false)
-          File.WriteAllBytes(dialog.FileName, gbImageBox.GBImage!.Source!);
-      };
-      menu.Items.Add(binMenu);
-
-      menu.IsOpen = true;
+          var fileName = _dialogs.ShowSaveFile("2bpp 저장", "2bpp 파일|*2bpp|bin 파일|*.bin|모든 파일|*.*", $"unown_{button.Tag}_{index + 1}.2bpp");
+          if (fileName != null)
+            File.WriteAllBytes(fileName, gbImageBox.GBImage!.Source!);
+        })
+        .Create());
     }
   }
 
@@ -144,11 +123,10 @@ public partial class UnownTab : UserControl
       var index = UnownListBox.SelectedIndex;
       if (index != -1)
       {
-        _pokegold.Colors.Pokemons[200][0] = GBColor.FromWPFColor(Color1.SelectedColor!.Value);
-        _pokegold.Colors.Pokemons[200][1] = GBColor.FromWPFColor(Color2.SelectedColor!.Value);
-        _pokegold.Colors.ShinyPokemons[200][0] = GBColor.FromWPFColor(ShinyColor1.SelectedColor!.Value);
-        _pokegold.Colors.ShinyPokemons[200][1] = GBColor.FromWPFColor(ShinyColor2.SelectedColor!.Value);
-
+        _pokegold.Data.Colors.Pokemons[200][0] = new GBColor(Color1.SelectedColor!.Value);
+        _pokegold.Data.Colors.Pokemons[200][1] = new GBColor(Color2.SelectedColor!.Value);
+        _pokegold.Data.Colors.ShinyPokemons[200][0] = new GBColor(ShinyColor1.SelectedColor!.Value);
+        _pokegold.Data.Colors.ShinyPokemons[200][1] = new GBColor(ShinyColor2.SelectedColor!.Value);
         UpdatePokemonImages();
         _pokegold.NotifyDataChanged();
       }
@@ -161,60 +139,59 @@ public partial class UnownTab : UserControl
 
     FrontImage.GBImage = new()
     {
-      Source = _pokegold.Images.Unowns[index],
-      Rows = _pokegold.Pokemons[200].GetImageTileSize(),
-      Columns = _pokegold.Pokemons[200].GetImageTileSize(),
-      Colors = new System.Drawing.Color[] {
-        _pokemonWhiteColor,
-        _pokegold.Colors.Pokemons[200][0].ToColor(),
-        _pokegold.Colors.Pokemons[200][1].ToColor(),
-        _pokemonBlackColor,
+      Source = _pokegold.Data.Images.Unowns[index],
+      Rows = _pokegold.Data.Pokemons[200].ImageTileSize,
+      Columns = _pokegold.Data.Pokemons[200].ImageTileSize,
+      Colors = new GBColor[] {
+        GBColor.GBWhite,
+        _pokegold.Data.Colors.Pokemons[200][0],
+        _pokegold.Data.Colors.Pokemons[200][1],
+        GBColor.GBBlack,
       },
     };
 
     FrontShinyImage.GBImage = new()
     {
-      Source = _pokegold.Images.Unowns[index],
-      Rows = _pokegold.Pokemons[200].GetImageTileSize(),
-      Columns = _pokegold.Pokemons[200].GetImageTileSize(),
-      Colors = new System.Drawing.Color[] {
-        _pokemonWhiteColor,
-        _pokegold.Colors.ShinyPokemons[200][0].ToColor(),
-        _pokegold.Colors.ShinyPokemons[200][1].ToColor(),
-        _pokemonBlackColor,
+      Source = _pokegold.Data.Images.Unowns[index],
+      Rows = _pokegold.Data.Pokemons[200].ImageTileSize,
+      Columns = _pokegold.Data.Pokemons[200].ImageTileSize,
+      Colors = new GBColor[] {
+        GBColor.GBWhite,
+        _pokegold.Data.Colors.ShinyPokemons[200][0],
+        _pokegold.Data.Colors.ShinyPokemons[200][1],
+        GBColor.GBBlack,
       },
     };
 
     BackImage.GBImage = new()
     {
-      Source = _pokegold.Images.UnownBacksides[index],
+      Source = _pokegold.Data.Images.UnownBacksides[index],
       Rows = 6,
       Columns = 6,
-      Colors = new System.Drawing.Color[] {
-        _pokemonWhiteColor,
-        _pokegold.Colors.Pokemons[200][0].ToColor(),
-        _pokegold.Colors.Pokemons[200][1].ToColor(),
-        _pokemonBlackColor,
+      Colors = new GBColor[] {
+        GBColor.GBWhite,
+        _pokegold.Data.Colors.Pokemons[200][0],
+        _pokegold.Data.Colors.Pokemons[200][1],
+        GBColor.GBBlack,
       },
     };
 
     BackShinyImage.GBImage = new()
     {
-      Source = _pokegold.Images.UnownBacksides[index],
+      Source = _pokegold.Data.Images.UnownBacksides[index],
       Rows = 6,
       Columns = 6,
-      Colors = new System.Drawing.Color[] {
-        _pokemonWhiteColor,
-        _pokegold.Colors.ShinyPokemons[200][0].ToColor(),
-        _pokegold.Colors.ShinyPokemons[200][1].ToColor(),
-        _pokemonBlackColor,
+      Colors = new GBColor[] {
+        GBColor.GBWhite,
+        _pokegold.Data.Colors.ShinyPokemons[200][0],
+        _pokegold.Data.Colors.ShinyPokemons[200][1],
+        GBColor.GBBlack,
       },
     };
 
-    Color1.SelectedColor = _pokegold.Colors.Pokemons[200][0].ToWPFColor();
-    Color2.SelectedColor = _pokegold.Colors.Pokemons[200][1].ToWPFColor();
-
-    ShinyColor1.SelectedColor = _pokegold.Colors.ShinyPokemons[200][0].ToWPFColor();
-    ShinyColor2.SelectedColor = _pokegold.Colors.ShinyPokemons[200][1].ToWPFColor();
+    Color1.SelectedColor = _pokegold.Data.Colors.Pokemons[200][0].ToColor();
+    Color2.SelectedColor = _pokegold.Data.Colors.Pokemons[200][1].ToColor();
+    ShinyColor1.SelectedColor = _pokegold.Data.Colors.ShinyPokemons[200][0].ToColor();
+    ShinyColor2.SelectedColor = _pokegold.Data.Colors.ShinyPokemons[200][1].ToColor();
   }
 }

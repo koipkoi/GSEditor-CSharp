@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:vm="clr-namespace:GSEditor.ViewModels"
         mc:Ignorable="d"
         Height="200"
         Width="260"
@@ -12,6 +13,9 @@
         WindowStartupLocation="CenterOwner"
         WindowStyle="SingleBorderWindow"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+  <Window.DataContext>
+    <vm:EmptyViewModel />
+  </Window.DataContext>
 
   <Grid>
     <Grid.RowDefinitions>
@@ -66,5 +70,4 @@
     </UniformGrid>
 
   </Grid>
-
 </Window>

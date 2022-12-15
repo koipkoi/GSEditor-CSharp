@@ -4,21 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:vm="clr-namespace:GSEditor.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="1280"
              d:DesignWidth="650"
              SizeChanged="OnSizeChanged">
+  <UserControl.DataContext>
+    <vm:EmptyViewModel />
+  </UserControl.DataContext>
+
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
+
     <ListBox Grid.Column="0"
              Name="TMHMsListBox"
              Width="160"
              Margin="4"
              Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
              SelectionChanged="OnTMHMsSelectionChanged" />
+
     <Border Grid.Column="1"
             Name="ContentBorder"
             Margin="0, 4, 4, 4"
@@ -187,5 +194,6 @@
         </StackPanel>
       </ScrollViewer>
     </Border>
+
   </Grid>
 </UserControl>

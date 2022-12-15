@@ -1,6 +1,6 @@
-﻿using GSEditor.Core;
-using GSEditor.Core.PokegoldCore;
-using GSEditor.Utilities;
+﻿using GSEditor.Common.Extensions;
+using GSEditor.Common.Utilities;
+using GSEditor.Contract.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +9,7 @@ namespace GSEditor.UI.Tabs;
 
 public partial class ItemsTab : UserControl
 {
-  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
+  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
 
   public ItemsTab()
   {
@@ -26,7 +26,7 @@ public partial class ItemsTab : UserControl
     this.RunSafe(() =>
     {
       ItemsListBox.Items.Clear();
-      foreach (var e in _pokegold.Strings.ItemNames)
+      foreach (var e in _pokegold.Data.Strings.ItemNames)
         ItemsListBox.Items.Add(e);
     });
 
@@ -40,17 +40,17 @@ public partial class ItemsTab : UserControl
     {
       this.RunSafe(() =>
       {
-        NameTextBox.Text = _pokegold.Strings.ItemNames[index];
-        PriceUpDown.Value = _pokegold.Items[index].Price;
-        GroupComboBox.SelectedIndex = _pokegold.Items[index].Pocket;
-        DescriptionTextBox.Text = _pokegold.Strings.ItemDescriptions[index].Replace("[59]", "\n");
+        NameTextBox.Text = _pokegold.Data.Strings.ItemNames[index];
+        PriceUpDown.Value = _pokegold.Data.Items[index].Price;
+        GroupComboBox.SelectedIndex = _pokegold.Data.Items[index].Pocket;
+        DescriptionTextBox.Text = _pokegold.Data.Strings.ItemDescriptions[index].Replace("[59]", "\n");
 
-        FieldMenuComboBox.SelectedIndex = _pokegold.Items[index].FieldMenu;
-        BattleMenuComboBox.SelectedIndex = _pokegold.Items[index].BattleMenu;
+        FieldMenuComboBox.SelectedIndex = _pokegold.Data.Items[index].FieldMenu;
+        BattleMenuComboBox.SelectedIndex = _pokegold.Data.Items[index].BattleMenu;
 
-        GiveEffectComboBox.SelectedIndex = _pokegold.Items[index].Effect;
-        RegisterAndSellComboBox.SelectedIndex = _pokegold.Items[index].Property >> 6;
-        ItemParameterUpDown.Value = _pokegold.Items[index].Parameter;
+        GiveEffectComboBox.SelectedIndex = _pokegold.Data.Items[index].Effect;
+        RegisterAndSellComboBox.SelectedIndex = _pokegold.Data.Items[index].Property >> 6;
+        ItemParameterUpDown.Value = _pokegold.Data.Items[index].Parameter;
       });
     }
 
@@ -67,8 +67,8 @@ public partial class ItemsTab : UserControl
         if (NameTextBox.Text.TryTextEncode(out var _))
         {
           var previousSelection = ItemsListBox.SelectedIndex;
-          _pokegold.Strings.ItemNames[index] = NameTextBox.Text;
-          ItemsListBox.Items[index] = _pokegold.Strings.ItemNames[index];
+          _pokegold.Data.Strings.ItemNames[index] = NameTextBox.Text;
+          ItemsListBox.Items[index] = _pokegold.Data.Strings.ItemNames[index];
           ItemsListBox.SelectedIndex = previousSelection;
           _pokegold.NotifyDataChanged();
         }
@@ -76,7 +76,7 @@ public partial class ItemsTab : UserControl
         var realDescription = DescriptionTextBox.Text.Replace("\r\n", "\n").Replace("\n", "[59]");
         if (realDescription.TryTextEncode(out var _))
         {
-          _pokegold.Strings.ItemDescriptions[index] = realDescription;
+          _pokegold.Data.Strings.ItemDescriptions[index] = realDescription;
           _pokegold.NotifyDataChanged();
         }
       });
@@ -98,9 +98,8 @@ public partial class ItemsTab : UserControl
     {
       this.RunSafe(() =>
       {
-        _pokegold.Items[index].Price = PriceUpDown.Value ?? 0;
-        _pokegold.Items[index].Parameter = ItemParameterUpDown.Value ?? 0;
-
+        _pokegold.Data.Items[index].Price = PriceUpDown.Value ?? 0;
+        _pokegold.Data.Items[index].Parameter = ItemParameterUpDown.Value ?? 0;
         _pokegold.NotifyDataChanged();
       });
     }
@@ -112,16 +111,14 @@ public partial class ItemsTab : UserControl
     if (index != -1)
     {
       this.RunSafe(() =>
-    {
-      _pokegold.Items[index].FieldMenu = (byte)FieldMenuComboBox.SelectedIndex;
-      _pokegold.Items[index].BattleMenu = (byte)BattleMenuComboBox.SelectedIndex;
-
-      _pokegold.Items[index].Effect = (byte)GiveEffectComboBox.SelectedIndex;
-      _pokegold.Items[index].Pocket = (byte)GroupComboBox.SelectedIndex;
-      _pokegold.Items[index].Property = (byte)(RegisterAndSellComboBox.SelectedIndex << 6);
-
-      _pokegold.NotifyDataChanged();
-    });
+      {
+        _pokegold.Data.Items[index].FieldMenu = (byte)FieldMenuComboBox.SelectedIndex;
+        _pokegold.Data.Items[index].BattleMenu = (byte)BattleMenuComboBox.SelectedIndex;
+        _pokegold.Data.Items[index].Effect = (byte)GiveEffectComboBox.SelectedIndex;
+        _pokegold.Data.Items[index].Pocket = (byte)GroupComboBox.SelectedIndex;
+        _pokegold.Data.Items[index].Property = (byte)(RegisterAndSellComboBox.SelectedIndex << 6);
+        _pokegold.NotifyDataChanged();
+      });
     }
   }
 }

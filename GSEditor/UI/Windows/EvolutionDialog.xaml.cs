@@ -1,5 +1,5 @@
-﻿using GSEditor.Core;
-using GSEditor.Core.PokegoldCore;
+﻿using GSEditor.Contract.Services;
+using GSEditor.Models.Pokegold;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,26 +8,26 @@ namespace GSEditor.UI.Windows;
 
 public partial class EvolutionDialog : Window
 {
-  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
-  private PGEvolution? _result = null;
+  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
 
-  private EvolutionDialog(Window owner, PGEvolution? currentItem)
+  public Evolution? Result { get; set; }
+
+  public EvolutionDialog(Evolution? currentItem)
   {
-    Owner = owner;
     Title = currentItem != null ? "진화 수정" : "진화 추가";
 
     InitializeComponent();
 
     for (var i = 0; i < 251; i++)
     {
-      var e = _pokegold.Strings.PokemonNames[i];
+      var e = _pokegold.Data.Strings.PokemonNames[i];
       StatsPokemonComboBox.Items.Add(e);
       ItemPokemonComboBox.Items.Add(e);
       ExchangePokemonComboBox.Items.Add(e);
       AffectionPokemonComboBox.Items.Add(e);
     }
 
-    foreach (var e in _pokegold.Strings.ItemNames)
+    foreach (var e in _pokegold.Data.Strings.ItemNames)
     {
       ItemItemComboBox.Items.Add(e);
       ExchangeItemComboBox.Items.Add(e);
@@ -91,14 +91,6 @@ public partial class EvolutionDialog : Window
     }
   }
 
-  public static PGEvolution? Show(DependencyObject owner, PGEvolution? currentItem = null)
-  {
-    var dialog = new EvolutionDialog(GetWindow(owner), currentItem);
-    if (dialog.ShowDialog() ?? false)
-      return dialog._result;
-    return null;
-  }
-
   private void OnPokemonComboBoxSelectionChanged(object sender, SelectionChangedEventArgs _)
   {
     // 선택한 항목이 다른 탭에서도 적용되게끔 함
@@ -124,7 +116,7 @@ public partial class EvolutionDialog : Window
       case 0:
         if (Stats0.IsChecked ?? true)
         {
-          _result = new()
+          Result = new()
           {
             Type = 1,
             Level = (byte)(StatsLevel.Value ?? 0),
@@ -133,7 +125,7 @@ public partial class EvolutionDialog : Window
         }
         else
         {
-          _result = new()
+          Result = new()
           {
             Type = 5,
             Level = (byte)(StatsLevel.Value ?? 0),
@@ -146,7 +138,7 @@ public partial class EvolutionDialog : Window
         break;
 
       case 1:
-        _result = new()
+        Result = new()
         {
           Type = 2,
           ItemNo = (byte)(ItemItemComboBox.SelectedIndex + 1),
@@ -157,7 +149,7 @@ public partial class EvolutionDialog : Window
         break;
 
       case 2:
-        _result = new()
+        Result = new()
         {
           Type = 3,
           ItemNo = (byte)((ExchangeNeedItemCheckBox.IsChecked ?? true) ? ExchangeItemComboBox.SelectedIndex + 1 : 0xff),
@@ -168,7 +160,7 @@ public partial class EvolutionDialog : Window
         break;
 
       case 3:
-        _result = new()
+        Result = new()
         {
           Type = 4,
           Affection = (byte)((Affection1.IsChecked ?? true) ? 1 : ((Affection2.IsChecked ?? true) ? 2 : 3)),

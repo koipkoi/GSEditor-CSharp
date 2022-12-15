@@ -1,5 +1,6 @@
-﻿using GSEditor.Core;
-using GSEditor.Utilities;
+﻿using GSEditor.Common.Extensions;
+using GSEditor.Common.Utilities;
+using GSEditor.Contract.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +11,7 @@ namespace GSEditor.UI.Tabs;
 
 public partial class TMHMsTab : UserControl
 {
-  private readonly Pokegold _pokegold = App.Services.GetRequiredService<Pokegold>();
+  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
   private readonly List<CheckListBox> _pokemonList;
 
   public TMHMsTab()
@@ -64,12 +65,12 @@ public partial class TMHMsTab : UserControl
         {
           var label = (i < 50 ? "기술" : "비전");
           var number = (i < 50 ? i + 1 : i - 49).ToString().PadLeft(2, '0');
-          var name = _pokegold.Strings.MoveNames[_pokegold.TMHMs[i] - 1];
+          var name = _pokegold.Data.Strings.MoveNames[_pokegold.Data.TMHMs[i] - 1];
           TMHMsListBox.Items.Add($"{label}{number} [{name}]");
         }
 
         MoveComboBox.Items.Clear();
-        foreach (var e in _pokegold.Strings.MoveNames)
+        foreach (var e in _pokegold.Data.Strings.MoveNames)
           MoveComboBox.Items.Add(e);
 
         if (_pokemonList.Select(e => e.Items.Count).Sum() != 251)
@@ -77,7 +78,7 @@ public partial class TMHMsTab : UserControl
           _pokemonList.ForEach(e => e.Items.Clear());
           for (var i = 0; i < 251; i++)
           {
-            var name = _pokegold.Strings.PokemonNames[i];
+            var name = _pokegold.Data.Strings.PokemonNames[i];
             _pokemonList[i / 10].Items.Add(name);
           }
         }
@@ -85,7 +86,7 @@ public partial class TMHMsTab : UserControl
         {
           for (var i = 0; i < 251; i++)
           {
-            var name = _pokegold.Strings.PokemonNames[i];
+            var name = _pokegold.Data.Strings.PokemonNames[i];
             _pokemonList[i / 10].Items[i % 10] = name;
           }
         }
@@ -107,14 +108,14 @@ public partial class TMHMsTab : UserControl
     {
       this.RunSafe(() =>
       {
-        MoveComboBox.SelectedIndex = _pokegold.TMHMs[index] - 1;
+        MoveComboBox.SelectedIndex = _pokegold.Data.TMHMs[index] - 1;
 
         foreach (var e in _pokemonList)
           e.SelectedItems.Clear();
         for (var i = 0; i < 251; i++)
         {
           var item = _pokemonList[i / 10].Items[i % 10];
-          if (_pokegold.Pokemons[i].TMHMs[index])
+          if (_pokegold.Data.Pokemons[i].TMHMs[index])
             _pokemonList[i / 10].SelectedItems.Add(item);
         }
       });
@@ -132,11 +133,11 @@ public partial class TMHMsTab : UserControl
     {
       this.RunSafe(() =>
       {
-        _pokegold.TMHMs[index] = (byte)(MoveComboBox.SelectedIndex + 1);
+        _pokegold.Data.TMHMs[index] = (byte)(MoveComboBox.SelectedIndex + 1);
 
         var label = (index < 50 ? "기술" : "비전");
         var number = (index < 50 ? index + 1 : index - 49).ToString().PadLeft(2, '0');
-        var name = _pokegold.Strings.MoveNames[_pokegold.TMHMs[index] - 1];
+        var name = _pokegold.Data.Strings.MoveNames[_pokegold.Data.TMHMs[index] - 1];
         TMHMsListBox.Items[index] = $"{label}{number} [{name}]";
 
         _pokegold.NotifyDataChanged();
@@ -154,12 +155,12 @@ public partial class TMHMsTab : UserControl
       this.RunSafe(() =>
       {
         for (var i = 0; i < 251; i++)
-          _pokegold.Pokemons[i].TMHMs[index] = false;
+          _pokegold.Data.Pokemons[i].TMHMs[index] = false;
 
         for (var i = 0; i < _pokemonList.Count; i++)
         {
           foreach (var e in _pokemonList[i].SelectedItems)
-            _pokegold.Pokemons[(i * 10) + _pokemonList[i].Items.IndexOf(e)].TMHMs[index] = true;
+            _pokegold.Data.Pokemons[(i * 10) + _pokemonList[i].Items.IndexOf(e)].TMHMs[index] = true;
         }
 
         _pokegold.NotifyDataChanged();
