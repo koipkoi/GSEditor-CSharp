@@ -128,7 +128,10 @@ public partial class MainWindow : Window
         {
           var emulatorPath = _appSettings.AppSettings.EmulatorPath;
           if (emulatorPath == null || !File.Exists(emulatorPath))
+          {
             _dialogs.ShowError("알림", "에뮬레이터가 설정되어있지 않아 실패했습니다.");
+            return;
+          }
 
           try
           {
@@ -136,9 +139,7 @@ public partial class MainWindow : Window
           }
           catch
           {
-            // todo 알림 개선
-            // _dialogs.ShowError("알림", "지원하지 않는 에뮬레이터로 실행하였습니다.\n다른 에뮬레이터로 실행해주세요.");
-            _dialogs.ShowError("알림", "에뮬레이터가 설정되어있지 않아 실패했습니다.");
+            _dialogs.ShowError("알림", "지원하지 않는 에뮬레이터로 실행하였습니다.\n다른 에뮬레이터로 실행해주세요.");
           }
         }
         break;

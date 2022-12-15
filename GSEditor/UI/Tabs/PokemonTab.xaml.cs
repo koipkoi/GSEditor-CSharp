@@ -383,8 +383,7 @@ public partial class PokemonTab : UserControl
     var index = PokemonListBox.SelectedIndex;
     if (index == -1)
     {
-      // todo 알림 개선
-      // _dialogs.ShowError("오류", "잘못된 접근입니다.");
+      _dialogs.ShowError("오류", "잘못된 접근입니다.");
       return;
     }
 
