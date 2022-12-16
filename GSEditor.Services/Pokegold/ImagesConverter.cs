@@ -7,7 +7,8 @@ namespace GSEditor.Services.Pokegold;
 
 public sealed class ImagesConverter : IPokegoldConverter
 {
-  private static readonly int[][] _imageAddrs = new int[][] {
+  private static readonly int[][] _imageAddrs = new int[][]
+  {
     new int[] { 0x0485e2, 0x04bfff, },
     new int[] { 0x054000, 0x057fff, },
     new int[] { 0x058000, 0x05bfff, },

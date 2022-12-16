@@ -16,7 +16,6 @@ public sealed class PokegoldService : IPokegoldService
   private readonly MD5 _md5 = MD5.Create();
   private readonly List<IPokegoldConverter> _converters = new()
   {
-    new ChecksumConverter(),
     new ColorsConverter(),
     new ImagesConverter(),
     new ItemsConverter(),
@@ -25,6 +24,7 @@ public sealed class PokegoldService : IPokegoldService
     new PokemonsConverter(),
     new StringsConverter(),
     new TMHMsConverter(),
+    new ChecksumConverter(),
   };
 
   public event EventHandler? RomChanged;
