@@ -23,7 +23,7 @@
              Name="ItemsListBox"
              Width="144"
              Margin="4"
-             Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
+             Style="{DynamicResource GSEditor_Style_ListBox_ColoredWithFinder}"
              SelectionChanged="OnItemsSelectionChanged" />
 
     <Border Grid.Column="1"

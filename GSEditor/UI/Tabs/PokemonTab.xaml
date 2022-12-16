@@ -24,7 +24,7 @@
              Name="PokemonListBox"
              Width="144"
              Margin="4"
-             Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
+             Style="{DynamicResource GSEditor_Style_ListBox_ColoredWithFinder}"
              SelectionChanged="OnPokemonListBoxSelected" />
 
     <Border Grid.Column="1"
@@ -373,7 +373,6 @@
             <Label Margin="0, 0, 0, 4">진화</Label>
             <ListView Name="EvolutionListView"
                       Height="128"
-                      ItemsSource="{Binding Evolutions}"
                       Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
                       SelectionChanged="OnEvolutionLearnMoveSelectionChanged"
                       MouseDoubleClick="OnEvolutionListViewDoubleClick">
@@ -422,7 +421,6 @@
             <Label Margin="0, 8, 0, 4">배우는 기술</Label>
             <ListView Name="LearnMoveListView"
                       Height="240"
-                      ItemsSource="{Binding Moves}"
                       Style="{DynamicResource GSEditor_Style_ListBox_Colored}"
                       SelectionChanged="OnEvolutionLearnMoveSelectionChanged"
                       MouseDoubleClick="OnLearnMoveListViewDoubleClick">
