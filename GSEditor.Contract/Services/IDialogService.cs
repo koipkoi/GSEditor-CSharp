@@ -16,6 +16,8 @@ public interface IDialogService
   public void ShowMain();
   public void ShowAppInfo();
 
+  public void ShowRomCorruption();
+
   public Evolution? ShowEvolutionEditor(Evolution? defaultValue);
   public LearnMove? ShowLearnMoveEditor(LearnMove? defaultValue);
   public List<LearnMove> ShowLearnMoveImporter();

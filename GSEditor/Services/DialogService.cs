@@ -81,6 +81,12 @@ public class DialogService : IDialogService
     dialog.ShowDialogCenterOwner();
   }
 
+  public void ShowRomCorruption()
+  {
+    var dialog = new RomCorruptionsDialog();
+    dialog.ShowDialogCenterOwner();
+  }
+
   public Evolution? ShowEvolutionEditor(Evolution? defaultValue)
   {
     var dialog = new EvolutionEditorDialog(defaultValue);

@@ -7,19 +7,26 @@ public sealed class LearnMove
   public byte Level { get; set; }
   public byte MoveNo { get; set; }
 
-  public static List<LearnMove> FromBytes(byte[] bytes)
+  public static bool TryParseFromBytes(byte[] bytes, out List<LearnMove> result)
   {
-    var result = new List<LearnMove>();
+    result = new List<LearnMove>();
     for (var i = 0; i < bytes.Length; i += 2)
     {
-      var newItem = new LearnMove
+      try
       {
-        Level = bytes[i],
-        MoveNo = bytes[i + 1],
-      };
-      result.Add(newItem);
+        var newItem = new LearnMove
+        {
+          Level = bytes[i],
+          MoveNo = bytes[i + 1],
+        };
+        result.Add(newItem);
+      }
+      catch
+      {
+        return false;
+      }
     }
-    return result;
+    return true;
   }
 
   public byte[] ToBytes()

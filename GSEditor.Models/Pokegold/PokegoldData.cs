@@ -6,6 +6,7 @@ namespace GSEditor.Models.Pokegold;
 public sealed class PokegoldData
 {
   public byte[]? Bytes { get; set; }
+
   public Colors Colors { get; } = new();
   public Images Images { get; } = new();
   public Strings Strings { get; } = new();
@@ -14,6 +15,7 @@ public sealed class PokegoldData
   public List<Pokedex> Pokedex { get; } = new();
   public List<Pokemon> Pokemons { get; } = new();
   public List<byte> TMHMs { get; } = new();
+  public List<Corruption> Corruptions { get; } = new();
 
   public byte GetByte(int address)
   {
@@ -25,6 +27,8 @@ public sealed class PokegoldData
   public byte[] GetBytes(int address, int length)
   {
     if (Bytes == null)
+      return Array.Empty<byte>();
+    if (address < 0 || length == 0 || address + length > Bytes.Length)
       return Array.Empty<byte>();
     var result = new byte[length];
     for (var i = 0; i < length; i++)

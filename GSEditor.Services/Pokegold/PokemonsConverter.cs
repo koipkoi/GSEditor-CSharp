@@ -18,10 +18,24 @@ public sealed class PokemonsConverter : IPokegoldConverter
 
       var evolutionsBytes = data.GetBytes(address, b => b == 0);
       address += evolutionsBytes.Length + 1;
-      newPokemon.Evolutions.AddRange(Evolution.FromBytes(evolutionsBytes));
+      if (Evolution.TryParseFromBytes(evolutionsBytes, out var newEvolutions))
+        newPokemon.Evolutions.AddRange(newEvolutions);
+      else
+        data.Corruptions.Add(new()
+        {
+          Type = Corruption.EvolutionCorrupted,
+          Index = i,
+        });
 
       var learnMovesBytes = data.GetBytes(address, b => b == 0);
-      newPokemon.LearnMoves.AddRange(LearnMove.FromBytes(learnMovesBytes));
+      if (LearnMove.TryParseFromBytes(learnMovesBytes, out var newLearnMoves))
+        newPokemon.LearnMoves.AddRange(newLearnMoves);
+      else
+        data.Corruptions.Add(new()
+        {
+          Type = Corruption.LearnMoveCorrupted,
+          Index = i,
+        });
     }
   }
 

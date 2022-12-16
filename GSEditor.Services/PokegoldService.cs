@@ -46,12 +46,13 @@ public sealed class PokegoldService : IPokegoldService
     try
     {
       Data.Bytes = File.ReadAllBytes(fileName);
+      Data.Corruptions.Clear();
 
       foreach (var converter in _converters)
         converter.Read(Data);
 
       IsOpened = true;
-      IsChanged = false;
+      IsChanged = Data.Corruptions.Count > 0;
       FileName = fileName;
       RomChanged?.Invoke(this, EventArgs.Empty);
 
@@ -64,6 +65,7 @@ public sealed class PokegoldService : IPokegoldService
 
     IsOpened = false;
     IsChanged = false;
+    Data.Corruptions.Clear();
     FileName = "";
     RomChanged?.Invoke(this, EventArgs.Empty);
 
@@ -80,6 +82,7 @@ public sealed class PokegoldService : IPokegoldService
       File.WriteAllBytes(FileName, Data.Bytes!);
 
       IsChanged = false;
+      Data.Corruptions.Clear();
       DataChanged?.Invoke(this, EventArgs.Empty);
 
       return true;

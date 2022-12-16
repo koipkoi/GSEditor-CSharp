@@ -11,38 +11,46 @@ public sealed class Evolution
   public byte Affection { get; set; }
   public byte BaseStats { get; set; }
 
-  public static List<Evolution> FromBytes(byte[] bytes)
+  public static bool TryParseFromBytes(byte[] bytes, out List<Evolution> result)
   {
-    // 바이트 토큰 처리
-    var arrays = new List<byte[]>();
-    for (var i = 0; i < bytes.Length; i++)
-    {
-      switch (bytes[i])
-      {
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-          arrays.Add(new byte[] { bytes[i], bytes[i + 1], bytes[i + 2], });
-          i += 2;
-          break;
+    result = new List<Evolution>();
 
-        case 5:
-          arrays.Add(new byte[] { bytes[i], bytes[i + 1], bytes[i + 2], bytes[i + 3], });
-          i += 3;
-          break;
+    try
+    {
+      // 바이트 토큰 처리
+      var arrays = new List<byte[]>();
+      for (var i = 0; i < bytes.Length; i++)
+      {
+        switch (bytes[i])
+        {
+          case 1:
+          case 2:
+          case 3:
+          case 4:
+            arrays.Add(new byte[] { bytes[i], bytes[i + 1], bytes[i + 2], });
+            i += 2;
+            break;
+
+          case 5:
+            arrays.Add(new byte[] { bytes[i], bytes[i + 1], bytes[i + 2], bytes[i + 3], });
+            i += 3;
+            break;
+        }
+      }
+
+      // 항목 파싱
+      foreach (var e in arrays)
+      {
+        var newItem = ParseItem(e);
+        result.Add(newItem);
       }
     }
-
-    // 항목 파싱
-    var result = new List<Evolution>();
-    foreach (var e in arrays)
+    catch
     {
-      var newItem = ParseItem(e);
-      result.Add(newItem);
+      return false;
     }
 
-    return result;
+    return true;
   }
 
   private static Evolution ParseItem(byte[] bytes)

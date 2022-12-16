@@ -35,7 +35,7 @@ public partial class MainWindow : Window
       CommandBindings.Add(new CommandBinding(menuItemShortcutCommand, (_, __) => OnMenuItemShortcutExecute(keyGesture.DisplayString, null)));
     }
 
-    _pokegold.RomChanged += OnRomChanged;
+    _pokegold.RomChanged += OnDataChanged;
     _pokegold.DataChanged += OnDataChanged;
   }
 
@@ -68,16 +68,11 @@ public partial class MainWindow : Window
   {
     base.OnClosed(e);
 
-    _pokegold.RomChanged -= OnRomChanged;
+    _pokegold.RomChanged -= OnDataChanged;
     _pokegold.DataChanged -= OnDataChanged;
   }
 
   private void OnDataChanged(object? _, EventArgs __)
-  {
-    FileModifyState.Visibility = _pokegold.IsChanged ? Visibility.Visible : Visibility.Collapsed;
-  }
-
-  private void OnRomChanged(object? _, EventArgs __)
   {
     FileNameState.Content = _pokegold.FileName;
     SaveMenuItem.IsEnabled = _pokegold.IsOpened;
@@ -85,6 +80,7 @@ public partial class MainWindow : Window
     SaveToolBarButton.IsEnabled = _pokegold.IsOpened;
     TestPlayToolBarButton.IsEnabled = _pokegold.IsOpened;
     MainTab.IsEnabled = _pokegold.IsOpened;
+    FileModifyState.Visibility = _pokegold.IsChanged ? Visibility.Visible : Visibility.Collapsed;
   }
 
   private void OnMenuItemClick(object? sender, RoutedEventArgs _)
@@ -110,7 +106,17 @@ public partial class MainWindow : Window
         if (fileName != null)
         {
           if (!_pokegold.Open(fileName))
+          {
             _dialogs.ShowError("알림", "오류가 발생하여 롬 파일을 불러올 수 없습니다.");
+          }
+          else
+          {
+            if (_pokegold.Data.Corruptions.Count > 0)
+            {
+              if (_dialogs.ShowQuestion("알림", "롬파일에서 손상된 데이터가 존재하여 데이터의 일부 손실 또는 대체되었습니다.\n자세한 내역을 확인하겠습니까?"))
+                _dialogs.ShowRomCorruption();
+            }
+          }
         }
         break;
 

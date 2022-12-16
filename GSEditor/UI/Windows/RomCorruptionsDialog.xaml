@@ -1,0 +1,48 @@
+﻿<Window x:Class="GSEditor.UI.Windows.RomCorruptionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:GSEditor.ViewModels"
+        MinHeight="400"
+        MinWidth="560"
+        Height="400"
+        Width="560"
+        Title="대체 데이터 내역"
+        ShowInTaskbar="False"
+        ResizeMode="CanResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+  <Window.DataContext>
+    <vm:EmptyViewModel />
+  </Window.DataContext>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <ListView Grid.Row="0"
+              Name="LogsListBiew"
+              Margin="4"
+              Style="{DynamicResource GSEditor_Style_ListBox_Colored}">
+      <ListView.View>
+        <GridView>
+          <GridViewColumn DisplayMemberBinding="{Binding No}"
+                          Header="순번"
+                          Width="64" />
+          <GridViewColumn DisplayMemberBinding="{Binding Content}"
+                          Header="내용"
+                          Width="400" />
+        </GridView>
+      </ListView.View>
+    </ListView>
+
+    <WrapPanel Grid.Row="1"
+               Margin="4, 0, 4, 4"
+               HorizontalAlignment="Right">
+      <Button Padding="24, 4, 24, 4"
+              Click="OnConfirmClick">확인</Button>
+    </WrapPanel>
+
+  </Grid>
+</Window>
