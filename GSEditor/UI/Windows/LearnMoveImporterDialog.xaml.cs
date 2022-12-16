@@ -6,13 +6,13 @@ using System.Windows.Controls;
 
 namespace GSEditor.UI.Windows;
 
-public partial class LearnMoveImportDialog : Window
+public partial class LearnMoveImporterDialog : Window
 {
   private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
 
   public List<LearnMove> Result { get; } = new();
 
-  public LearnMoveImportDialog()
+  public LearnMoveImporterDialog()
   {
     InitializeComponent();
 

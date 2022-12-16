@@ -83,21 +83,21 @@ public class DialogService : IDialogService
 
   public Evolution? ShowEvolutionEditor(Evolution? defaultValue)
   {
-    var dialog = new EvolutionDialog(defaultValue);
+    var dialog = new EvolutionEditorDialog(defaultValue);
     dialog.ShowDialogCenterOwner();
     return dialog.Result;
   }
 
   public LearnMove? ShowLearnMoveEditor(LearnMove? defaultValue)
   {
-    var dialog = new LearnMoveDialog(defaultValue);
+    var dialog = new LearnMoveEditorDialog(defaultValue);
     dialog.ShowDialogCenterOwner();
     return dialog.Result;
   }
 
   public List<LearnMove> ShowLearnMoveImporter()
   {
-    var dialog = new LearnMoveImportDialog();
+    var dialog = new LearnMoveImporterDialog();
     dialog.ShowDialogCenterOwner();
     return dialog.Result;
   }

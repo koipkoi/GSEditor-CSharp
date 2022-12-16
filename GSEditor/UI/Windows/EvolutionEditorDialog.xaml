@@ -1,4 +1,4 @@
-﻿<Window x:Class="GSEditor.UI.Windows.EvolutionDialog"
+﻿<Window x:Class="GSEditor.UI.Windows.EvolutionEditorDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -58,6 +58,7 @@
           <ComboBox  Grid.Row="2"
                      Grid.Column="2"
                      Name="StatsPokemonComboBox"
+                     Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}"
                      SelectionChanged="OnPokemonComboBoxSelectionChanged" />
 
           <StackPanel Grid.Row="3"
@@ -106,10 +107,12 @@
 
           <ComboBox  Grid.Row="0"
                      Grid.Column="2"
-                     Name="ItemItemComboBox" />
+                     Name="ItemItemComboBox"
+                     Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}" />
           <ComboBox  Grid.Row="2"
                      Grid.Column="2"
                      Name="ItemPokemonComboBox"
+                     Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}"
                      SelectionChanged="OnPokemonComboBoxSelectionChanged" />
 
         </Grid>
@@ -148,10 +151,12 @@
           <ComboBox  Grid.Row="0"
                      Grid.Column="2"
                      Name="ExchangePokemonComboBox"
+                     Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}"
                      SelectionChanged="OnPokemonComboBoxSelectionChanged" />
           <ComboBox  Grid.Row="4"
                      Grid.Column="2"
                      IsEnabled="{Binding ElementName=ExchangeNeedItemCheckBox, Path=IsChecked}"
+                     Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}"
                      Name="ExchangeItemComboBox" />
 
         </Grid>
@@ -178,6 +183,7 @@
           <ComboBox  Grid.Row="0"
                      Grid.Column="2"
                      Name="AffectionPokemonComboBox"
+                     Style="{DynamicResource GSEditor_Style_ComboBox_ColoredWithFinder}"
                      SelectionChanged="OnPokemonComboBoxSelectionChanged" />
 
           <StackPanel Grid.Row="1"

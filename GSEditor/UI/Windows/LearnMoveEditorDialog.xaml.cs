@@ -5,13 +5,13 @@ using System.Windows;
 
 namespace GSEditor.UI.Windows;
 
-public partial class LearnMoveDialog : Window
+public partial class LearnMoveEditorDialog : Window
 {
   private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
 
   public LearnMove? Result { get; set; }
 
-  public LearnMoveDialog(LearnMove? defaultValue)
+  public LearnMoveEditorDialog(LearnMove? defaultValue)
   {
     Title = defaultValue != null ? "배우는 기술 수정" : "배우는 기술 추가";
 

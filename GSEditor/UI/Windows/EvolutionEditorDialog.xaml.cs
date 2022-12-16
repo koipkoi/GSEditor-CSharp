@@ -6,13 +6,13 @@ using System.Windows.Controls;
 
 namespace GSEditor.UI.Windows;
 
-public partial class EvolutionDialog : Window
+public partial class EvolutionEditorDialog : Window
 {
   private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
 
   public Evolution? Result { get; set; }
 
-  public EvolutionDialog(Evolution? currentItem)
+  public EvolutionEditorDialog(Evolution? currentItem)
   {
     Title = currentItem != null ? "진화 수정" : "진화 추가";
 
