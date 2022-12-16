@@ -13,7 +13,11 @@ public partial class SelectorFinderDialog : Window
   private SelectorFinderDialog()
   {
     InitializeComponent();
-    Loaded += (_, __) => UpdateResult();
+    Loaded += (_, __) =>
+    {
+      UpdateResult();
+      KeywordTextBox.Focus();
+    };
   }
 
   public static int Show(DependencyObject owner, ItemCollection list)
