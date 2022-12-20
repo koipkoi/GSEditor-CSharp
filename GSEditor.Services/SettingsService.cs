@@ -1,4 +1,5 @@
-﻿using GSEditor.Contract.Services;
+﻿using GSEditor.Common.Utilities;
+using GSEditor.Contract.Services;
 using GSEditor.Models.Settings;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
@@ -30,9 +31,10 @@ public sealed class SettingsService : ISettingsService
 
   private T ReadInternal<T>(string name) where T : new()
   {
-    if (!File.Exists(name))
+    var fileName = GetSettingsFileName(name);
+    if (!File.Exists(fileName))
       return new();
-    using var ms = new MemoryStream(File.ReadAllBytes(name));
+    using var ms = new MemoryStream(File.ReadAllBytes(fileName));
     using var reader = new BsonDataReader(ms);
     return _serializer.Deserialize<T>(reader)!;
   }
@@ -44,7 +46,12 @@ public sealed class SettingsService : ISettingsService
       using var ms = new MemoryStream();
       using var writer = new BsonDataWriter(ms);
       _serializer.Serialize(writer, obj);
-      File.WriteAllBytes(name, ms.ToArray());
+      File.WriteAllBytes(GetSettingsFileName(name), ms.ToArray());
     }
+  }
+
+  private static string GetSettingsFileName(string name)
+  {
+    return Path.Combine(Platforms.AppDataDir, name);
   }
 }
