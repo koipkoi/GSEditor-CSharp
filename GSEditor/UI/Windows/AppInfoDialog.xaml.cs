@@ -6,6 +6,13 @@ namespace GSEditor.UI.Windows;
 public partial class AppInfoDialog : Window
 {
   public static readonly string AppVersions = "" +
+    "### v1.2.6\n" +
+    "* 항목 검색 기능에서 창이 열릴경우 입력을 바로 할 수 있도록 변경\n" +
+    "* 체크섬 기록이 재대로 되지 않는 문제를 수정\n" +
+    "* 외부 원인에 의한 깨진 데이터를 알림, 데이터 수정 기능 추가 (이미지, 진화·배우는 기술 데이터만 지원)\n" +
+    "* 오류 알림 개선\n" +
+    "  \n" +
+    "  \n" +
     "### v1.2.5\n" +
     "* 메뉴 순서 변경 (포켓몬, 아이템, 안농, 기술, 기술머신 > 포켓몬, 안농, 아이템, 기술, 기술머신)\n" +
     "* 콤보상자 홀수, 짝수 구분되도록 스타일 변경\n" +
