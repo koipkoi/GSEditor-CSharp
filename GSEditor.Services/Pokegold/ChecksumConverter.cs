@@ -17,11 +17,6 @@ public sealed class ChecksumConverter : IPokegoldConverter
     /* 7 */ new byte[0x310],
   };
 
-  private static bool IsNotImageByte(byte[] bytes)
-  {
-    return !(bytes.Length == 0x190 || bytes.Length == 0x240 || bytes.Length == 0x310);
-  }
-
   public void Read(PokegoldData data)
   {
     // 포켓몬 이미지 : 깨진 데이터 대체
@@ -29,7 +24,7 @@ public sealed class ChecksumConverter : IPokegoldConverter
     {
       if (i != 200)
       {
-        if (IsNotImageByte(data.Images.Pokemons[i]))
+        if (data.Images.Pokemons[i].Length == 0)
         {
           data.Images.Pokemons[i] = _defaultImageBytes[data.Pokemons[i].ImageTileSize];
           data.Corruptions.Add(new()
@@ -38,7 +33,7 @@ public sealed class ChecksumConverter : IPokegoldConverter
             Index = i,
           });
         }
-        if (IsNotImageByte(data.Images.PokemonBacksides[i]))
+        if (data.Images.PokemonBacksides[i].Length == 0)
         {
           data.Images.PokemonBacksides[i] = _defaultImageBytes[6];
           data.Corruptions.Add(new()
@@ -53,7 +48,7 @@ public sealed class ChecksumConverter : IPokegoldConverter
     // 트레이너 이미지 : 깨진 데이터 대체
     for (var i = 0; i < 66; i++)
     {
-      if (IsNotImageByte(data.Images.Trainers[i]))
+      if (data.Images.Trainers[i].Length == 0)
       {
         data.Images.Trainers[i] = _defaultImageBytes[7];
         data.Corruptions.Add(new()
@@ -67,7 +62,7 @@ public sealed class ChecksumConverter : IPokegoldConverter
     // 안농 이미지 : 깨진 데이터 대체
     for (var i = 0; i < 26; i++)
     {
-      if (IsNotImageByte(data.Images.Unowns[i]))
+      if (data.Images.Unowns[i].Length == 0)
       {
         data.Images.Unowns[i] = _defaultImageBytes[5];
         data.Corruptions.Add(new()
@@ -76,7 +71,7 @@ public sealed class ChecksumConverter : IPokegoldConverter
           Index = i,
         });
       }
-      if (IsNotImageByte(data.Images.UnownBacksides[i]))
+      if (data.Images.UnownBacksides[i].Length == 0)
       {
         data.Images.UnownBacksides[i] = _defaultImageBytes[6];
         data.Corruptions.Add(new()

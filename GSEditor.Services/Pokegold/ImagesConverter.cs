@@ -56,11 +56,11 @@ public sealed class ImagesConverter : IPokegoldConverter
       {
         var bank = data.GetByte(0x48000 + (i * 6)).ToDecodedBank();
         var address = data.GetBytes(0x48001 + (i * 6), 2).ToGBAddress(bank);
-        data.Images.Pokemons.Add(data.GetBytes(address, 4096).ToLZDecompressedBytes());
+        data.Images.Pokemons.Add(data.GetBytes(address, 4096).ToLZDecompressedBytes(Array.Empty<byte>()));
 
         var backsideBank = data.GetByte(0x48000 + (i * 6) + 3).ToDecodedBank();
         var backsideAddress = data.GetBytes(0x48001 + (i * 6) + 3, 2).ToGBAddress(backsideBank);
-        data.Images.PokemonBacksides.Add(data.GetBytes(backsideAddress, 4096).ToLZDecompressedBytes());
+        data.Images.PokemonBacksides.Add(data.GetBytes(backsideAddress, 4096).ToLZDecompressedBytes(Array.Empty<byte>()));
       }
       else
       {
@@ -74,7 +74,7 @@ public sealed class ImagesConverter : IPokegoldConverter
     {
       var bank = data.GetByte(0x80000 + (i * 3)).ToDecodedBank();
       var address = data.GetBytes(0x80001 + (i * 3), 2).ToGBAddress(bank);
-      data.Images.Trainers.Add(data.GetBytes(address, 4096).ToLZDecompressedBytes());
+      data.Images.Trainers.Add(data.GetBytes(address, 4096).ToLZDecompressedBytes(Array.Empty<byte>()));
     }
 
     data.Images.Unowns.Clear();
@@ -83,11 +83,11 @@ public sealed class ImagesConverter : IPokegoldConverter
     {
       var bank = data.GetByte(0x7c000 + (i * 6)).ToDecodedBank();
       var address = data.GetBytes(0x7c001 + (i * 6), 2).ToGBAddress(bank);
-      data.Images.Unowns.Add(data.GetBytes(address, 4096).ToLZDecompressedBytes());
+      data.Images.Unowns.Add(data.GetBytes(address, 4096).ToLZDecompressedBytes(Array.Empty<byte>()));
 
       var backsideBank = data.GetByte(0x7c000 + (i * 6) + 3).ToDecodedBank();
       var backsideAddress = data.GetBytes(0x7c001 + (i * 6) + 3, 2).ToGBAddress(backsideBank);
-      data.Images.UnownBacksides.Add(data.GetBytes(backsideAddress, 4096).ToLZDecompressedBytes());
+      data.Images.UnownBacksides.Add(data.GetBytes(backsideAddress, 4096).ToLZDecompressedBytes(Array.Empty<byte>()));
     }
   }
 
