@@ -6,6 +6,11 @@ namespace GSEditor.UI.Windows;
 public partial class AppInfoDialog : Window
 {
   public static readonly string AppVersions = "" +
+    "### v1.2.6.2\n" +
+    "* 성별관련 오류 수정\n" +
+    "* 외부툴에 의한 이미지 손상 로딩 개선\n" +
+    "  \n" +
+    "  \n" +
     "### v1.2.6\n" +
     "* 항목 검색 기능에서 창이 열릴경우 입력을 바로 할 수 있도록 변경\n" +
     "* 체크섬 기록이 재대로 되지 않는 문제를 수정\n" +
