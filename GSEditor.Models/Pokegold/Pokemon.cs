@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GSEditor.Models.Pokegold;
 
@@ -54,6 +56,13 @@ public sealed class Pokemon
 
   public static Pokemon FromBytes(byte[] bytes)
   {
+    // 외부에서 성별값을 세밀히 조절했을 경우의 처리
+    if (!_genderRates.ContainsKey(bytes[13]))
+    {
+      var min = _genderRates.Keys.Min(v => Math.Abs((int)v - bytes[13]));
+      bytes[13] = _genderRates.Keys.First(v => Math.Abs((int)v - bytes[13]) == min);
+    }
+
     var newItem = new Pokemon
     {
       No = bytes[0],
