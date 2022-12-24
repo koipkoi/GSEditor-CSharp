@@ -31,7 +31,6 @@
 ### 2. [MS-PL](./Docs/Licenses/ms-pl.md)
 
 * Wpf.Toolkit
-* XAMLMarkupExtensions
 
 ### 3. [Creative Commons](https://creativecommons.org/licenses/by/3.0)
 
