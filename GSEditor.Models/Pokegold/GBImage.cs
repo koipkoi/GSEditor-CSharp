@@ -34,7 +34,7 @@ public sealed class GBImage
     return image != null;
   }
 
-  private static GBColor[]? DecodePalette(string fileName)
+  private static Color[]? DecodePalette(string fileName)
   {
     var _pngHeader = new byte[] { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
     var _paletteHeader = "PLTE"u8.ToArray();
@@ -62,22 +62,17 @@ public sealed class GBImage
       index++;
     }
 
-    var result = new GBColor[4];
+    var result = new Color[4];
     for (var i = 0; i < 4; i++)
     {
-      result[i] = new()
-      {
-        R = bytes[index + 0],
-        G = bytes[index + 1],
-        B = bytes[index + 2],
-      };
+      result[i] = Color.FromArgb(0xff, bytes[index + 0], bytes[index + 1], bytes[index + 2]);
       index += 3;
     }
 
     return result;
   }
 
-  private static GBImage? CreateGBImage(string fileName, GBColor[] colors)
+  private static GBImage? CreateGBImage(string fileName, Color[] colors)
   {
     var image = (Bitmap)Image.FromFile(fileName);
 
@@ -125,7 +120,7 @@ public sealed class GBImage
       Rows = rows,
       Columns = columns,
       Source = bytes.ToArray(),
-      Colors = colors,
+      Colors = colors.Select(c => new GBColor(c)).ToArray(),
     };
   }
 

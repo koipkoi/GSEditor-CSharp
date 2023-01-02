@@ -77,6 +77,16 @@ public sealed class GBColor
     _loByte = (byte)((colorValue & 0x00ff) >> 0);
   }
 
+  public GBColor(System.Drawing.Color color)
+  {
+    var r = (color.R / 8) << 0;
+    var g = (color.G / 8) << 5;
+    var b = (color.B / 8) << 10;
+    var colorValue = r | g | b;
+    _hiByte = (byte)((colorValue & 0xff00) >> 8);
+    _loByte = (byte)((colorValue & 0x00ff) >> 0);
+  }
+
   public byte[] ToBytes()
   {
     return new byte[] { _loByte, _hiByte, };
@@ -109,6 +119,26 @@ public sealed class GBColor
   public override int GetHashCode()
   {
     return base.GetHashCode();
+  }
+
+  public static explicit operator GBColor(Color color)
+  {
+    return new()
+    {
+      R = color.R,
+      G = color.G,
+      B = color.B
+    };
+  }
+
+  public static explicit operator GBColor(System.Drawing.Color color)
+  {
+    return new()
+    {
+      R = color.R,
+      G = color.G,
+      B = color.B
+    };
   }
 
   public static bool operator ==(GBColor a, GBColor b)
