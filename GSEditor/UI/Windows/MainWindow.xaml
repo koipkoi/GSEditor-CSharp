@@ -1,4 +1,4 @@
-﻿<Window x:Class="GSEditor.UI.Windows.MainWindow"
+<Window x:Class="GSEditor.UI.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         d:DesignHeight="560"
         d:DesignWidth="640"
-        Title="GS 에디터"
+        Title="{Binding Title.Value}"
         ResizeMode="CanResizeWithGrip"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
         Loaded="{b:EventBinding CheckUpdate, Argument=true}"
@@ -128,21 +128,31 @@
                 Padding="0"
                 Margin="2"
                 IsEnabled="{Binding IsRomOpened.Value}">
+
       <TabItem Header="포켓몬">
         <tabs:PokemonTab />
       </TabItem>
+
       <TabItem Header="안농">
         <tabs:UnownTab />
       </TabItem>
+
       <TabItem Header="아이템">
         <tabs:ItemsTab />
       </TabItem>
+
       <TabItem Header="기술">
         <tabs:MovesTab />
       </TabItem>
+
       <TabItem Header="기술머신">
         <tabs:TMHMsTab />
       </TabItem>
+
+      <TabItem Header="트레이너 그룹">
+        <tabs:TrainerGroupsTab />
+      </TabItem>
+
     </TabControl>
 
     <StatusBar Grid.Row="3"

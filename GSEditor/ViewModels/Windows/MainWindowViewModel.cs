@@ -16,12 +16,15 @@ public sealed class MainWindowViewModel
   private readonly IDialogService _dialogs = Program.Services.GetRequiredService<IDialogService>();
   private readonly IUpdateService _updates = Program.Services.GetRequiredService<IUpdateService>();
 
+  public BindingProperty<string> Title { get; } = new("");
   public BindingProperty<bool> IsRomOpened { get; } = new(false);
   public BindingProperty<bool> IsRomChanged { get; } = new(false);
   public BindingProperty<string> RomFileName { get; } = new("-");
 
   public MainWindowViewModel()
   {
+    Title.Value = $"GS 에디터 - v{Platforms.AppVersion}";
+
     _pokegold.RomChanged += OnDataChanged;
     _pokegold.DataChanged += OnDataChanged;
   }

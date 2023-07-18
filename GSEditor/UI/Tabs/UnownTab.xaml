@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GSEditor.UI.Tabs.UnownTab"
+<UserControl x:Class="GSEditor.UI.Tabs.UnownTab"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:GSEditor.UI.Controls"
              xmlns:vm="clr-namespace:GSEditor.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="1280"
+             d:DesignHeight="450"
              d:DesignWidth="650">
   <UserControl.DataContext>
     <vm:EmptyViewModel />
@@ -69,7 +69,7 @@
           </StackPanel>
 
           <Label Margin="0, 16, 0, 8"
-                 Style="{DynamicResource GSEditor_Style_Label_Section}">이미지 &amp; 색상</Label>
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">이미지</Label>
           <StackPanel Orientation="Horizontal">
 
             <Button Width="64"

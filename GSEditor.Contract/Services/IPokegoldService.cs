@@ -1,4 +1,4 @@
-﻿using GSEditor.Models.Pokegold;
+using GSEditor.Models.Pokegold;
 using System;
 
 namespace GSEditor.Contract.Services;

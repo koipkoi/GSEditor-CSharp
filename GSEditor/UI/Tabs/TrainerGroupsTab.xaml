@@ -1,0 +1,89 @@
+<UserControl x:Class="GSEditor.UI.Tabs.TrainerGroupsTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:controls="clr-namespace:GSEditor.UI.Controls"
+             xmlns:vm="clr-namespace:GSEditor.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="650">
+  <UserControl.DataContext>
+    <vm:EmptyViewModel />
+  </UserControl.DataContext>
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <ListBox Grid.Column="0"
+             Name="TrainersListBox"
+             Width="144"
+             Margin="4"
+             Style="{DynamicResource GSEditor_Style_ListBox_ColoredWithFinder}"
+             SelectionChanged="OnListBoxSelected" />
+
+    <Border Grid.Column="1"
+            Name="ContentBorder"
+            Margin="0, 4, 4, 4"
+            IsEnabled="False"
+            Style="{DynamicResource GSEditor_Style_Border_Default}">
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical"
+                    Margin="6, 6, 6, 56">
+          <Label Margin="0, 0, 0, 8"
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">그룹명</Label>
+          <TextBox Name="NameTextBox"
+                   MaxLength="12"
+                   TextChanged="OnTextBoxTextChanged" />
+
+          <Label Margin="0, 16, 0, 8"
+                 Style="{DynamicResource GSEditor_Style_Label_Section}">이미지 &amp; 색상</Label>
+          <Grid>
+            <StackPanel Name="ImagePanel"
+                        Orientation="Vertical">
+              <StackPanel Orientation="Horizontal">
+                <Button Width="64"
+                        Height="64"
+                        Margin="0, 0, 4, 0"
+                        VerticalAlignment="Center"
+                        Tag="front"
+                        Click="OnImageClick">
+                  <controls:IgnoreDpiPanel>
+                    <controls:GBImageBox x:Name="FrontImage"
+                                         IsHitTestVisible="False" />
+                  </controls:IgnoreDpiPanel>
+                </Button>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal"
+                          Margin="0, 8, 0, 0">
+                <xctk:ColorPicker Name="Color1"
+                                  Width="64"
+                                  Margin="0, 0, 4, 0"
+                                  ShowTabHeaders="False"
+                                  ColorMode="ColorCanvas"
+                                  DisplayColorAndName="False"
+                                  SelectedColorChanged="OnColorPickerValueChanged" />
+                <xctk:ColorPicker Name="Color2"
+                                  Width="64"
+                                  ShowTabHeaders="False"
+                                  ColorMode="ColorCanvas"
+                                  DisplayColorAndName="False"
+                                  SelectedColorChanged="OnColorPickerValueChanged" />
+              </StackPanel>
+            </StackPanel>
+            <Label Name="NotEditableImageLabel"
+                   HorizontalAlignment="Center"
+                   Padding="0, 16, 0, 16"
+                   Visibility="Collapsed">라이벌 이미지가 이미 존재하여 편집할 수 없습니다.</Label>
+          </Grid>
+        </StackPanel>
+      </ScrollViewer>
+    </Border>
+
+  </Grid>
+</UserControl>
