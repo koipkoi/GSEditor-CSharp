@@ -13,7 +13,7 @@ public partial class RomCorruptionsDialog : Window
     InitializeComponent();
 
     var cnt = 0;
-    var pokegold = App.Services.GetRequiredService<IPokegoldService>();
+    var pokegold = Program.Services.GetRequiredService<IPokegoldService>();
     pokegold.Data.Corruptions.ForEach(e =>
     {
       var pokemonName = pokegold.Data.Strings.PokemonNames[e.Index];

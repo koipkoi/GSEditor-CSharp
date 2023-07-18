@@ -1,10 +1,11 @@
-﻿using GSEditor.Common.Extensions;
+using GSEditor.Common.Extensions;
 using GSEditor.Common.Utilities;
 using GSEditor.Contract.Services;
 using GSEditor.Models.Pokegold;
 using GSEditor.UI.Controls;
 using GSEditor.ViewModels.Selectors;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,9 +18,9 @@ namespace GSEditor.UI.Tabs;
 
 public partial class PokemonTab : UserControl
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
-  private readonly IDialogService _dialogs = App.Services.GetRequiredService<IDialogService>();
-  private readonly IPopupMenuService _popupMenus = App.Services.GetRequiredService<IPopupMenuService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
+  private readonly IDialogService _dialogs = Program.Services.GetRequiredService<IDialogService>();
+  private readonly IPopupMenuService _popupMenus = Program.Services.GetRequiredService<IPopupMenuService>();
 
   private readonly List<CheckListBox> _tmhmList;
 

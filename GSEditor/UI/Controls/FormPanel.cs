@@ -1,4 +1,5 @@
-﻿using System.Windows;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GSEditor.UI.Controls;

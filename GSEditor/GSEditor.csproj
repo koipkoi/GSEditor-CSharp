@@ -1,84 +1,40 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net7.0-windows</TargetFramework>
-		<Nullable>enable</Nullable>
-		<UseWindowsForms>False</UseWindowsForms>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Platforms>x86</Platforms>
-		<ApplicationManifest>App.manifest</ApplicationManifest>
-		<ApplicationIcon>App.ico</ApplicationIcon>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-		<UseWPF>True</UseWPF>
-		<StartupObject>GSEditor.App</StartupObject>
-	</PropertyGroup>
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>True</UseWPF>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Platforms>x86</Platforms>
+    <ApplicationManifest>App.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources/Images/app_icon.ico</ApplicationIcon>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-		<DebugType>full</DebugType>
-	</PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
+    <PackageReference Include="MdXaml" Version="1.16.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="PresentationTheme.Aero" Version="0.6.4" />
+  </ItemGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-		<DebugType>full</DebugType>
-	</PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GSEditor.Common\GSEditor.Common.csproj" />
+    <ProjectReference Include="..\GSEditor.Contract\GSEditor.Contract.csproj" />
+    <ProjectReference Include="..\GSEditor.Models\GSEditor.Models.csproj" />
+    <ProjectReference Include="..\GSEditor.Services\GSEditor.Services.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="Resources\Images\app_icon_64.png" />
-	  <None Remove="Resources\Images\if_database.bmp" />
-	  <None Remove="Resources\Images\if_database.png" />
-	  <None Remove="Resources\Images\if_exit.bmp" />
-	  <None Remove="Resources\Images\if_exit.png" />
-	  <None Remove="Resources\Images\if_folder.bmp" />
-	  <None Remove="Resources\Images\if_folder.png" />
-	  <None Remove="Resources\Images\if_help.bmp" />
-	  <None Remove="Resources\Images\if_help_book.png" />
-	  <None Remove="Resources\Images\if_music.bmp" />
-	  <None Remove="Resources\Images\if_new_docs.bmp" />
-	  <None Remove="Resources\Images\if_play.bmp" />
-	  <None Remove="Resources\Images\if_play.png" />
-	  <None Remove="Resources\Images\if_save.bmp" />
-	  <None Remove="Resources\Images\if_save.png" />
-	  <None Remove="Resources\Images\if_script.bmp" />
-	  <None Remove="Resources\Images\if_script.png" />
-	  <None Remove="Resources\Images\if_settings.bmp" />
-	  <None Remove="Resources\Images\if_settings.png" />
-	</ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\*" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="App.ico" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
-	  <PackageReference Include="MdXaml" Version="1.16.2" />
-	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-	  <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
-	  <PackageReference Include="PresentationTheme.Aero" Version="0.6.4" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Page Include="App.xaml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\GSEditor.Common\GSEditor.Common.csproj" />
-	  <ProjectReference Include="..\GSEditor.Contract\GSEditor.Contract.csproj" />
-	  <ProjectReference Include="..\GSEditor.Models\GSEditor.Models.csproj" />
-	  <ProjectReference Include="..\GSEditor.Services\GSEditor.Services.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Resource Include="Resources\Images\app_icon_64.png" />
-	  <Resource Include="Resources\Images\if_database.png" />
-	  <Resource Include="Resources\Images\if_exit.png" />
-	  <Resource Include="Resources\Images\if_folder.png" />
-	  <Resource Include="Resources\Images\if_help_book.png" />
-	  <Resource Include="Resources\Images\if_play.png" />
-	  <Resource Include="Resources\Images\if_save.png" />
-	  <Resource Include="Resources\Images\if_script.png" />
-	  <Resource Include="Resources\Images\if_settings.png" />
-	</ItemGroup>
+  <!-- 수동 엔트리포인트 사용 -->
+  <ItemGroup>
+    <ApplicationDefinition Remove="App.xaml" />
+    <Page Include="App.xaml" />
+  </ItemGroup>
 
 </Project>

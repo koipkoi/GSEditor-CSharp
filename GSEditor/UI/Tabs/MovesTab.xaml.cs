@@ -9,7 +9,7 @@ namespace GSEditor.UI.Tabs;
 
 public partial class MovesTab : UserControl
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
 
   public MovesTab()
   {

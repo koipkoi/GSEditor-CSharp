@@ -1,20 +1,20 @@
-﻿using GSEditor.Common.Bindings;
+using GSEditor.Common.Bindings;
 using GSEditor.Common.Utilities;
 using GSEditor.Contract.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Policy;
 
 namespace GSEditor.ViewModels.Windows;
 
 public sealed class MainWindowViewModel
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
-  private readonly ISettingsService _appSettings = App.Services.GetRequiredService<ISettingsService>();
-  private readonly IDialogService _dialogs = App.Services.GetRequiredService<IDialogService>();
-  private readonly IUpdateService _updates = App.Services.GetRequiredService<IUpdateService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
+  private readonly ISettingsService _appSettings = Program.Services.GetRequiredService<ISettingsService>();
+  private readonly IDialogService _dialogs = Program.Services.GetRequiredService<IDialogService>();
+  private readonly IUpdateService _updates = Program.Services.GetRequiredService<IUpdateService>();
 
   public BindingProperty<bool> IsRomOpened { get; } = new(false);
   public BindingProperty<bool> IsRomChanged { get; } = new(false);

@@ -1,4 +1,4 @@
-﻿using GSEditor.Common.Extensions;
+using GSEditor.Common.Extensions;
 using GSEditor.Common.Utilities;
 using GSEditor.Contract.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +9,7 @@ namespace GSEditor.UI.Tabs;
 
 public partial class ItemsTab : UserControl
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
 
   public ItemsTab()
   {

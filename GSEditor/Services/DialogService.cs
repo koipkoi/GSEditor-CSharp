@@ -1,16 +1,17 @@
-﻿using GSEditor.Common.Extensions;
+using GSEditor.Common.Extensions;
 using GSEditor.Contract.Services;
 using GSEditor.Models.Pokegold;
 using GSEditor.UI.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace GSEditor.Services;
 
 public class DialogService : IDialogService
 {
-  private readonly ISettingsService _settings = App.Services.GetRequiredService<ISettingsService>();
+  private readonly ISettingsService _settings = Program.Services.GetRequiredService<ISettingsService>();
 
   public void ShowMessage(string title, string message)
   {

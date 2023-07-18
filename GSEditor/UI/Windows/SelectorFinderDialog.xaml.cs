@@ -1,4 +1,5 @@
-﻿using GSEditor.ViewModels.Windows;
+using GSEditor.ViewModels.Windows;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

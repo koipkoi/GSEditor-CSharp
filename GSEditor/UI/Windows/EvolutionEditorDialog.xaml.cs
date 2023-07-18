@@ -8,7 +8,7 @@ namespace GSEditor.UI.Windows;
 
 public partial class EvolutionEditorDialog : Window
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
 
   public Evolution? Result { get; set; }
 

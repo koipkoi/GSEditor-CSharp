@@ -1,7 +1,9 @@
-﻿using GSEditor.Common.Extensions;
+using GSEditor.Common.Extensions;
 using GSEditor.Common.Utilities;
 using GSEditor.Contract.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Xceed.Wpf.Toolkit;
@@ -11,7 +13,7 @@ namespace GSEditor.UI.Tabs;
 
 public partial class TMHMsTab : UserControl
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
   private readonly List<CheckListBox> _pokemonList;
 
   public TMHMsTab()

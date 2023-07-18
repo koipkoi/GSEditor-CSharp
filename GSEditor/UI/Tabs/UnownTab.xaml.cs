@@ -12,9 +12,9 @@ namespace GSEditor.UI.Tabs;
 
 public partial class UnownTab : UserControl
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
-  private readonly IDialogService _dialogs = App.Services.GetRequiredService<IDialogService>();
-  private readonly IPopupMenuService _popupMenus = App.Services.GetRequiredService<IPopupMenuService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
+  private readonly IDialogService _dialogs = Program.Services.GetRequiredService<IDialogService>();
+  private readonly IPopupMenuService _popupMenus = Program.Services.GetRequiredService<IPopupMenuService>();
 
   public UnownTab()
   {

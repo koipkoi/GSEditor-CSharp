@@ -1,6 +1,7 @@
-﻿using GSEditor.Contract.Services;
+using GSEditor.Contract.Services;
 using GSEditor.Models.Pokegold;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,7 +9,7 @@ namespace GSEditor.UI.Windows;
 
 public partial class LearnMoveImporterDialog : Window
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
 
   public List<LearnMove> Result { get; } = new();
 

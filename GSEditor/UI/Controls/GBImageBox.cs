@@ -1,4 +1,5 @@
-﻿using GSEditor.Models.Pokegold;
+using GSEditor.Models.Pokegold;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;

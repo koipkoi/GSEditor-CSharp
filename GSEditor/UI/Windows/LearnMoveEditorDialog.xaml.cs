@@ -7,7 +7,7 @@ namespace GSEditor.UI.Windows;
 
 public partial class LearnMoveEditorDialog : Window
 {
-  private readonly IPokegoldService _pokegold = App.Services.GetRequiredService<IPokegoldService>();
+  private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
 
   public LearnMove? Result { get; set; }
 
