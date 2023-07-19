@@ -31,7 +31,6 @@ public static class Program
   public static IServiceProvider Services { get; private set; } = new ServiceCollection()
       .AddSingleton<IPokegoldService, PokegoldService>()
       .AddSingleton<ISettingsService, SettingsService>()
-      .AddSingleton<IUpdateService, UpdateService>()
       .AddSingleton<IDialogService, DialogService>()
       .AddSingleton<IPopupMenuService, PopupMenuService>()
       .BuildServiceProvider();

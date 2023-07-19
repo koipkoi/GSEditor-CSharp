@@ -4,7 +4,6 @@ using GSEditor.Contract.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 
 namespace GSEditor.ViewModels.Windows;
@@ -14,7 +13,6 @@ public sealed class MainWindowViewModel
   private readonly IPokegoldService _pokegold = Program.Services.GetRequiredService<IPokegoldService>();
   private readonly ISettingsService _appSettings = Program.Services.GetRequiredService<ISettingsService>();
   private readonly IDialogService _dialogs = Program.Services.GetRequiredService<IDialogService>();
-  private readonly IUpdateService _updates = Program.Services.GetRequiredService<IUpdateService>();
 
   public BindingProperty<string> Title { get; } = new("");
   public BindingProperty<bool> IsRomOpened { get; } = new(false);
@@ -132,23 +130,5 @@ public sealed class MainWindowViewModel
   public void ShowAppInfo()
   {
     _dialogs.ShowAppInfo();
-  }
-
-  public async void CheckUpdate(bool ignoreNoHasUpdate)
-  {
-    var update = await _updates.GetAppUpdate();
-    if (!update.HasUpdate)
-    {
-      if (!ignoreNoHasUpdate)
-        _dialogs.ShowMessage("알림", $"현재 최신 버전입니다.\n(현재 버전 : {Platforms.AppVersion})");
-      return;
-    }
-
-    var isConfirm = _dialogs.ShowQuestion("알림", $"버전 업데이트가 있습니다.\n· 현재 버전 : {Platforms.AppVersion}\n· 최신 버전 : {update.LatestVersion}\n\n'확인'을 눌러주시면 다운로드 페이지가 열립니다.");
-    if (isConfirm)
-    {
-      var url = "https://github.com/koipkoi/GSEditor/releases";
-      Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
-    }
   }
 }

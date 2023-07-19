@@ -13,7 +13,6 @@
         Title="{Binding Title.Value}"
         ResizeMode="CanResizeWithGrip"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-        Loaded="{b:EventBinding CheckUpdate, Argument=true}"
         Closing="{b:EventBinding RequestClose}"
         Closed="{b:EventBinding Cleanup}">
   <Window.DataContext>
@@ -88,11 +87,9 @@
         </MenuItem>
       </MenuItem>
       <MenuItem Header="도움말(_H)">
-        <MenuItem Header="업데이트 확인(_U)..."
-                  Click="{b:EventBinding CheckUpdate, Argument=false}" />
-        <Separator />
         <MenuItem Header="GS 에디터 정보(_A)..."
-                  Click="{b:EventBinding ShowAppInfo}" />
+                  Click="{b:EventBinding ShowAppInfo}">
+        </MenuItem>
       </MenuItem>
     </Menu>
 
