@@ -26,7 +26,7 @@ public static class Program
   public const string Name = "GS 에디터";
   public const string Description = "포켓몬스터 금 버전 에디터";
   public const string Author = "koipkoi";
-  public const string Version = "1.2.6.3";
+  public const string Version = "1.2.7.0";
 
   public static IServiceProvider Services { get; private set; } = new ServiceCollection()
       .AddSingleton<IPokegoldService, PokegoldService>()

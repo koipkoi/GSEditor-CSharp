@@ -1,4 +1,4 @@
-﻿using GSEditor.Common.Utilities;
+using GSEditor.Common.Utilities;
 using System.Windows;
 
 namespace GSEditor.UI.Windows;
@@ -6,6 +6,10 @@ namespace GSEditor.UI.Windows;
 public partial class AppInfoDialog : Window
 {
   public static readonly string AppVersions = "" +
+    "### v1.2.7\n" +
+    "* 트레이너 그룹 탭 추가" +
+    "  \n" +
+    "  \n" +
     "### v1.2.6\n" +
     "* 항목 검색 기능에서 창이 열릴경우 입력을 바로 할 수 있도록 변경\n" +
     "* 체크섬 기록이 재대로 되지 않는 문제를 수정\n" +
